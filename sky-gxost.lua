@@ -3,6 +3,8 @@
 
 -- local response = gg.makeRequest("http://192.168.1.100:9999/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
+
+-- gx = require("gx.gx")
 gx = load(response.content)()
 
 scriptv = {process ='com.tgc.sky.android', version = 196112}
@@ -1976,6 +1978,7 @@ gg.setRanges(gg.REGION_C_DATA)
 gg.searchNumber('3.5', gg.TYPE_FLOAT)
 quick_results = gg.getResults(1)
 quick_results[1].value = {'3.5', '200'}
+quick_results[1].bool = "{gxbool}"
 gg.clearResults()
 
 ------------------------------------
@@ -1985,6 +1988,7 @@ gg.clearResults()
 gg.searchNumber('1D;0.15000000596F;0.5F;1.0F;0.40000000596F::25', gg.TYPE_DWORD)
 clouds_results = gg.getResults(1)
 clouds_results[1].value = {1, 0}
+clouds_results[1].bool = "{gxbool}"
 gg.clearResults()
 
 ------------------------------------
@@ -2935,6 +2939,10 @@ gx.add_menu({
 	type = "back"
 })
 
+function test(b)
+	gg.toast(tostring(b["bool"]))
+end
+
 gx.add_menu({
 	title = "Fun Stuffs:",
 	name = "funmenu",
@@ -2956,7 +2964,7 @@ gx.add_menu({
 		{"Walk with Instrument 🎹", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+					{address = pbase + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}}
