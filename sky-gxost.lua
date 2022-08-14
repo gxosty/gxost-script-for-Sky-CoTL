@@ -3,7 +3,6 @@
 
 -- local response = gg.makeRequest("http://192.168.1.100:9999/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
-
 -- gx = require("gx.gx")
 gx = load(response.content)()
 
@@ -2298,7 +2297,7 @@ function unlockelders()
 end
 
 function uwc()
-	gx.vars['w'] = gx.editor.get({{address = pbase, flags = "D"}})[1]
+	gx.vars.w = gx.editor.get({{address = pbase, flags = "D"}})[1].value
 end
 
 function propset(id, freeze)
@@ -2464,7 +2463,7 @@ function get_wl_counts()
 		end
 	end
 
-	return count
+	return tostring(count)
 end
 
 function tpwls()
@@ -2884,8 +2883,9 @@ end
 gx.vars["wb"] = 5.0
 
 gx.add_menu({
-	title = "Choose hack:",
+	title = {"Map: [", {get_map_name}, "] | (by: gxost) | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_counts}},
 	name = "main",
+	pre_f = {uwc},
 	menu = {
 		{"[⬆️] Wall Breach: {gx:settings.wb}", {pmove, {"{gx:settings.wdistance}"}}},
 		{"[⏭] Farms", {gx.open_menu, {"farmmenu"}}},
@@ -2938,10 +2938,6 @@ gx.add_menu({
 	use_single_function = true,
 	type = "back"
 })
-
-function test(b)
-	gg.toast(tostring(b["bool"]))
-end
 
 gx.add_menu({
 	title = "Fun Stuffs:",
