@@ -2973,7 +2973,7 @@ gx.add_menu({
 })
 
 gx.add_menu({
-	title = {"WL Count: {gx:w}"},
+	title = {"WL Count: ", {tostring, {"{gx:w}"}}},
 	name = "wingmenu",
 	pre_f = {uwc},
 	menu = {
