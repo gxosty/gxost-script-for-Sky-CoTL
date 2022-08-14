@@ -2941,17 +2941,23 @@ gx.add_menu({
 	menu = {
 		{"Infinity Fireworks 🎆", {
 			gx.editor.switch, {
-				{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				{
+					{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				}
 			}
 		}},
 		{"Fake sleeping 💤", {
 			gx.editor.switch, {
-				{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				{
+					{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				}
 			}
 		}},
 		{"Walk with Instrument 🎹", {
 			gx.editor.switch, {
-				{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				{
+					{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+				}
 			}
 		}}
 	},
