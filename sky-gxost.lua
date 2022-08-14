@@ -2993,7 +2993,7 @@ gx.add_menu({
 		{"| Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}, bool = "{gxindex}"}
+					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
