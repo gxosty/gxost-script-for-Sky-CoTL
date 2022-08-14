@@ -2941,17 +2941,17 @@ gx.add_menu({
 	menu = {
 		{"Infinity Fireworks 🎆", {
 			gx.editor.switch, {
-				{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
+				{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 			}
 		}},
 		{"Fake sleeping 💤", {
 			gx.editor.switch, {
-				{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
+				{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 			}
 		}},
 		{"Walk with Instrument 🎹", {
 			gx.editor.switch, {
-				{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
+				{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 			}
 		}}
 	},
@@ -2979,14 +2979,14 @@ gx.add_menu({
 		{"| Unlock Friendship Nodes 🔓", {
 			gx.editor.switch, {
 				{
-					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false, bool = "{gxindex}"}
+					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
 		{"| Read Chats", {
 			gx.editor.switch, {
 				{
-					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxindex}"}
+					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
@@ -3006,14 +3006,14 @@ gx.add_menu({
 		{"| No Knockdown 🚹", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
+					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
 		{"| God Mode", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
+					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
