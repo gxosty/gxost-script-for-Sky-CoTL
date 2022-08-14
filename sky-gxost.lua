@@ -2064,7 +2064,7 @@ function pmove(dis)
 end
 
 function setwl()
-	local c = gg.prompt({"Default: "..w}, {[1] = ""}, {[1] = "number"})
+	local c = gg.prompt({"Default: "..gx.vars.w}, {[1] = ""}, {[1] = "number"})
 
 	if c == nil then
 		return
@@ -2941,17 +2941,17 @@ gx.add_menu({
 	menu = {
 		{"Infinity Fireworks 🎆", {
 			gx.editor.switch, {
-				{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}}
+				{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
 			}
 		}},
 		{"Fake sleeping 💤", {
 			gx.editor.switch, {
-				{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}}
+				{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
 			}
 		}},
 		{"Walk with Instrument 🎹", {
 			gx.editor.switch, {
-				{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}}
+				{address = player + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
 			}
 		}}
 	},
@@ -2979,21 +2979,21 @@ gx.add_menu({
 		{"| Unlock Friendship Nodes 🔓", {
 			gx.editor.switch, {
 				{
-					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false}
+					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false, bool = "{gxindex}"}
 				}
 			}
 		}},
 		{"| Read Chats", {
 			gx.editor.switch, {
 				{
-					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false}
+					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxindex}"}
 				}
 			}
 		}},
 		{"| Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}}
+					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}, bool = "{gxindex}"}
 				}
 			}
 		}},
@@ -3006,14 +3006,14 @@ gx.add_menu({
 		{"| No Knockdown 🚹", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}}
+					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
 				}
 			}
 		}},
 		{"| God Mode", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}}
+					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}, bool = "{gxindex}"}
 				}
 			}
 		}},
