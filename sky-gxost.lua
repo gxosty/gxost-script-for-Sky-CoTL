@@ -2008,7 +2008,7 @@ function tptowl()
 				{address = offset + i * 0x120 + 0x8, flags = gg.TYPE_FLOAT},
 			})
 
-			setposit(crds[1], crds[2], crds[3])
+			setposit(crds[1].value, crds[2].value, crds[3].value)
 			break
 		end
 	end
