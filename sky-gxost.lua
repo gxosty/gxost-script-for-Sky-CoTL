@@ -1,7 +1,8 @@
 -- Huge thanks to Kiojeen for his "Magic Teleport" feature.
 -- Check out his "Hellboy" project -> https://github.com/Kiojeen/HellBoy
 
--- local response = gg.makeRequest("http://192.168.1.100:9999/gx.lua")
+-- local url = "http://192.168.1.107:9999"
+-- local response = gg.makeRequest(url.."/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
 -- gx = require("gx.gx")
 gx = load(response.content)()
@@ -9,6 +10,8 @@ gx = load(response.content)()
 scriptv = {process ='com.tgc.sky.android', version = 196112}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
+config_path = "/sdcard/gxost.gx"
+version = "0.1.0"
 
 function vcheck()
 	if gameinfo.packageName ~= scriptv.process then
@@ -22,6 +25,34 @@ function vcheck()
 
 	if tonumber(gameinfo.versionCode) > scriptv.version then
 		gg.alert('[Error] Script needs update! \ngame : ' .. tonumber(gameinfo.versionCode) .. '\nscript : ' .. scriptv.version)
+	end
+end
+
+
+function load_settings()
+	local settings = gx.load_json_file(config_path)
+	if settings == nil then
+		local defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/gxost-defaults.json").content
+		-- local defsets = gg.makeRequest(url.."/gxost-defaults.json").content
+		settings = gx.json.decode(defsets)
+		gg.toast("Using default config", true)
+		save_settings()
+	end
+
+	gx.vars.settings = settings
+end
+
+function save_settings()
+	gx.save_json_file(config_path, gx.vars.settings)
+end
+
+function changelog()
+	if version ~= gx.vars.settings.version then
+		gx.vars.settings.version = version
+		save_settings()
+		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/changelogs.json").content)[gx.vars.settings.version]['content']
+		-- local chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
+		gg.alert(chtext, "OK")
 	end
 end
 
@@ -1077,10 +1108,6 @@ sarray = {}
 -- LDR W8, [X28,#0x28]	-1,186,976,888 	<- Emotes
 -- CSET W0, WZR, NE 	446,629,856 	<- Cosmetics
 
-settings = {
-	wdistance = 5.0,
-	useautoburn = true
-}
 -- players -> 12800
 -- player wing charge -> 5BC8
 -- player code -> 10B00
@@ -1538,6 +1565,19 @@ function getposit()
 	}
 end
 
+function getpositstring()
+	if gx.vars.settings.show_coords == true then
+		local posit = getposit()
+		posit.x = gx.round(posit.x, 2)
+		posit.y = gx.round(posit.y, 2)
+		posit.z = gx.round(posit.z, 2)
+		str = "\n[x: "..tostring(posit.x).."; y: "..tostring(posit.y).."; z: "..tostring(posit.z).."]"
+		return str
+	else
+		return ""
+	end
+end
+
 function setposit(mx,my,mz)
 	jh = {
 		{
@@ -1893,11 +1933,11 @@ function uiopen(m)
 
 	if m == 1 then
 		local cmenu = {
-			"Pants",
-			"Masks",
-			"Hairs",
-			"Capes",
-			"Props"
+			"[👖] Pants",
+			"[👺] Masks",
+			"[🦱] Hairs",
+			"[🧣] Capes",
+			"[🪑] Props"
 		}
 
 		cmenu = gg.choice(cmenu, nil, "Open:")
@@ -1916,42 +1956,7 @@ function uiopen(m)
 		gg.setValues(values)
 	elseif m == 2 then
 		setadd(player + offsets.constel_menu, gg.TYPE_DWORD, 1, false)
-	elseif m == 3 then
-		local smenu = {
-			"Props (NOT WORKING)",
-			"Potions (NOT WORKING)",
-			"Spells (NOT WORKING)"
-		}
-
-		smenu = gg.choice(smenu, nil, "Shop Category")
-
-		if smenu == nil then
-			return
-		end
-
-		setstr(player + offsets.shop_menu + 0x29, 22, sconv[smenu])
-		local values = {
-			{address = player + offsets.shop_menu, value = 1, flags = gg.TYPE_DWORD},
-		}
-
-		gg.setValues(values)
 	end
-end
-
-function uimenu()
-	local menu = {
-		"Closet",
-		"Constellation (Bug)",
-		"Enchantment Shop (NOT WORKING)"
-	}
-
-	local m = gg.choice(menu, nil, "What to open?")
-
-	if m == nil then
-		return
-	end
-
-	uiopen(m)
 end
 
 function get_wl_counts()
@@ -2211,7 +2216,7 @@ function DoPoints(points, cr_mode, use_candle)
 	local b = false
 	local stopped = false
 
-	if settings.useautoburn then
+	if gx.vars.settings.useautoburn then
 		if autoburn == off then
 			set_autoburn(true)
 			b = true
@@ -2335,29 +2340,6 @@ function semiautocr()
 	end
 end
 
-function settingsmenu()
-	local smenu = gg.choice({
-		"Wall breach distance: "..settings.wdistance,
-		"Use Autoburn in AutoCR: "..sign(settings.useautoburn)
-	}, nil, "Settings:")
-
-	if smenu == nil then 
-		return
-	end
-
-	if smenu == 1 then
-		local wbd = gg.prompt({"Default distance: "..settings.wdistance}, {[1] = settings.wdistance}, {[1] = "number"})
-		if wbd ~= nil then
-			settings.wdistance = wbd[1]
-		end
-
-		gg.toast("Wall Breach distance: "..settings.wdistance)
-	elseif smenu == 2 then
-		settings.useautoburn = not(settings.useautoburn)
-		gg.toast("Use Autoburn in AutoCR: "..sign(settings.useautoburn))
-	end
-end
-
 function update()
 	if cosmetic_lock == on then
 		ccape2 = gg.getValues({
@@ -2386,11 +2368,11 @@ end
 gx.vars["wb"] = 5.0
 
 gx.add_menu({
-	title = {"Map: [", {get_map_name}, "] | (by: gxost) | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_counts}},
+	title = {"Map: ", {get_map_name}, " | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_counts}, {getpositstring}},
 	name = "main",
 	pre_f = {uwc},
 	menu = {
-		{"[⬆️] Wall Breach: {gx:settings.wb}", {pmove, {"{gx:settings.wdistance}"}}},
+		{"[⬆️] Wall Breach: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
 		{"[⏭] Farms", {gx.open_menu, {"farmmenu"}}},
 		{"[🌀] Teleporter", {gx.open_menu, {"teleportermenu"}}},
 		{"[🪑] Prop Hack", {propmenu}},
@@ -2435,8 +2417,8 @@ gx.add_menu({
 	name = "uimenu",
 	f = {uiopen, {"{gxindex}"}},
 	menu = {
-		{"Closet"},
-		{"Constellation"}
+		{"[🧥] Closet"},
+		{"[🌌] Constellation"}
 	},
 	use_single_function = true,
 	type = "back"
@@ -2538,403 +2520,31 @@ gx.add_menu({
 	title = "Settings:",
 	name = "settingsmenu",
 	menu = {
-		{"Wall breach distance: {gx:settings.wb}", nil},
-		{"Use Autoburn in AutoCR: {gx:settings.useautoburn}", nil}
+		{"Wall breach distance: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
+		{"Use Autoburn in AutoCR: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
+		{"Show player coords in menu title: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}}
 	},
+	post_f = {save_settings},
+	menu_repeat = true,
 	type = "back"
 })
 
 gx.set_back_text("|⬅️| Back")
-gx.set_signs = {[false] = "¦❌¦", [true] = "¦✅¦"}
-gx.vars.settings = {
-	wb = 5.0,
-	useautoburn = true
-}
+gx.set_signs({[false] = "¦❌¦", [true] = "¦✅¦"})
 
-function start()
-	cr_mode = true
-	menu = gg.choice({
-		"[⬆️] Wall Breach: "..settings.wdistance,
-		"[⏭] Farm",
-		"[🌀] Teleporter",
-		"[🪑] Prop Hack",
-		"[💻] Open (UI)",
-		"[💫] Spells",
-		"[🎉] Fun!",
-		"[🦋] Wings",
-		"[💨] No Wind Wall",
-		"[✨] Other Hacks",
-		"[⚙️] Settings"
-		-- "!!! {Debug Features}"
-	}, nil, "Choose Hack:")
+function _init()
+	load_settings()
+	changelog()
+	_text = "gxost-"..version.." loaded"
 
-	if menu == nil then
-		return
-	else
-		if menu == 1 then
-			pmove(settings.wdistance)
-		elseif menu == 2 then
-			cmode = gg.choice({
-				"[▶️] Semi-AutoCR",
-				"[▶️] Semi-WingLight Run",
-				"[📍] Teleport WLs to yourself",
-				"[📍] Teleport Statues to yourself⚠️",
-				"[☀️] Collect Waxes",
-				"[⭐] Collect WLs",
-				"[🔓] Unlock Elders"
-			}, nil, "Current map: "..get_map_name())
-
-			if cmode == 1 then
-				local map = get_map()
-				local family = get_family_by_map(map)
-	
-				if family ~= nil then
-					if gg.alert("Do you want to CR "..get_map_name().."?", "Yes", "Cancel") == 1 then
-						DoPoints(make_points_list(map))
-					else
-						return
-					end
-				else
-					if map == "CandleSpace" then
-						gg.toast("You are at Home. Enter the portal first!")
-					else
-						gg.toast("CR Function unavailable for "..get_map_name())
-					end
-				end
-
-			elseif cmode == 2 then
-				gg.toast("Not yet available.")
-			elseif cmode == 3 then
-				tpwls()
-			elseif cmode == 4 then
-				tpstatues()
-			elseif cmode == 5 then
-				collect_waxes()
-			elseif cmode == 6 then
-				collect_wls()
-			elseif cmode == 7 then
-				if get_map() ~= "CandleSpaceEnd" then
-					gg.toast("You must be in Orbit/Heaven. Go there and try again")
-					return
-				end
-
-				gg.toast("Processing...")
-				unlockelders()
-				gg.toast("Done!")
-			end
-
-		elseif menu == 3 then
-			tpmenu = gg.choice({
-				"[⏩] Change Map",
-				"[🚩] Go to"
-			}, nil, "Current map: "..get_map_name())
-
-			if tpmenu == nil then
-				return
-			end
-
-			if tpmenu == 1 then
-				mps = {}
-				for i, v in ipairs(maps) do
-					table.insert(mps, v[1])
-				end
-	
-				local mpchoice = gg.choice(mps, nil, "Choose map that you want to teleport to")
-	
-				if mpchoice == nil then
-					return
-				else
-					change_map(maps[mpchoice][2])
-				end
-			elseif tpmenu == 2 then
-				local map = get_map()
-
-				ppoints = make_poisitions(map)
-
-				if ppoints ~= nil then
-					mp_names = get_names(ppoints)
-					place = gg.choice(mp_names, nil, "Where to go?")
-
-					if place == nil then
-						return
-					end
-
-					pos = get_pos_by_name(ppoints, mp_names[place])
-					setposit(pos.x, pos.y, pos.z)
-
-					gg.toast(place)
-				else
-					gg.toast("No place to go here.")
-				end
-			end
-
-		elseif menu == 4 then
-			propmenu()
-		elseif menu == 5 then
-			uimenu()
-		elseif menu == 6 then
-			dospell()
-		elseif menu == 7 then
-			funmenu = gg.multiChoice({
-				inffire.." Infinity Fireworks 🎆",
-				fakesleep.." Fake sleeping 💤",
-				walkwithinst.." Walk with Instrument 🎹"
-			}, nil, "Fun stuffs:")
-
-			if funmenu == nil then
-				return
-			end
-
-			if funmenu[1] == true then
-				if inffire == on then
-					inffire = off
-					setadd(player + offsets.famount_off, gg.TYPE_DWORD, 5, false)
-				else
-					inffire = on
-					setadd(player + offsets.famount_off, gg.TYPE_DWORD, 5, true)
-				end
-			end
-
-			if funmenu[2] == true then
-				if fakesleep == on then
-					fakesleep = off
-					setadd(player + offsets.sleeping, gg.TYPE_DWORD, 1, false)
-				else
-					fakesleep = on
-					setadd(player + offsets.sleeping, gg.TYPE_DWORD, 257, true)
-				end
-			end
-
-			if funmenu[3] == true then
-				if walkwithinst == on then
-					walkwithinst = off
-					setadd(pbase + offsets.gesture, gg.TYPE_DWORD, 65793, false)
-				else
-					walkwithinst = on
-					setadd(pbase + offsets.gesture, gg.TYPE_DWORD, 0, true)
-				end
-			end
-		elseif menu == 8 then
-			w = getadd(pbase, gg.TYPE_DWORD)
-			wmenu = gg.choice({
-				"[🔢] Set WL count",
-				"[🌟] Throw WL⚠️",
-				"[💥] Explode WLs⚠️",
-			}, nil, "WL Count: "..w)
-
-			if wmenu == nil then
-				return
-			end
-
-			if wmenu == 1 then
-				local c = gg.prompt({"Default: "..w}, {[1] = ""}, {[1] = "number"})
-
-				if c == nil then
-					return
-				end
-
-				c[1] = tonumber(c[1])
-
-				if c[1] < 1 then
-					gg.toast("Can't be lower than 1")
-					return
-				end
-
-				local b = false
-				local a = gg.alert("Do you want to lock it?", "Yes", "No")
-
-				if a == nil then
-					return
-				end
-
-				if a == 1 then
-					b = true
-				end
-
-				setadd(pbase, gg.TYPE_DWORD, c[1], b)
-			elseif wmenu == 2 then
-				local c = gg.prompt({"How many to throw?"}, {[1] = ""}, {[1] = "number"})
-
-				if c == nil then
-					return
-				end
-
-				c[1] = tonumber(c[1])
-
-				if c[1] < 0 then
-					gg.toast("Number can't be negative.")
-					return
-				elseif c[1] > w then
-					gg.toast("Number can't be bigger than your WL count.")
-					return
-				elseif c[1] > 100 then
-					gg.toast("Above 100 is not accepted, else game will crash")
-					return
-				end
-
-				setadd(player + offsets.damage, gg.TYPE_DWORD, c[1], false)
-			elseif wmenu == 3 then
-				if gg.alert("Only 1 wl will be left. Are you sure?", "Yes", "No") == 1 then
-					setadd(player + offsets.damage, gg.TYPE_DWORD, clamp(w - 1, 0, 100), false)
-				end
-			end
-
-		elseif menu == 9 then
-			nowind()
-		elseif menu == 10 then
-			hackmenu = gg.multiChoice({
-				autoburn.." Autoburn 🔥",
-				cosmetics.." Unlock All Cosmetics & Emotes 🔓",
-				friendnode_unlock.." Unlock Friendship Nodes 🔓",
-				chat_read.." Read Chats",
-				energy.." Unlimited Energy ♾️",
-				quick.." Quick Steps ⚡",
-				clouds.." Remove Clouds ☁️",
-				noknock.." No Knockdown 🚹",
-				godmode.." God Mode"
-				-- cosmetic_lock.." Cosmetic Lock"
-			}, nil, "Select Hacks:")
-
-			if hackmenu == nil then
-				return
-			else
-				if hackmenu[1] then
-					if nentity_test then
-						if autoburn == off then
-							set_autoburn(true)
-						else
-							set_autoburn(false)
-						end
-					else
-						gg.toast("Autoburn can't be activated due to internal error.")
-					end
-				end
-
-				if hackmenu[2] then
-					if cosmetics == on then
-						unlock_all(false)
-					else
-						unlock_all(true)
-					end
-				end
-
-				if hackmenu[3] then
-					if friendnode_unlock == on then
-						friendnode_unlock = off
-						setadd(bootloader + offsets.ptofnodes, gg.TYPE_DWORD, 872415336, false)
-					else
-						friendnode_unlock = on
-						setadd(bootloader + offsets.ptofnodes, gg.TYPE_DWORD, 1384120352, false)
-					end
-				end
-
-				if hackmenu[4] then
-					if chat_read == on then
-						chat_read = off
-						setadd(bootloader + offsets.chat, gg.TYPE_DWORD, 4043309695, false)
-					else
-						chat_read = on
-						setadd(bootloader + offsets.chat, gg.TYPE_DWORD, 704644064, false)
-					end
-				end
-
-				if hackmenu[5] then
-					if energy == on then
-						energy = off
-						setadd(player + offsets.wing_charge, gg.TYPE_FLOAT, 14.0, false)
-					else
-						energy = on
-						setadd(player + offsets.wing_charge, gg.TYPE_FLOAT, 14.0, true)
-					end
-				end
-
-				if hackmenu[6] then
-					if quick == on then
-						quick_results[1].value = '3.5'
-						quick = off
-					else
-						quick_results[1].value = '200'
-						quick = on
-					end
-
-					gg.setValues(quick_results)
-				end
-
-				if hackmenu[7] then
-					if clouds == on then
-						clouds = off
-						clouds_results[1].value = 1
-					else
-						clouds = on
-						clouds_results[1].value = 0
-					end
-
-					gg.setValues(clouds_results)
-				end
-
-				if hackmenu[8] then
-					if noknock == on then
-						noknock = off
-						setadd(player + offsets.pose, gg.TYPE_DWORD, 0, false)
-					else
-						noknock = on
-						setadd(player + offsets.pose, gg.TYPE_DWORD, 0, true)
-					end
-				end
-
-				if hackmenu[9] then
-					if godmode == on then
-						godmode = off
-						setadd(player + offsets.damage, gg.TYPE_DWORD, 0, false)
-					else
-						godmode = on
-						setadd(player + offsets.damage, gg.TYPE_DWORD, 0, true)
-					end
-				end
-			end
-		elseif menu == 11 then
-			settingsmenu()
-		elseif menu == 12 then
-			debugmenu = gg.choice({
-				"{Get map}",
-				"{Get map name}",
-				"{Show Coordinates}"
-			}, nil, "Test features. (might crash game)")
-
-			if debugmenu == 1 then
-				gg.toast(get_map())
-			elseif debugmenu == 2 then
-				gg.toast(get_map_name())
-			elseif debugmenu == 3 then
-				values = gg.getValues({
-					{address = coords['x'], flags = gg.TYPE_FLOAT},
-					{address = coords['y'], flags = gg.TYPE_FLOAT},
-					{address = coords['z'], flags = gg.TYPE_FLOAT},
-				})
-	
-				crds = {
-					x = tostring(values[1].value),
-					y = tostring(values[2].value),
-					z = tostring(values[3].value)
-				}
-				
-				gg.choice({
-					"X : "..crds['x'],
-					"Y : "..crds['y'],
-					"Z : "..crds['z']
-				})
-			end
-		end
+	if a_ver >= 30 then
+		_text = _text.." |Android "..tostring(a_ver - 19).."|"
 	end
+
+	gg.toast(_text)
 end
 
-_text = "gxost-0.0.11 loaded"
-
-if a_ver >= 30 then
-	_text = _text.." |Android "..tostring(a_ver - 19).."|"
-end
-
-gg.toast(_text)
+_init()
 
 while true do
 	if gg.isVisible(true) then
