@@ -1568,9 +1568,9 @@ end
 function getpositstring()
 	if gx.vars.settings.show_coords == true then
 		local posit = getposit()
-		posit.x = gx.round(posit.x, 2)
-		posit.y = gx.round(posit.y, 2)
-		posit.z = gx.round(posit.z, 2)
+		-- posit.x = gx.round(posit.x, 2)
+		-- posit.y = gx.round(posit.y, 2)
+		-- posit.z = gx.round(posit.z, 2)
 		str = "\n[x: "..tostring(posit.x).."; y: "..tostring(posit.y).."; z: "..tostring(posit.z).."]"
 		return str
 	else
