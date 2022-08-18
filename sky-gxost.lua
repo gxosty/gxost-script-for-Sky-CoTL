@@ -1997,6 +1997,23 @@ function tpwls()
 	end
 end
 
+function tptowl()
+	local offset = nentity + offsets.wl_pos
+
+	for i = 0, 11 do
+		if getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD) == 1 then
+			local crds = gg.getValues({
+				{address = offset + i * 0x120, flags = gg.TYPE_FLOAT},
+				{address = offset + i * 0x120 + 0x4, flags = gg.TYPE_FLOAT},
+				{address = offset + i * 0x120 + 0x8, flags = gg.TYPE_FLOAT},
+			})
+
+			setposit(crds[1], crds[2], crds[3])
+			break
+		end
+	end
+end
+
 function collect_wls()
 	local offset = nentity + offsets.wl_pos
 	local values1 = {}
@@ -2392,7 +2409,7 @@ gx.add_menu({
 	name = "farmmenu",
 	menu = {
 		{"[▶️] Semi-AutoCR", {semiautocr}},
-		{"[▶️] Semi-WingLight Run", {gg.toast, {"Not yet available."}}},
+		{"[📍] Teleport to WL", {tptowl}},
 		{"[📍] Teleport WLs to yourself", {tpwls}},
 		{"[📍] Teleport Statues to yourself⚠️", {tpstatues}},
 		{"[☀️] Collect Waxes", {collect_waxes}},
