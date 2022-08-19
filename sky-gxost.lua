@@ -1,7 +1,7 @@
 -- Huge thanks to Kiojeen for his "Magic Teleport" feature.
 -- Check out his "Hellboy" project -> https://github.com/Kiojeen/HellBoy
 
-local url = "http://192.168.1.107:9999"
+-- local url = "http://192.168.1.107:9999"
 -- local response = gg.makeRequest(url.."/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
 -- gx = require("gx.gx")
@@ -1574,9 +1574,9 @@ end
 function getpositstring()
 	if gx.vars.settings.show_coords == true then
 		local posit = getposit()
-		posit.x = gx.round(posit.x, 2)
-		posit.y = gx.round(posit.y, 2)
-		posit.z = gx.round(posit.z, 2)
+		-- posit.x = gx.round(posit.x, 2)
+		-- posit.y = gx.round(posit.y, 2)
+		-- posit.z = gx.round(posit.z, 2)
 		str = "\n[x: "..tostring(posit.x).."; y: "..tostring(posit.y).."; z: "..tostring(posit.z).."]"
 		return str
 	else
