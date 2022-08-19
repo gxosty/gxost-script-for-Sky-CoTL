@@ -1975,22 +1975,12 @@ function get_wl_count()
 		
 		if st == 1 then
 			count = count + 1
-		end
-	end
-
-	for i = 0, 11 do
-		crds = gx.editor.get({
-			{address = offset + i * 0x120, flags = "F"},
-			{address = offset + i * 0x120 + 0x4, flags = "F"},
-			{address = offset + i * 0x120 + 0x8, flags = "F"},
-		})
-
-		if crds[1].value ~= 0 and crds[2].value ~= 0 and crds[3].value ~= 0 then
+		elseif st == 8 then
 			count_max = count_max + 1
-		else
-			break
 		end
 	end
+
+	count_max + count
 
 	return tostring(count).."/"..tostring(count_max)
 end
