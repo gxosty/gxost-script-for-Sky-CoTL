@@ -1980,7 +1980,7 @@ function get_wl_count()
 		end
 	end
 
-	count_max + count
+	count_max = count_max + count
 
 	return tostring(count).."/"..tostring(count_max)
 end
