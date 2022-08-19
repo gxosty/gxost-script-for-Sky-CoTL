@@ -1965,19 +1965,29 @@ function uiopen(m)
 	end
 end
 
-function get_wl_counts()
+function get_wl_count()
 	local count = 0
+	local count_max = 0
 	local offset = nentity + offsets.wl_pos
 
 	for i = 0, 11 do
 		st = getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD)
+		crds = gx.editor.get({
+			{address = offset + i * 0x120, flags = "F"},
+			{address = offset + i * 0x120 + 0x4, flags = "F"},
+			{address = offset + i * 0x120 + 0x8, flags = "F"},
+		})
 			
 		if st == 1 then
 			count = count + 1
 		end
+
+		if crds[1].value ~= 0 and crds[2].value ~= 0 and crds[3].value ~= 0 then
+			count_max = count_max + 1
+		end
 	end
 
-	return tostring(count)
+	return tostring(count).."/"..tostring(count_max)
 end
 
 function tpwls()
@@ -2391,7 +2401,7 @@ end
 gx.vars["wb"] = 5.0
 
 gx.add_menu({
-	title = {"Map: ", {get_map_name}, " | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_counts}, {getpositstring}},
+	title = {"Map: ", {get_map_name}, " | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_count}, {getpositstring}},
 	name = "main",
 	pre_f = {uwc},
 	menu = {
