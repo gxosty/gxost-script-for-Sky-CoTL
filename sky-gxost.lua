@@ -1972,18 +1972,23 @@ function get_wl_count()
 
 	for i = 0, 11 do
 		st = getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD)
+		
+		if st == 1 then
+			count = count + 1
+		end
+	end
+
+	for i = 0, 11 do
 		crds = gx.editor.get({
 			{address = offset + i * 0x120, flags = "F"},
 			{address = offset + i * 0x120 + 0x4, flags = "F"},
 			{address = offset + i * 0x120 + 0x8, flags = "F"},
 		})
-			
-		if st == 1 then
-			count = count + 1
-		end
 
 		if crds[1].value ~= 0 and crds[2].value ~= 0 and crds[3].value ~= 0 then
 			count_max = count_max + 1
+		else
+			break
 		end
 	end
 
