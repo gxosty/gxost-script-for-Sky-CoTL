@@ -1,5 +1,8 @@
 {
 	"0.1.0" : {
 		"content" : "What's New in v0.1.0:\n- Script menu system update.\n- Added Wing Light related features.\n- Feature to help with collecting Eden Statues.\n- Added \"Open (UI)\" menu section.\n- \"Settings\" now works.\n- and More"
+	},
+	"0.1.1" : {
+		"content" : "Hotifx v0.1.1:\n- Added Valley Temple CR."
 	}
 }
