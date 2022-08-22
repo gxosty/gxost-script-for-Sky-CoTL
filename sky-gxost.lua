@@ -1128,7 +1128,7 @@ offsets = {
 	ptopbase = 0x449B18,
 	ptoentity = 0x1794B38,
 	ptogs = 0x1742800,
-	gamespeed_off = 0x20,
+	gamespeed_off = -0x15D17BC,
 	gesture = 0x33E0C,
 	-- camera = 0xE42DAC, -- camera yaw
 	ptonentity = 0x7F942C,
@@ -1372,7 +1372,6 @@ function find_adds()
 	pbase = player + offsets.ptopbase
 	nentity = getadd(bootloader + offsets.ptoentity, gg.TYPE_QWORD) + offsets.ptonentity
 	nentity_test = getadd(nentity, gg.TYPE_DWORD) == 1099746509
-	gs = getadd(bootloader + offsets.ptogs, gg.TYPE_QWORD)
 
 	if not(nentity_test) then
 		gg.searchNumber(1099746509, gg.TYPE_DWORD)
@@ -1455,8 +1454,6 @@ find_adds()
 
 -- Teleport variables
 coords = find_pos()
-
-candle = coords['x'] - offsets.hcandle
 prop_bckp = nil
 cape_bckp = nil
 
@@ -1525,7 +1522,7 @@ gg.clearResults()
 ------------------------------------
 
 function set_game_speed(speed)
-	setadd(gs + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
+	setadd(nentity + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
 end
 
 function change_map(mp)
@@ -1671,10 +1668,11 @@ end
 function pmagic(arr,id,sil)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
+	if sil == nil then sil = 0 end
 	gx.editor.set({
 		{address = tgt, 		value = id, 	flags = "D"},
 		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
-		{address = tgt = 0x28, 	value = sil, 	flags = "D"},
+		{address = tgt + 0x28, 	value = sil, 	flags = "D"},
 		{address = tgt + 0xC00, value = 20, 	flags = "D"}
 	})
 end
