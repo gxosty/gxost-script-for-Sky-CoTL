@@ -4,5 +4,8 @@
 	},
 	"0.1.1" : {
 		"content" : "Hotifx v0.1.1:\n- Added Valley Temple CR."
+	},
+	"0.1.2" : {
+		"content" : "Hotifx v0.1.2:\n- Updated to the latest version of Sky (199070)\n- Temporarily removed \"Read Chats\"\n- Temporarily Removed \"Teleport Statues to yourself\"\n- New features will Come Soon"
 	}
 }
