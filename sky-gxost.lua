@@ -1672,7 +1672,7 @@ function pmagic(arr,id,sil)
 		{address = tgt, 		value = id, 	flags = "D"},
 		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
 		{address = tgt + 0x28, 	value = sil, 	flags = "D"},
-		{address = tgt + 0xC00, value = 20, 	flags = "D"}
+		{address = player + offsets.magic + 0xC00, value = 20, 	flags = "D"}
 	})
 end
 
