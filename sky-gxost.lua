@@ -7,11 +7,11 @@ local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/
 -- gx = require("gx.gx")
 gx = load(response.content)()
 
-scriptv = {process ='com.tgc.sky.android', version = 196112}
+scriptv = {process ='com.tgc.sky.android', version = 199070}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.1"
+version = "0.1.2"
 
 function vcheck()
 	if gameinfo.packageName ~= scriptv.process then
@@ -52,6 +52,7 @@ function changelog()
 		save_settings()
 		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/main/changelogs.json").content)[gx.vars.settings.version]['content']
 		-- local chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
+		-- local chtext = gx.json.decode(io.open("changelogs.json"):read("*a"))[gx.vars.settings.version]['content']
 		gg.alert(chtext, "OK")
 	end
 end
@@ -1097,7 +1098,7 @@ sarray = {}
 
 -- bootloader to player offset 0x1441FE8
 -- bootloader to entity offset  0x172D4D8
--- bootloader to gui offset 0x16d0500 (basically search for number "Ca" 330,712,483,300)
+-- bootloader to gui offset 0x16d0500 (basically search for number "Ca" 330,712,483,3??)
 -- entity to nentity offset 0x80505C  (seems like this offset never changes)
 -- player to props offset  0x447624
 -- player to firework charge amount offset  0x447624 + 0x1540
@@ -1119,42 +1120,37 @@ sarray = {}
 -- player code -> 10B00
 
 offsets = {
-	chat = 0x5A2500,
-	ptoemotes = 0xA21A64, -- Thanks to Kiojeen
-	ptocloset = 0x3C90B8, -- Thanks to Kiojeen
-	ptofnodes = 0x815B9C, -- Thanks to Kiojeen
-	ptoplayer = 0x1441FE8, -- 0xb8ce8 from bootloader end ??????
-	ptopbase = 0x424848,
-	ptoentity = 0x172D4D8,
-	ptogui = 0x16d0500, -- Thanks to Kiojeen
-	gamespeed_off = -0xA5EE30, -- Thanks to Kiojeen
-	gesture = 0x2DA14,
-	camera = 0xE42DAC, -- camera yaw
-	ptonentity = 0x80505C,
-	wing_charge = 0x4458B4,
-	sleeping = 0x449D10,
-	pose = 0x443118,
-	closet_menu = 0x15A8C08,
-	constel_menu = 0x15AC728,
-	shop_menu = 0x15AD048, --28 {",SpellShop_Oasis_Scroll", ",SpellShop_Oasis_Potion", "*SpellShop_Oasis_Spell"}
-	vwing = 0x445904,
-	damage = 0x445978,
-	pos_off = 0x43FCF0,
-	wl_pos = 0x530754, -- 120 offset between each
-	statue_pos = -0x83009C,
-	hcandle = 0xBFF6E2C, -- deprecated
-	magic = 0x451510,
-	props_off = 0x447624,
-	famount_off = 0x447624 + 0x1540,
-	cape_off = 0x447608,
-	plants = 0xCD2798,
-	-- friend_node = -0x13BF18C, -- deprecated :)
-	node_off = -0x2C,
-	portal_off = 0x4011F0, -- Thanks to Kiojeen
-	vcandles = 0x5521D4,
+	-- chat = 0x5A2500,
+	ptoemotes = 0xA52768,
+	ptocloset = 0x3DD9F8,
+	ptofnodes = 0x836F68,
+	ptoplayer = 0x14A36C8,
+	ptopbase = 0x449B18,
+	ptoentity = 0x1794B38,
+	ptogs = 0x1742800,
+	gamespeed_off = -0x15D17BC,
+	gesture = 0x33E0C,
+	-- camera = 0xE42DAC, -- camera yaw
+	ptonentity = 0x7F942C,
+	wing_charge = 0x470D4C,
+	sleeping = 0x4752A0,
+	pose = 0x46E5A8,
+	closet_menu = 0x15DB988,
+	constel_menu = 0x15DF4A8,
+	vwing = 0x470D9C,
+	damage = 0x470E08,
+	pos_off = 0x46B1C0,
+	wl_pos = 0x53C744,
+	-- statue_pos = -0x83009C,
+	magic = 0x47CBC0,
+	props_off = 0x472B24,
+	famount_off = 0x472B24 + 0x15D0,
+	plants = 0xD05A08,
+	portal_off = 0x4239D8,
+	vcandles = 0x56DAC4,
 	vcandles_dist = 0x70,
-	curmap_off = -0x167FADC,
-	wind_off = -0x879DDC
+	curmap_off = -0x168472C,
+	wind_off = -0x86DBAC
 }
 
 gg.setRanges(gg.REGION_C_ALLOC)
@@ -1376,7 +1372,6 @@ function find_adds()
 	pbase = player + offsets.ptopbase
 	nentity = getadd(bootloader + offsets.ptoentity, gg.TYPE_QWORD) + offsets.ptonentity
 	nentity_test = getadd(nentity, gg.TYPE_DWORD) == 1099746509
-	gui = getadd(bootloader + offsets.ptogui, gg.TYPE_QWORD)
 
 	if not(nentity_test) then
 		gg.searchNumber(1099746509, gg.TYPE_DWORD)
@@ -1459,8 +1454,6 @@ find_adds()
 
 -- Teleport variables
 coords = find_pos()
-
-candle = coords['x'] - offsets.hcandle
 prop_bckp = nil
 cape_bckp = nil
 
@@ -1529,7 +1522,7 @@ gg.clearResults()
 ------------------------------------
 
 function set_game_speed(speed)
-	setadd(gui + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
+	setadd(nentity + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
 end
 
 function change_map(mp)
@@ -1675,18 +1668,13 @@ end
 function pmagic(arr,id,sil)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
-
-	setadd(tgt,gg.TYPE_DWORD,id,false)
-
-	if id ~= 0 then
-		setadd(tgt + 0x8,gg.TYPE_DWORD,2139095040,false)
-		setadd(tgt + 0x28,gg.TYPE_DWORD,sil,false)
-		setadd(player + offsets.magic + 0xC00, gg.TYPE_DWORD, 12, false)
-	else
-		setadd(tgt + 0x8,gg.TYPE_DWORD,0,false)
-		setadd(tgt + 0x28,gg.TYPE_DWORD,0,false)
-		setadd(player + offsets.magic + 0xC00, gg.TYPE_DWORD, 12, false)
-	end
+	if sil == nil then sil = 360 end
+	gx.editor.set({
+		{address = tgt, 		value = id, 	flags = "D"},
+		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
+		{address = tgt + 0x28, 	value = sil, 	flags = "D"},
+		{address = tgt + 0xC00, value = 20, 	flags = "D"}
+	})
 end
 
 function dospell()
@@ -1965,19 +1953,24 @@ function uiopen(m)
 	end
 end
 
-function get_wl_counts()
+function get_wl_count()
 	local count = 0
+	local count_max = 0
 	local offset = nentity + offsets.wl_pos
 
 	for i = 0, 11 do
-		st = getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD)
-			
+		st = getadd(offset + i * 0x130 + 0xA8, gg.TYPE_DWORD)
+		
 		if st == 1 then
 			count = count + 1
+		elseif st == 8 then
+			count_max = count_max + 1
 		end
 	end
 
-	return tostring(count)
+	count_max = count_max + count
+
+	return tostring(count).."/"..tostring(count_max)
 end
 
 function tpwls()
@@ -1985,11 +1978,11 @@ function tpwls()
 	local ppos = getposit()
 
 	for i = 0, 11 do
-		if getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD) == 1 then
+		if getadd(offset + i * 0x130 + 0xA8, gg.TYPE_DWORD) == 1 then
 			local crds = {
-				x = offset + i * 0x120,
-				y = offset + 0x4 + i * 0x120,
-				z = offset + 0x8 + i * 0x120
+				x = offset + i * 0x130,
+				y = offset + 0x4 + i * 0x130,
+				z = offset + 0x8 + i * 0x130
 			}
 	
 			local crds_values = {
@@ -2007,11 +2000,11 @@ function tptowl()
 	local offset = nentity + offsets.wl_pos
 
 	for i = 0, 11 do
-		if getadd(offset + i * 0x120 + 0x98, gg.TYPE_DWORD) == 1 then
+		if getadd(offset + i * 0x130 + 0xA8, gg.TYPE_DWORD) == 1 then
 			local crds = gg.getValues({
-				{address = offset + i * 0x120, flags = gg.TYPE_FLOAT},
-				{address = offset + i * 0x120 + 0x4, flags = gg.TYPE_FLOAT},
-				{address = offset + i * 0x120 + 0x8, flags = gg.TYPE_FLOAT},
+				{address = offset + i * 0x130, flags = gg.TYPE_FLOAT},
+				{address = offset + i * 0x130 + 0x4, flags = gg.TYPE_FLOAT},
+				{address = offset + i * 0x130 + 0x8, flags = gg.TYPE_FLOAT},
 			})
 
 			setposit(crds[1].value, crds[2].value + 2.0, crds[3].value)
@@ -2027,7 +2020,7 @@ function collect_wls()
 	local count = 0
 
 	for i = 0, 11 do
-		ad = offset + i * 0x120 + 0x98
+		ad = offset + i * 0x130 + 0xA8
 		st = getadd(ad, gg.TYPE_DWORD)
 
 		if st == 1 then
@@ -2391,9 +2384,8 @@ end
 gx.vars["wb"] = 5.0
 
 gx.add_menu({
-	title = {"Map: ", {get_map_name}, " | WLs: ", {tostring, {"{gx:w}"}}, " | WLs in map: ", {get_wl_counts}, {getpositstring}},
+	title = {"Map: ", {get_map_name}, " | WLs in map: ", {get_wl_count}, {getpositstring}},
 	name = "main",
-	pre_f = {uwc},
 	menu = {
 		{"[⬆️] Wall Breach: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
 		{"[⏭] Farms", {gx.open_menu, {"farmmenu"}}},
@@ -2417,7 +2409,7 @@ gx.add_menu({
 		{"[▶️] Semi-AutoCR", {semiautocr}},
 		{"[📍] Teleport to WL", {tptowl}},
 		{"[📍] Teleport WLs to yourself", {tpwls}},
-		{"[📍] Teleport Statues to yourself⚠️", {tpstatues}},
+		-- {"[📍] Teleport Statues to yourself⚠️", {tpstatues}},
 		{"[☀️] Collect Waxes", {collect_waxes}},
 		{"[⭐] Collect WLs", {collect_wls}},
 		{"[🔓] Unlock Elders", {unlockelders}},
@@ -2454,7 +2446,7 @@ gx.add_menu({
 		{"Infinity Fireworks 🎆", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.famount_off, value = 5, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+					{address = player + offsets.famount_off, value = {5, 0}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
@@ -2468,7 +2460,7 @@ gx.add_menu({
 		{"Walk with Instrument 🎹", {
 			gx.editor.switch, {
 				{
-					{address = pbase + offsets.gesture, value = {65793, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+					{address = pbase + offsets.gesture, value = {16843008, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}}
@@ -2501,13 +2493,13 @@ gx.add_menu({
 				}
 			}
 		}},
-		{"| Read Chats", {
-			gx.editor.switch, {
-				{
-					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
-				}
-			}
-		}},
+		-- {"| Read Chats", {
+		-- 	gx.editor.switch, {
+		-- 		{
+		-- 			{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
+		-- 		}
+		-- 	}
+		-- }},
 		{"| Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
