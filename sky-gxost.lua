@@ -1528,7 +1528,7 @@ end
 function change_map(mp)
 	setstr(player + offsets.portal_off, 30, '.' .. mp)
 	set_game_speed(10)
-	pmagic(8, 224110574, 0)
+	pmagic(8, 224110574)
 	gg.sleep(1000)
 	set_game_speed(1)
 	setstr(player + offsets.portal_off, 30, '.Rain_Cave')
