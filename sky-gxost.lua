@@ -1668,7 +1668,7 @@ end
 function pmagic(arr,id,sil)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
-	if sil == nil then sil = 0 end
+	if sil == nil then sil = 360 end
 	gx.editor.set({
 		{address = tgt, 		value = id, 	flags = "D"},
 		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
