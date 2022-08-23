@@ -1120,7 +1120,7 @@ sarray = {}
 -- player code -> 10B00
 
 offsets = {
-	-- chat = 0x5A2500,
+	chat = 0x5BD8A4,
 	ptoemotes = 0xA52768,
 	ptocloset = 0x3DD9F8,
 	ptofnodes = 0x836F68,
@@ -2435,6 +2435,13 @@ gx.add_menu({
 					{address = pbase + offsets.gesture, value = {16843008, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
+		}},
+		{"{gxsign} Read Chats", {
+			gx.editor.switch, {
+				{
+					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
+				}
+			}
 		}}
 	},
 	type = "xback",
@@ -2466,13 +2473,6 @@ gx.add_menu({
 				}
 			}
 		}},
-		-- {"{gxsign} Read Chats", {
-		-- 	gx.editor.switch, {
-		-- 		{
-		-- 			{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
-		-- 		}
-		-- 	}
-		-- }},
 		{"{gxsign} Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
