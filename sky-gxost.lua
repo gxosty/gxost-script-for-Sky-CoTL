@@ -1,8 +1,8 @@
 -- Huge thanks to Kiojeen for his "Magic Teleport" feature.
 -- Check out his "Hellboy" project -> https://github.com/Kiojeen/HellBoy
 
--- local url = "http://192.168.1.107:9999"
--- local response = gg.makeRequest(url.."/gx.lua")
+-- local url = "http://192.168.1.100:9999"
+-- local response = gg.makeRequest(url.."/gx/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
 -- gx = require("gx.gx")
 gx = load(response.content)()
@@ -1127,7 +1127,6 @@ offsets = {
 	ptoplayer = 0x14A36C8,
 	ptopbase = 0x449B18,
 	ptoentity = 0x1794B38,
-	ptogs = 0x1742800,
 	gamespeed_off = -0x15D17BC,
 	gesture = 0x33E0C,
 	-- camera = 0xE42DAC, -- camera yaw
@@ -1137,6 +1136,7 @@ offsets = {
 	pose = 0x46E5A8,
 	closet_menu = 0x15DB988,
 	constel_menu = 0x15DF4A8,
+	fastitem = 0x752544,
 	vwing = 0x470D9C,
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
@@ -1155,12 +1155,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '¦✅¦'
-off = '¦❌¦'
-
-function sign(b)
-	if b then return on else return off end
-end
+on  = '〔🟢〕'
+off = '〔🔴〕'
 
 function getadd(add,flag)
 	local a = {
@@ -2343,8 +2339,6 @@ function semiautocr()
 	if family ~= nil then
 		if gg.alert("Do you want to CR "..get_map_name().."?", "Yes", "Cancel") == 1 then
 			DoPoints(make_points_list(map))
-		else
-			return
 		end
 	else
 		if map == "CandleSpace" then
@@ -2356,28 +2350,7 @@ function semiautocr()
 end
 
 function update()
-	if cosmetic_lock == on then
-		ccape2 = gg.getValues({
-			{address = player + offsets.cape2_off, flags = gg.TYPE_DWORD}
-		})[1].value
-
-		if cur_cape ~= ccape2 then
-			ccape = gg.getValues({
-				{address = player + offsets.cape_off, flags = gg.TYPE_DWORD}
-			})[1].value
-
-			if ccape == ccape2 then
-				wrld = get_map()
-				if cur_world1 ~= wrld then
-					capeset(cur_cape, false)
-					cur_world1 = wrld
-				end
-			else
-				capeset(ccape2, false)
-				cur_cape = ccape2
-			end
-		end
-	end
+	
 end
 
 gx.vars["wb"] = 5.0
@@ -2442,21 +2415,21 @@ gx.add_menu({
 	title = "Fun Stuffs:",
 	name = "funmenu",
 	menu = {
-		{"Infinity Fireworks 🎆", {
+		{"{gxsign} Infinity Fireworks 🎆", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.famount_off, value = {5, 0}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"Fake sleeping 💤", {
+		{"{gxsign} Fake sleeping 💤", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"Walk with Instrument 🎹", {
+		{"{gxsign} Walk with Instrument 🎹", {
 			gx.editor.switch, {
 				{
 					{address = pbase + offsets.gesture, value = {16843008, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
@@ -2464,7 +2437,8 @@ gx.add_menu({
 			}
 		}}
 	},
-	type = "multi_choice_s"
+	type = "xback",
+	menu_repeat = true
 })
 
 gx.add_menu({
@@ -2483,43 +2457,43 @@ gx.add_menu({
 	title = "Select Hacks:",
 	name = "hacksmenu",
 	menu = {
-		{"| Autoburn 🔥", {set_autoburn, {"{gxbool}"}}},
-		{"| Unlock All Cosmetics & Emotes 🔓", {unlock_all, {"{gxbool}"}}},
-		{"| Unlock Friendship Nodes 🔓", {
+		{"{gxsign} Autoburn 🔥", {set_autoburn, {"{gxbool}"}}},
+		{"{gxsign} Unlock All Cosmetics & Emotes 🔓", {unlock_all, {"{gxbool}"}}},
+		{"{gxsign} Unlock Friendship Nodes 🔓", {
 			gx.editor.switch, {
 				{
 					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
-		-- {"| Read Chats", {
+		-- {"{gxsign} Read Chats", {
 		-- 	gx.editor.switch, {
 		-- 		{
 		-- 			{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
 		-- 		}
 		-- 	}
 		-- }},
-		{"| Unlimited Energy ♾️", {
+		{"{gxsign} Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"| Quick Steps ⚡", {
+		{"{gxsign} Quick Steps ⚡", {
 			gx.editor.switch, {quick_results}
 		}},
-		{"| Remove Clouds ☁️", {
+		{"{gxsign} Remove Clouds ☁️", {
 			gx.editor.switch, {clouds_results}
 		}},
-		{"| No Knockdown 🚹", {
+		{"{gxsign} No Prop Recharge ⏳", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+					{address = nentity + offsets.fastitem, value = 0, flags = "F", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"| God Mode", {
+		{"{gxsign} God Mode", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
@@ -2527,7 +2501,8 @@ gx.add_menu({
 			}
 		}},
 	},
-	type = "multi_choice_s"
+	type = "xback",
+	menu_repeat = true
 })
 
 gx.add_menu({
@@ -2540,11 +2515,11 @@ gx.add_menu({
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
-	type = "back"
+	type = "xback"
 })
 
 gx.set_back_text("|⬅️| Back")
-gx.set_signs({[false] = "¦❌¦", [true] = "¦✅¦"})
+gx.set_signs({[false] = off, [true] = on})
 
 function _init()
 	load_settings()
@@ -2560,15 +2535,7 @@ end
 
 _init()
 
-while true do
-	if gg.isVisible(true) then
-		gg.setVisible(false)
-		gx.start()
-	end
-
-	update()
-	gg.sleep(250)
-end
+gx.loop(250, update, false)
 
 --[[
 
