@@ -1,8 +1,7 @@
--- Huge thanks to Kiojeen for his "Magic Teleport" feature.
--- Check out his "Hellboy" project -> https://github.com/Kiojeen/HellBoy
+-- Check out "Hellboy" project -> https://github.com/Kiojeen/HellBoy (BY: Kiojeen)
 
--- local url = "http://192.168.1.107:9999"
--- local response = gg.makeRequest(url.."/gx.lua")
+-- local url = "http://192.168.1.100:9999"
+-- local response = gg.makeRequest(url.."/gx/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
 -- gx = require("gx.gx")
 gx = load(response.content)()
@@ -11,7 +10,7 @@ scriptv = {process ='com.tgc.sky.android', version = 199070}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.2"
+version = "0.1.3"
 
 function vcheck()
 	if gameinfo.packageName ~= scriptv.process then
@@ -1120,23 +1119,25 @@ sarray = {}
 -- player code -> 10B00
 
 offsets = {
-	-- chat = 0x5A2500,
+	chat = 0x5BD8A4,
 	ptoemotes = 0xA52768,
 	ptocloset = 0x3DD9F8,
 	ptofnodes = 0x836F68,
 	ptoplayer = 0x14A36C8,
 	ptopbase = 0x449B18,
 	ptoentity = 0x1794B38,
-	ptogs = 0x1742800,
 	gamespeed_off = -0x15D17BC,
 	gesture = 0x33E0C,
-	-- camera = 0xE42DAC, -- camera yaw
+	camera = 0xE37F7C, -- camera yaw | cam distance: -C |
 	ptonentity = 0x7F942C,
 	wing_charge = 0x470D4C,
 	sleeping = 0x4752A0,
 	pose = 0x46E5A8,
 	closet_menu = 0x15DB988,
 	constel_menu = 0x15DF4A8,
+	ptofastitem = -0xE9C8,
+	fastitem = 0x270,
+	fasthome = 0x46CE90,
 	vwing = 0x470D9C,
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
@@ -1155,12 +1156,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '¦✅¦'
-off = '¦❌¦'
-
-function sign(b)
-	if b then return on else return off end
-end
+on  = '〔🟢)'
+off = '(🔴〕'
 
 function getadd(add,flag)
 	local a = {
@@ -1186,11 +1183,7 @@ function setadd(add,flag,val,bfreeze)
 	if bfreeze then 
 		gg.addListItems(uu)
 	else
-		if indexof(sarray,uu[1].address) == -1 then
-			gg.removeListItems(uu)
-		else
-			gg.addListItems(uu)
-		end
+		gg.removeListItems(uu)
 	end
 end
 
@@ -1351,7 +1344,7 @@ function make_map_list(family)
 	return m
 end
 
-function make_poisitions(map)
+function make_positions(map)
 	local points = {}
 
 	for i, v in ipairs(posits) do
@@ -2089,7 +2082,7 @@ end
 function gotomenu()
 	local map = get_map()
 	
-	ppoints = make_poisitions(map)
+	ppoints = make_positions(map) -- AHHAHAHA HOW COULDN'T I KNOW ABOUT IT?
 	
 	if ppoints ~= nil then
 		mp_names = get_names(ppoints)
@@ -2343,8 +2336,6 @@ function semiautocr()
 	if family ~= nil then
 		if gg.alert("Do you want to CR "..get_map_name().."?", "Yes", "Cancel") == 1 then
 			DoPoints(make_points_list(map))
-		else
-			return
 		end
 	else
 		if map == "CandleSpace" then
@@ -2356,28 +2347,7 @@ function semiautocr()
 end
 
 function update()
-	if cosmetic_lock == on then
-		ccape2 = gg.getValues({
-			{address = player + offsets.cape2_off, flags = gg.TYPE_DWORD}
-		})[1].value
-
-		if cur_cape ~= ccape2 then
-			ccape = gg.getValues({
-				{address = player + offsets.cape_off, flags = gg.TYPE_DWORD}
-			})[1].value
-
-			if ccape == ccape2 then
-				wrld = get_map()
-				if cur_world1 ~= wrld then
-					capeset(cur_cape, false)
-					cur_world1 = wrld
-				end
-			else
-				capeset(ccape2, false)
-				cur_cape = ccape2
-			end
-		end
-	end
+	
 end
 
 gx.vars["wb"] = 5.0
@@ -2442,29 +2412,37 @@ gx.add_menu({
 	title = "Fun Stuffs:",
 	name = "funmenu",
 	menu = {
-		{"Infinity Fireworks 🎆", {
+		{"{gxsign} Infinity Fireworks 🎆", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.famount_off, value = {5, 0}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"Fake sleeping 💤", {
+		{"{gxsign} Fake sleeping 💤", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.sleeping, value = {1, 257}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"Walk with Instrument 🎹", {
+		{"{gxsign} Walk with Instrument 🎹", {
 			gx.editor.switch, {
 				{
 					{address = pbase + offsets.gesture, value = {16843008, 0}, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
+		}},
+		{"{gxsign} Read Chats", {
+			gx.editor.switch, {
+				{
+					{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
+				}
+			}
 		}}
 	},
-	type = "multi_choice_s"
+	type = "xback",
+	menu_repeat = true
 })
 
 gx.add_menu({
@@ -2483,43 +2461,36 @@ gx.add_menu({
 	title = "Select Hacks:",
 	name = "hacksmenu",
 	menu = {
-		{"| Autoburn 🔥", {set_autoburn, {"{gxbool}"}}},
-		{"| Unlock All Cosmetics & Emotes 🔓", {unlock_all, {"{gxbool}"}}},
-		{"| Unlock Friendship Nodes 🔓", {
+		{"{gxsign} Autoburn 🔥", {set_autoburn, {"{gxbool}"}}},
+		{"{gxsign} Unlock All Cosmetics & Emotes 🔓", {unlock_all, {"{gxbool}"}}},
+		{"{gxsign} Unlock Friendship Nodes 🔓", {
 			gx.editor.switch, {
 				{
 					{address = bootloader + offsets.ptofnodes, value = {872415336, 1384120352}, flags = "D", freeze = false, bool = "{gxbool}"}
 				}
 			}
 		}},
-		-- {"| Read Chats", {
-		-- 	gx.editor.switch, {
-		-- 		{
-		-- 			{address = bootloader + offsets.chat, value = {4043309695, 704644064}, flags = "D", freeze = false, bool = "{gxbool}"}
-		-- 		}
-		-- 	}
-		-- }},
-		{"| Unlimited Energy ♾️", {
+		{"{gxsign} Unlimited Energy ♾️", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.wing_charge, value = 14.0, flags = "F", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"| Quick Steps ⚡", {
+		{"{gxsign} Quick Steps ⚡", {
 			gx.editor.switch, {quick_results}
 		}},
-		{"| Remove Clouds ☁️", {
+		{"{gxsign} Remove Clouds ☁️", {
 			gx.editor.switch, {clouds_results}
 		}},
-		{"| No Knockdown 🚹", {
+		{"{gxsign} No Prop Recharge ⏳", {
 			gx.editor.switch, {
 				{
-					{address = player + offsets.pose, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
+					{address = nentity + offsets.fastitem, value = 0, flags = "F", freeze = {false, true}, bool = "{gxbool}"}
 				}
 			}
 		}},
-		{"| God Mode", {
+		{"{gxsign} God Mode", {
 			gx.editor.switch, {
 				{
 					{address = player + offsets.damage, value = 0, flags = "D", freeze = {false, true}, bool = "{gxbool}"}
@@ -2527,7 +2498,8 @@ gx.add_menu({
 			}
 		}},
 	},
-	type = "multi_choice_s"
+	type = "xback",
+	menu_repeat = true
 })
 
 gx.add_menu({
@@ -2540,11 +2512,11 @@ gx.add_menu({
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
-	type = "back"
+	type = "xback"
 })
 
 gx.set_back_text("|⬅️| Back")
-gx.set_signs({[false] = "¦❌¦", [true] = "¦✅¦"})
+gx.set_signs({[false] = off, [true] = on})
 
 function _init()
 	load_settings()
@@ -2560,26 +2532,18 @@ end
 
 _init()
 
-while true do
-	if gg.isVisible(true) then
-		gg.setVisible(false)
-		gx.start()
-	end
-
-	update()
-	gg.sleep(250)
-end
+gx.loop(250, update, false)
 
 --[[
 
-	          ) (`-.                   .-')    .-') _    
-	           ( OO ).                ( OO ). (  OO) )   
-	  ,----.  (_/.  \_)-..-'),-----. (_)---\_)/     '._  
-	 '  .-./-')\  `.'  /( OO'  .-.  '/    _ | |'--...__) 
-	 |  |_( O- )\     /\/   |  | |  |\  :` `. '--.  .--' 
-	 |  | .--, \ \   \ |\_) |  |\|  | '..`''.)   |  |    
-	(|  | '. (_/.'    \_) \ |  | |  |.-._)   \   |  |    
-	 |  '--'  |/  .'.  \   `'  '-'  '\       /   |  |    
-	  `------''--'   '--'    `-----'  `-----'    `--'    
+	          ) (`-.                   .-')    .-') _    62
+	           ( OO ).                ( OO ). (  OO) )   79
+	  ,----.  (_/.  \_)-..-'),-----. (_)---\_)/     '._  3A
+	 '  .-./-')\  `.'  /( OO'  .-.  '/    _ | |'--...__) 20
+	 |  |_( O- )\     /\/   |  | |  |\  :` `. '--.  .--' 67
+	 |  | .--, \ \   \ |\_) |  |\|  | '..`''.)   |  |    78
+	(|  | '. (_/.'    \_) \ |  | |  |.-._)   \   |  |    6F
+	 |  '--'  |/  .'.  \   `'  '-'  '\       /   |  |    73
+	  `------''--'   '--'    `-----'  `-----'    `--'    74
 
 ]]--
