@@ -1152,7 +1152,7 @@ offsets = {
 	constel_menu = 0x15DF4A8,
 	ptofastitem = -0xE9C8,
 	fastitem = 0x270,
-	fasthome = 0x46CE90,
+	-- fasthome = 0x46CE90,
 	vwing = 0x470D9C,
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
@@ -2372,12 +2372,11 @@ function update()
 			gg.setValues({{address = itemtime_pointer.value + offsets.fastitem, value = 0, flags = gg.TYPE_FLOAT}})
 		end
 	end
-	if gx.vars.settings.fasthome then
-		if gg.getValues({{address = player + offsets.fasthome, flags = gg.TYPE_FLOAT}})[1].value > 0.0 then
-			set_game_speed(100)
-			gg.sleep(1000)
-			set_game_speed(1)
-			gg.sleep(1000)
+	if gx.vars.settings.oldstylesit then
+		local value = gg.getValues({{address = player + offsets.pose, flags = gg.TYPE_DWORD}})[1]
+		if value.value == 2 then
+			value.value = 4
+			gg.setValues({value})
 		end
 	end
 end
