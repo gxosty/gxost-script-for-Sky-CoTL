@@ -2374,7 +2374,7 @@ function update()
 	end
 	if gx.vars.settings.fasthome then
 		if gg.getValues({{address = player + offsets.fasthome, flags = gg.TYPE_FLOAT}})[1].value > 0.0 then
-			set_game_speed(10)
+			set_game_speed(100)
 			gg.sleep(1000)
 			set_game_speed(1)
 			gg.sleep(1000)
