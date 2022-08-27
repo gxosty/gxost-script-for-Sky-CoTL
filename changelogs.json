@@ -10,5 +10,8 @@
 	},
 	"0.1.3" : {
 		"content" : "Tiny update v0.1.3:\n- Added \"Read Chat\" again in \"Fun\" menu"
+	},
+	"0.1.4" : {
+		"content" : "Update v0.1.4:\n- Changes to Isle CR points\n- Changes to Trials Cave CR points\n- Changes to Prairie Village CR points\n- Changes to 8 player puzzle CR points\n- Fix in Forest's Brook CR point, where player would fall underground\n- \"No prop recharge\" has been fixed and moved to \"Settings\"\n- Added \"Old Style Sitting\" in \"Settings\" menu."
 	}
 }
