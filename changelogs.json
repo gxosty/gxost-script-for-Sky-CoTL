@@ -7,5 +7,11 @@
 	},
 	"0.1.2" : {
 		"content" : "Hotifx v0.1.2:\n- Updated to the latest version of Sky (199070)\n- Temporarily removed \"Read Chats\"\n- Temporarily Removed \"Teleport Statues to yourself\"\n- New features will Come Soon"
+	},
+	"0.1.3" : {
+		"content" : "Tiny update v0.1.3:\n- Added \"Read Chat\" again in \"Fun\" menu"
+	},
+	"0.1.4" : {
+		"content" : "Update v0.1.4:\n- Changes to Isle CR points\n- Changes to Trials CaveCR points\n- Changes to Prairie Village CR points\n- Changes to 8 player puzzle CR points\n- Fix in Forest's Brook CR point, where player would fall underground\n- \"No prop recharge\" has been fixed and moved to \"Settings\"\n- Added \"Old Style Sitting\" in \"Settings\" menu."
 	}
 }

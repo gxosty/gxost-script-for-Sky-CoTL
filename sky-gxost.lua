@@ -10,7 +10,7 @@ scriptv = {process ='com.tgc.sky.android', version = 199070}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.3"
+version = "0.1.4"
 
 function vcheck()
 	if gameinfo.packageName ~= scriptv.process then
