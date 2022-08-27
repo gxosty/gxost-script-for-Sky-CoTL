@@ -3,6 +3,6 @@
 	"useautoburn" : true,
 	"show_coords" : false,
 	"fastitem" : false,
-	"fasthome" : true,
+	"oldstylesit" : false,
 	"version" : "?"
 }
