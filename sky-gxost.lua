@@ -2488,7 +2488,7 @@ gx.add_menu({
 		{"Use Autoburn in AutoCR: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
 		{"Show player coords in menu title: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"No Prop Recharge {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
-		{"Fast Home {gx:settings.fasthome}", {gx.set_var, {"settings.fasthome", "!{gx:settings.fasthome}"}}},
+		{"Old Style sitting {gx:settings.oldstylesit}", {gx.set_var, {"settings.oldstylesit", "!{gx:settings.oldstylesit}"}}},
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
