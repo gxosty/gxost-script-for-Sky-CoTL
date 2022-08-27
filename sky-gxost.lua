@@ -1171,8 +1171,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '(〔🟢'
-off = '🔴〕)'
+on  = '〔(🟢'
+off = '🔴)〕'
 
 function getadd(add,flag)
 	local a = {
