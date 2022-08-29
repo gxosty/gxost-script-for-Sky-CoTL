@@ -2523,11 +2523,11 @@ gx.add_menu({
 	type = "xback"
 })
 
-gx.add_menu({
-	title = "{gx@langtitle}",
-	name = "langmenu",
-	menu = {}
-})
+-- gx.add_menu({
+-- 	title = "{gx@langtitle}",
+-- 	name = "langmenu",
+-- 	menu = {}
+-- })
 
 gx.set_back_text("|⬅️| Back")
 gx.set_signs({[false] = off, [true] = on})
