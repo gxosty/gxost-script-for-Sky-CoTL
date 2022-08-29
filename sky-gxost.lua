@@ -2114,8 +2114,9 @@ function switch_chat(bool)
 	data = tostring(bootloader + offsets.chat - 0x6F74 + 0x4).."a 1796473471D | 4181778410D;"
 	data = tostring(bootloader + offsets.chat - 0x6F74 + 0x8).."a 1409286208D | 957113193D;"
 	data = tostring(bootloader + offsets.chat - 0x6F74 + 0xC).."a 907015158D | 958390601D"
+	gx.editor.parser.parse(data)
 
-	gx.editor.switch(data, bool)
+	-- gx.editor.switch(data, bool)
 end
 
 function clamp(n, a, b)
