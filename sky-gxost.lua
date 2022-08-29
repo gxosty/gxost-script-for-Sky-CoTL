@@ -1,9 +1,9 @@
 -- Check out "Hellboy" project -> https://github.com/Kiojeen/HellBoy (BY: Kiojeen)
 
 -- local url = "http://192.168.1.100:9999"
--- local response = gg.makeRequest(url.."/gx/gx.lua")
--- local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
-gx = require("gx.gx")
+local response = gg.makeRequest(url.."/gx/gx.lua")
+local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
+-- gx = require("gx.gx")
 -- gx = load(response.content)()
 
 scriptv = {process ='com.tgc.sky.android', version = 199070}
