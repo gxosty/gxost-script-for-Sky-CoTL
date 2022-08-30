@@ -114,6 +114,8 @@ function makelangmenu()
 		table.insert(m, {v, {set_lang, {k}}})
 	end
 
+	gg.alert(tostring(m))
+
 	return m
 end
 
