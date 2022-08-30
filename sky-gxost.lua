@@ -114,8 +114,6 @@ function makelangmenu()
 		table.insert(m, {v, {set_lang, {k}}})
 	end
 
-	gg.alert(tostring(m))
-
 	return m
 end
 
@@ -2565,7 +2563,7 @@ gx.add_menu({
 gx.add_menu({
 	title = "{gx@langtitle}",
 	name = "langmenu",
-	menu = {makelangmenu()},
+	menu = makelangmenu(),
 	type = "choice"
 })
 
