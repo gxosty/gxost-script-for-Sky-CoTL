@@ -1,5 +1,11 @@
 -- Check out "Hellboy" project -> https://github.com/Kiojeen/HellBoy (BY: Kiojeen)
 
+-- I am tired of doing, updating and improving this script because it needs a lot attention and I don't have much time to take care of it
+-- So let me say some words. You can use this script in educational purpose and is allowed to modify it.
+-- This script should always remain free and open source and readable, any kind of obfuscation is not allowed
+-- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
+-- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
+
 -- local url = "http://192.168.1.100:9999"
 -- local response = gg.makeRequest(url.."/gx/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
@@ -39,6 +45,13 @@ function load_settings()
 	if settings == nil then
 		settings = gx.json.decode(defsets)
 		gg.toast("Using default config", true)
+		while true do
+			gx.open_menu("langmenu")
+			if settings["langcode"] ~= nil then
+				break
+			end
+			gg.sleep(250)
+		end
 		save_settings()
 	else
 		check_settings(settings, gx.json.decode(defsets))
@@ -53,7 +66,17 @@ end
 function check_settings(tbl1, tbl2)
 	for k, v in pairs(tbl2) do
 		if tbl1[k] == nil then
-			tbl1[k] = tbl2[k]
+			if k == "langcode" then
+				while true do
+					gx.open_menu("langmenu")
+					if tbl1["langcode"] ~= nil then
+						break
+					end
+					gg.sleep(250)
+				end
+			else
+				tbl1[k] = tbl2[k]
+			end
 		end
 	end
 end
@@ -69,20 +92,35 @@ function changelog()
 	end
 end
 
+function load_langs()
+	local langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/languages.json").content)
+	-- local langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
+	gx.load_languages(langlist)
+end
+
+function set_lang(lang)
+	gx.vars.settings.langcode = lang
+	gx.vars.settings.language = languages[lang]
+	settings.langcode = lang
+	settings.language = languages[lang]
+	gx.set_language(lang)
+end
+
+function makelangmenu()
+	local m = {}
+	gx.vars['languages'] = languages
+
+	for k, v in pairs(languages) do
+		table.insert(m, {v, {set_lang, {k}}})
+	end
+
+	return m
+end
+
 vcheck()
 
 if gg.isVisible(true) then
 	gg.setVisible(false)
-end
-
-function testik(index, bools)
-	local s = ""
-
-	for k, v in ipairs(index) do
-		s = s.."\n"..tostring(v).." = "..tostring(bools[v])
-	end
-
-	gg.toast(s)
 end
 
 propsid = {
@@ -1162,7 +1200,7 @@ offsets = {
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
 	wl_pos = 0x53C744,
-	-- statue_pos = -0x83009C,
+	statue_pos = -0x82446C,
 	magic = 0x47CBC0,
 	props_off = 0x472B24,
 	famount_off = 0x472B24 + 0x15D0,
@@ -1176,8 +1214,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '〔(🟢'
-off = '🔴)〕'
+on  = '🟢'
+off = '⚪'
 
 function getadd(add,flag)
 	local a = {
@@ -2447,8 +2485,8 @@ gx.add_menu({
 	title = {"{gx@currentmap}: ", {get_map_name}},
 	name = "teleportermenu",
 	menu = {
-		{"[⏩] Change Map", {changemapmenu}},
-		{"[🚩] Go to", {gotomenu}}
+		{"[⏩] {gx@changemap}", {changemapmenu}},
+		{"[🚩] {gx@goto}", {gotomenu}}
 	},
 	type = "back"
 })
@@ -2469,7 +2507,7 @@ gx.add_menu({
 	title = "{gx@funstuff}:",
 	name = "funmenu",
 	menu = {
-		{"{gxsign} {gx@Infinityfireworks} 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
+		{"{gxsign} {gx@infinityfireworks} 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
 		{"{gxsign} {gx@fakesleeping} 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(pbase + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}}
@@ -2485,13 +2523,13 @@ gx.add_menu({
 	menu = {
 		{"[🔢] {gx@setwlcount}", {setwl}},
 		{"[🌟] {gx@throwwl}", {throwwl}},
-		{"[💥] {gx@explodewl}", {explodewl}}
+		{"[💥 ] {gx@explodewl}", {explodewl}}
 	},
 	type = "back"
 })
 
 gx.add_menu({
-	title = "Select Hacks:",
+	title = "{gx@selecthacks}:",
 	name = "hacksmenu",
 	menu = {
 		{"{gxsign} {gx@autoburn}", {set_autoburn, {"{gxbool}"}}},
@@ -2507,35 +2545,36 @@ gx.add_menu({
 })
 
 gx.add_menu({
-	title = "Settings:",
+	title = "{gx@settings}:",
 	name = "settingsmenu",
 	menu = {
-		{"Wall breach distance: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
-		{"Use Autoburn in AutoCR: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
-		{"Show player coords in menu title: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
-		{"No Prop Recharge: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
-		{"Old Style sitting: {gx:settings.oldstylesit}", {gx.set_var, {"settings.oldstylesit", "!{gx:settings.oldstylesit}"}}},
-		{"Teleport menu after CR: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
-		{"Language: {gx:settings.language}", {gx.open_menu, {"langmenu"}}}
+		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
+		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
+		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
+		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
+		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
+		{"{gx@language}: {gx:settings.language}", {gx.open_menu, {"langmenu"}}}
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
 	type = "xback"
 })
 
--- gx.add_menu({
--- 	title = "{gx@langtitle}",
--- 	name = "langmenu",
--- 	menu = {}
--- })
+gx.add_menu({
+	title = "{gx@langtitle}",
+	name = "langmenu",
+	menu = {makelangmenu()},
+	type = "choice"
+})
 
 gx.set_back_text("|⬅️| Back")
 gx.set_signs({[false] = off, [true] = on})
 
 function _init()
+	load_langs()
 	load_settings()
 	changelog()
-	_text = "gxost-"..version.." loaded"
+	_text = "[𝖗𝖊]𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"

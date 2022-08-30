@@ -3,6 +3,8 @@
 	"useautoburn" : true,
 	"show_coords" : false,
 	"fastitem" : false,
-	"oldstylesit" : false,
+	"menuaftercr" : true,
+	"langcode" : null,
+	"language" : null,
 	"version" : "?"
 }
