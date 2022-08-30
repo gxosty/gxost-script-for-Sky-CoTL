@@ -12,7 +12,7 @@ local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/
 -- gx = require("gx.gx")
 gx = load(response.content)()
 
-scriptv = {process ='com.tgc.sky.android', version = 199070}
+scriptv = {process = {'com.tgc.sky.android', "git.artdeell.skymodloader"}, version = 199070}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
@@ -23,7 +23,7 @@ languages = {
 }
 
 function vcheck()
-	if gameinfo.packageName ~= scriptv.process then
+	if gameinfo.packageName ~= scriptv.process[1] and gameinfo.packageName ~= scriptv.process[2] then
 		gg.alert('[Error] You have selected wrong process!\nprocess: ' .. gameinfo.packageName)
 		os.exit()
 	end
