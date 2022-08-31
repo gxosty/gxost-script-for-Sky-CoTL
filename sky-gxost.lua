@@ -64,12 +64,13 @@ function load_settings()
 end
 
 function save_settings()
+	gg.alert()
 	gx.save_json_file(config_path, gx.vars.settings)
 end
 
 function check_settings(tbl1, tbl2)
 	for k, v in pairs(tbl2) do
-		if tbl1[k] == nil then
+		if tbl1[k] == "?" then
 			if k == "langcode" then
 				while true do
 					gx.open_menu("langmenu")
