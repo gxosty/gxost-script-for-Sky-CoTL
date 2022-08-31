@@ -108,6 +108,7 @@ function set_lang(lang)
 	if gx.vars.settings == nil then
 		settings['langcode'] = lang
 	else
+		settings['langcode'] = lang
 		gx.vars.settings['langcode'] = lang
 	end
 	gx.set_language(lang)
