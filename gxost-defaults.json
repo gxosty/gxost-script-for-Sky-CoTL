@@ -4,7 +4,7 @@
 	"show_coords" : false,
 	"fastitem" : false,
 	"menuaftercr" : true,
-	"langcode" : null,
+	"langcode" : "?",
 	"ggvisible" : false,
 	"version" : "?"
 }
