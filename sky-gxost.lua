@@ -55,7 +55,7 @@ function load_settings()
 		gx.vars.settings = settings
 		save_settings()
 	else
-		check_settings(settings, gx.json.decode(defsets))
+		settings = check_settings(settings, gx.json.decode(defsets))
 		gx.vars.settings = settings
 		save_settings()
 	end
@@ -83,6 +83,8 @@ function check_settings(tbl1, tbl2)
 			end
 		end
 	end
+
+	return tbl1
 end
 
 function changelog()
