@@ -47,7 +47,7 @@ function load_settings()
 		gg.toast("Using default config", true)
 		while true do
 			gx.open_menu("langmenu")
-			if settings["langcode"] ~= nil then
+			if settings["langcode"] ~= "?" and settings["langcode"] ~= nil then
 				break
 			end
 			gg.sleep(250)
@@ -73,7 +73,7 @@ function check_settings(tbl1, tbl2)
 			if k == "langcode" then
 				while true do
 					gx.open_menu("langmenu")
-					if tbl1["langcode"] ~= nil then
+					if tbl1["langcode"] ~= "?" and tbl1["langcode"] ~= nil then
 						break
 					end
 					gg.sleep(250)
