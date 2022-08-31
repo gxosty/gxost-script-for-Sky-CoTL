@@ -5,6 +5,6 @@
 	"fastitem" : false,
 	"menuaftercr" : true,
 	"langcode" : null,
-	"language" : null,
+	"ggvisible" : false,
 	"version" : "?"
 }
