@@ -57,6 +57,7 @@ function load_settings()
 	else
 		check_settings(settings, gx.json.decode(defsets))
 		gx.vars.settings = settings
+		save_settings()
 	end
 
 	gx.set_language(settings.langcode)
