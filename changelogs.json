@@ -12,6 +12,16 @@
 		"content" : "Tiny update v0.1.3:\n- Added \"Read Chat\" again in \"Fun\" menu"
 	},
 	"0.1.4" : {
-		"content" : "Update v0.1.4:\n- Changes to Isle CR points\n- Changes to Trials CaveCR points\n- Changes to Prairie Village CR points\n- Changes to 8 player puzzle CR points\n- Fix in Forest's Brook CR point, where player would fall underground\n- \"No prop recharge\" has been fixed and moved to \"Settings\"\n- Added \"Old Style Sitting\" in \"Settings\" menu."
+		"content" : "Update v0.1.4:\n- Changes to Isle CR points\n- Changes to Trials Cave CR points\n- Changes to Prairie Village CR points\n- Changes to 8 player puzzle CR points\n- Fix in Forest's Brook CR point, where player would fall underground\n- \"No prop recharge\" has been fixed and moved to \"Settings\"\n- Added \"Old Style Sitting\" in \"Settings\" menu."
+	},
+	"0.1.5" : {
+		"content" : {
+			"en" : {
+				"Update v0.1.5:\n- Aiming script to make it multilangual, only English and Russian are available (not fully supported)\n- Returned \"Teleport statues to yourself\". Currently, only 60 statues will be teleported (yes I know, I am lazy, and you can't change me)\n- \"God Mode\" was merged with \"Unlimited Energy\"\n- Added \"GG visible\" option in settings. Now it is possible to use gg and script at the same time (hope you understood)\n- Removed \"Old Style Sitting\", because no use and buggy\n- Improved \"Read Chats\"\n- A bit menu enhancement"
+			},
+			"ru" : {
+				"Обновление v0.1.5\n- Скрипт направлен на то, чтобы сделать его многоязычным, доступны только английский и русский языки (поддерживается не полностью)\n- Вернулся назад \"Телепорт всех статуй к себе\". На данный момент будет телепортировано всего 60 статуй (да я знаю, я ленивый, и вы не сможете меня изменить)\n- \"Режим Бога\" был объединен с \"Неограниченной энергией\"\n- В настройках добавлена опция \"Показать GG\". Теперь можно использовать gg и скрипт одновременно (надеюсь вы поняли)\n- Убрано \"Сидение по старому стилю\", т.к. оно бесполезно и глючит.\n- Улучшено \"Читать чат\"\n- Небольшое улучшение меню"
+			}
+		}
 	}
 }

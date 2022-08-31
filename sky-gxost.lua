@@ -16,7 +16,7 @@ scriptv = {process = {'com.tgc.sky.android', "git.artdeell.skymodloader"}, versi
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.4"
+version = "0.1.5"
 languages = {
 	{"en", "English"},
 	{"ru", "Russian"}
@@ -41,7 +41,7 @@ end
 function load_settings()
 	local defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/gxost-defaults.json").content
 	-- local defsets = gg.makeRequest(url.."/gxost-defaults.json").content
-	local settings = gx.load_json_file(config_path)
+	settings = gx.load_json_file(config_path)
 	if settings == nil then
 		settings = gx.json.decode(defsets)
 		gg.toast("Using default config", true)
@@ -52,11 +52,14 @@ function load_settings()
 			end
 			gg.sleep(250)
 		end
+		gx.vars.settings = settings
 		save_settings()
 	else
 		check_settings(settings, gx.json.decode(defsets))
+		gx.vars.settings = settings
 	end
-	gx.vars.settings = settings
+
+	gx.set_language(settings.langcode)
 end
 
 function save_settings()
@@ -88,7 +91,7 @@ function changelog()
 		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/changelogs.json").content)[gx.vars.settings.version]['content']
 		-- local chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
 		-- local chtext = gx.json.decode(io.open("changelogs.json"):read("*a"))[gx.vars.settings.version]['content']
-		gg.alert(chtext, "OK")
+		gg.alert(chtext[gx.vars.settings.langcode], "OK")
 	end
 end
 
@@ -99,10 +102,11 @@ function load_langs()
 end
 
 function set_lang(lang)
-	gx.vars.settings.langcode = lang
-	gx.vars.settings.language = languages[lang]
-	settings.langcode = lang
-	settings.language = languages[lang]
+	if gx.vars.settings == nil then
+		settings['langcode'] = lang
+	else
+		gx.vars.settings['langcode'] = lang
+	end
 	gx.set_language(lang)
 end
 
@@ -110,14 +114,19 @@ function makelangmenu()
 	local m = {}
 	gx.vars['languages'] = languages
 
-	for k, v in pairs(languages) do
-		table.insert(m, {v, {set_lang, {k}}})
+	for k, v in ipairs(languages) do
+		table.insert(m, {v[2], {set_lang, {v[1]}}})
 	end
 
 	return m
 end
 
 vcheck()
+
+function switch_gg_visibility()
+	gx.vars.settings.ggvisible = gx.vars.settings.ggvisible == false
+	gx.set_gg_visible(gx.vars.settings.ggvisible)
+end
 
 if gg.isVisible(true) then
 	gg.setVisible(false)
@@ -2535,10 +2544,9 @@ gx.add_menu({
 		{"{gxsign} {gx@autoburn}", {set_autoburn, {"{gxbool}"}}},
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
-		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
-		{"{gxsign} {gx@godmode}", {gx.editor.switch, {tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
 	},
 	type = "xback",
 	menu_repeat = true
@@ -2553,7 +2561,8 @@ gx.add_menu({
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
-		{"{gx@language}: {gx:settings.language}", {gx.open_menu, {"langmenu"}}}
+		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
+		{"{gx@language}", {gx.open_menu, {"langmenu"}}}
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
@@ -2561,7 +2570,7 @@ gx.add_menu({
 })
 
 gx.add_menu({
-	title = "{gx@langtitle}",
+	title = "Language:",
 	name = "langmenu",
 	menu = makelangmenu(),
 	type = "choice"
@@ -2586,7 +2595,7 @@ end
 interval = 100
 _init()
 
-gx.loop(interval, update, false)
+gx.loop(interval, update, gx.vars.settings.ggvisible)
 
 --[[
 
