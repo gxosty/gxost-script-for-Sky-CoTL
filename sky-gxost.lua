@@ -64,7 +64,6 @@ function load_settings()
 end
 
 function save_settings()
-	gg.alert()
 	gx.save_json_file(config_path, gx.vars.settings)
 end
 
