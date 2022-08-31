@@ -1,19 +1,30 @@
 -- Check out "Hellboy" project -> https://github.com/Kiojeen/HellBoy (BY: Kiojeen)
 
+-- I am tired of doing, updating and improving this script because it needs a lot attention and I don't have much time to take care of it
+-- So let me say some words. You can use this script in educational purpose and is allowed to modify it.
+-- This script should always remain free and open source and readable, any kind of obfuscation is not allowed
+-- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
+-- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
+
 -- local url = "http://192.168.1.100:9999"
 -- local response = gg.makeRequest(url.."/gx/gx.lua")
 local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
 -- gx = require("gx.gx")
 gx = load(response.content)()
 
-scriptv = {process ='com.tgc.sky.android', version = 199070}
+scriptv = {process = {'com.tgc.sky.android', "git.artdeell.skymodloader"}, version = 199070}
+git_branch = "main"
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.4"
+version = "0.1.5"
+languages = {
+	{"en", "English"},
+	{"ru", "Russian"}
+}
 
 function vcheck()
-	if gameinfo.packageName ~= scriptv.process then
+	if gameinfo.packageName ~= scriptv.process[1] and gameinfo.packageName ~= scriptv.process[2] then
 		gg.alert('[Error] You have selected wrong process!\nprocess: ' .. gameinfo.packageName)
 		os.exit()
 	end
@@ -29,17 +40,28 @@ end
 
 
 function load_settings()
-	local defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/main/gxost-defaults.json").content
+	local defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content
 	-- local defsets = gg.makeRequest(url.."/gxost-defaults.json").content
-	local settings = gx.load_json_file(config_path)
+	settings = gx.load_json_file(config_path)
 	if settings == nil then
 		settings = gx.json.decode(defsets)
 		gg.toast("Using default config", true)
+		while true do
+			gx.open_menu("langmenu")
+			if settings["langcode"] ~= "?" and settings["langcode"] ~= nil then
+				break
+			end
+			gg.sleep(250)
+		end
+		gx.vars.settings = settings
 		save_settings()
 	else
-		check_settings(settings, gx.json.decode(defsets))
+		settings = check_settings(settings, gx.json.decode(defsets))
+		gx.vars.settings = settings
+		save_settings()
 	end
-	gx.vars.settings = settings
+
+	gx.set_language(settings.langcode)
 end
 
 function save_settings()
@@ -49,36 +71,70 @@ end
 function check_settings(tbl1, tbl2)
 	for k, v in pairs(tbl2) do
 		if tbl1[k] == nil then
-			tbl1[k] = tbl2[k]
+			if k == "langcode" then
+				while true do
+					gx.open_menu("langmenu")
+					if tbl1["langcode"] ~= "?" and tbl1["langcode"] ~= nil then
+						break
+					end
+					gg.sleep(250)
+				end
+			else
+				tbl1[k] = tbl2[k]
+			end
 		end
 	end
+
+	return tbl1
 end
 
 function changelog()
 	if version ~= gx.vars.settings.version then
 		gx.vars.settings.version = version
 		save_settings()
-		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/main/changelogs.json").content)[gx.vars.settings.version]['content']
+		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/changelogs.json").content)[gx.vars.settings.version]['content']
 		-- local chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
 		-- local chtext = gx.json.decode(io.open("changelogs.json"):read("*a"))[gx.vars.settings.version]['content']
-		gg.alert(chtext, "OK")
+		gg.alert(chtext[gx.vars.settings.langcode], "OK")
 	end
+end
+
+function load_langs()
+	local langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
+	-- local langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
+	gx.load_languages(langlist)
+end
+
+function set_lang(lang)
+	if gx.vars.settings == nil then
+		settings['langcode'] = lang
+	else
+		settings['langcode'] = lang
+		gx.vars.settings['langcode'] = lang
+	end
+	gx.set_language(lang)
+end
+
+function makelangmenu()
+	local m = {}
+	gx.vars['languages'] = languages
+
+	for k, v in ipairs(languages) do
+		table.insert(m, {v[2], {set_lang, {v[1]}}})
+	end
+
+	return m
 end
 
 vcheck()
 
-if gg.isVisible(true) then
-	gg.setVisible(false)
+function switch_gg_visibility()
+	gx.vars.settings.ggvisible = gx.vars.settings.ggvisible == false
+	gx.set_gg_visible(gx.vars.settings.ggvisible)
 end
 
-function testik(index, bools)
-	local s = ""
-
-	for k, v in ipairs(index) do
-		s = s.."\n"..tostring(v).." = "..tostring(bools[v])
-	end
-
-	gg.toast(s)
+if gg.isVisible(true) then
+	gg.setVisible(false)
 end
 
 propsid = {
@@ -330,68 +386,69 @@ magicsid = {
 	{'🧸️TGC Anniversary Guitar', 332997197},
 };
 
+-- {map_name}, {map_codename}, {map_wing_lights}
 maps = {
-	{"Home", "CandleSpace"},
-	{"Isle", "Dawn"},
-	{"Trials Cave", "DawnCave"},
-	{"Water Trial", "Dawn_TrialsWater"},
-	{"Earth Trial", "Dawn_TrialsEarth"},
-	{"Air Trial", "Dawn_TrialsAir"},
-	{"Fire Trial", "Dawn_TrialsFire"},
-	{"Prairie Butterfly Field", "Prairie_ButterflyFields"},
-	{"Bird Nest", "Prairie_NestAndKeeper"},
-	{"Sancuary Islands", "Prairie_Island"},
-	{"Prairie Cave", "Prairie_Cave"},
-	{"Prairie Village", "Prairie_Village"},
-	{"8 player puzzle", "DayHubCave"},
-	{"Prairie Temple", "DayEnd"},
-	{"Forest", "Rain"},
-	{"Forest Clearing", "RainForest"},
-	{"Forest Elevated Clearing", "RainShelter"},
-	{"Forest Caves", "Rain_Cave"},
-	{"Forest Boneyard", "RainMid"},
-	{"Forest Temple", "RainEnd"},
-	{"Treehouse", "Rain_BaseCamp"},
-	{"Wind Paths", "Skyway"},
-	{"Valley", "Sunset"},
-	{"Valley Citadel", "Sunset_Citadel"},
-	{"Valley Fly Race", "Sunset_FlyRace"},
-	{"Valley Race", "SunsetRace"},
-	{"Valley Race End", "SunsetEnd"},
-	{"Hermit Valley", "Sunset_YetiPark"},
-	{"Dream Village", "SunsetVillage"},
-	{"Valley Dream Theater", "Sunset_Theater"},
-	{"Valley Music Shop", "SunsetVillage_MusicShop"},
-	{"Valley Colosseum", "SunsetColosseum"},
-	{"Valley Temple", "SunsetEnd2"},
-	{"Wasteland Lobby", "DuskStart"},
-	{"Wasteland", "Dusk"},
-	{"Abyss Area", "Dusk_Triangle"},
-	{"Wasteland Graveyard", "DuskGraveyard"},
-	{"Forgotten Ark", "DuskOasis"},
-	{"Crab Fields", "Dusk_CrabField"},
-	{"Battlefield", "DuskMid"},
-	{"Wasteland Temple", "DuskEnd"},
-	{"Vault", "Night"},
-	{"Vault 2", "Night2"},
-	{"Vault End", "NightEnd"},
-	{"Vault Archive", "NightArchive"},
-	{"Starlight Desert", "NightDesert"},
-	{"Starlight Desert Beach", "NightDesert_Beach"},
-	{"Jar Cave", "Night_JarCave"},
-	{"Infinite Desert", "Night_InfiniteDesert"},
-	{"Planets", "NightDesert_Planets"},
-	{"Office", "TGCOffice"},
-	{"Void of Shattering", "StormEvent_VoidSpace"},
-	{"Days of Mischief", "Event_DaysOfMischief"},
-	{"Nintendo area", "Nintendo_CandleSpace"},
-	{"Eden", "StormStart"},
-	{"Eden mid", "Storm"},
-	{"Eden end", "StormEnd"},
-	{"!!! Orbit !!!", "OrbitMid"},
-	{"!!! Orbit 2 !!!", "OrbitEnd"},
-	{"!!! Heaven !!!", "CandleSpaceEnd"},
-	{"Credits map", "Credits"},
+	{"Home", "CandleSpace", 0},
+	{"Isle", "Dawn", 5},
+	{"Trials Cave", "DawnCave", 0},
+	{"Water Trial", "Dawn_TrialsWater", 1},
+	{"Earth Trial", "Dawn_TrialsEarth", 1},
+	{"Air Trial", "Dawn_TrialsAir", 1},
+	{"Fire Trial", "Dawn_TrialsFire", 1},
+	{"Prairie Butterfly Field", "Prairie_ButterflyFields", 3},
+	{"Bird Nest", "Prairie_NestAndKeeper", 2},
+	{"Sancuary Islands", "Prairie_Island", 8},
+	{"Prairie Cave", "Prairie_Cave", 2},
+	{"Prairie Village", "Prairie_Village", 5},
+	{"8 player puzzle", "DayHubCave", 1},
+	{"Prairie Temple", "DayEnd", 0},
+	{"Forest", "Rain", 2},
+	{"Forest's Brook", "RainForest", 4},
+	{"Forest Elevated Clearing", "RainShelter", 2},
+	{"Forest Caves", "Rain_Cave", 4},
+	{"Forest Boneyard", "RainMid", 3},
+	{"Forest Temple", "RainEnd", 1},
+	{"Treehouse", "Rain_BaseCamp", 2},
+	{"Wind Paths", "Skyway", 1},
+	{"Valley", "Sunset", 3},
+	{"Valley Citadel", "Sunset_Citadel", 2},
+	{"Valley Fly Race", "Sunset_FlyRace", 2},
+	{"Valley Race", "SunsetRace", 1},
+	{"Valley Race End", "SunsetEnd", 1},
+	{"Hermit Valley", "Sunset_YetiPark", 2},
+	{"Dream Village", "SunsetVillage", 3},
+	{"Valley Dream Theater", "Sunset_Theater", 1},
+	{"Valley Music Shop", "SunsetVillage_MusicShop", 0},
+	{"Valley Colosseum", "SunsetColosseum", 1},
+	{"Valley Temple", "SunsetEnd2", 1},
+	{"Wasteland Lobby", "DuskStart", 0},
+	{"Wasteland", "Dusk", 2},
+	{"Abyss Area", "Dusk_Triangle", 2},
+	{"Wasteland Graveyard", "DuskGraveyard", 6},
+	{"Forgotten Ark", "DuskOasis", 2},
+	{"Crab Fields", "Dusk_CrabField", 3},
+	{"Battlefield", "DuskMid", 2},
+	{"Wasteland Temple", "DuskEnd", 1},
+	{"Vault", "Night", 2},
+	{"Vault 2", "Night2", 4},
+	{"Vault End", "NightEnd", 0},
+	{"Vault Archive", "NightArchive", 2},
+	{"Starlight Desert", "NightDesert", 3},
+	{"Starlight Desert Beach", "NightDesert_Beach", 0},
+	{"Jar Cave", "Night_JarCave", 0},
+	{"Infinite Desert", "Night_InfiniteDesert", 0},
+	{"Planets", "NightDesert_Planets", 0},
+	{"Office", "TGCOffice", 0},
+	{"Void of Shattering", "StormEvent_VoidSpace", 0},
+	{"Days of Mischief", "Event_DaysOfMischief", 0},
+	{"Nintendo area", "Nintendo_CandleSpace", 0},
+	{"Eden", "StormStart", 1},
+	{"Eden mid", "Storm", 9},
+	{"Eden end", "StormEnd", 0},
+	{"!!! Orbit !!!", "OrbitMid", 0},
+	{"!!! Orbit 2 !!!", "OrbitEnd", 0},
+	{"!!! Heaven !!!", "CandleSpaceEnd", 0},
+	{"Credits map", "Credits", 0},
 }
 
 -- AUTO CANDLE RUN POINTS --
@@ -1157,7 +1214,7 @@ offsets = {
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
 	wl_pos = 0x53C744,
-	-- statue_pos = -0x83009C,
+	statue_pos = -0x82446C,
 	magic = 0x47CBC0,
 	props_off = 0x472B24,
 	famount_off = 0x472B24 + 0x15D0,
@@ -1171,8 +1228,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '〔(🟢'
-off = '🔴)〕'
+on  = '🟢'
+off = '⚪'
 
 function getadd(add,flag)
 	local a = {
@@ -1290,6 +1347,18 @@ function get_map_name()
 	for i, v in ipairs(maps) do
 		if v[2] == c then
 			return v[1]
+		end
+	end
+
+	return nil
+end
+
+function get_map_max_wl_count()
+	local c = get_map()
+
+	for i, v in ipairs(maps) do
+		if v[2] == c then
+			return v[3]
 		end
 	end
 
@@ -1964,9 +2033,8 @@ function uiopen(m)
 	end
 end
 
-function get_wl_count()
+function get_wl_count(b)
 	local count = 0
-	local count_max = 0
 	local offset = nentity + offsets.wl_pos
 
 	for i = 0, 11 do
@@ -1974,14 +2042,13 @@ function get_wl_count()
 		
 		if st == 1 then
 			count = count + 1
-		elseif st == 8 then
-			count_max = count_max + 1
 		end
 	end
 
-	count_max = count_max + count
-
-	return tostring(count).."/"..tostring(count_max)
+	if b then
+		return tostring(count).."/"..tostring(get_map_max_wl_count())
+	end
+	return count
 end
 
 function tpwls()
@@ -2090,6 +2157,17 @@ function nowind()
 	end
 
 	gg.setValues(xy)
+end
+
+function switch_chat(bool)
+	local data = ""
+	data = tostring(bootloader + offsets.chat).."a 4043309695D | 704644064D;"
+	data = data..tostring(bootloader + offsets.chat - 0x6F74).."a 924841046D | 1384120553D;"
+	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x4).."a 1796473471D | 4181778410D;"
+	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x8).."a 1409286208D | 957113193D;"
+	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0xC).."a 907015158D | 958390601D"
+
+	gx.editor.switch(data, bool)
 end
 
 function clamp(n, a, b)
@@ -2343,7 +2421,7 @@ function DoPoints(points, cr_mode, use_candle)
 		gg.setValues({{address = candle, flags = gg.TYPE_BYTE, value = 0}})
 	end
 
-	if stopped == false then
+	if stopped == false and gx.vars.settings.menuaftercr then
 		PointsEnd(get_map())
 	end
 end
@@ -2381,127 +2459,136 @@ function update()
 	end
 end
 
-gx.vars["wb"] = 5.0
+
 
 gx.add_menu({
-	title = {"Map: ", {get_map_name}, " | WLs in map: ", {get_wl_count}, {getpositstring}},
+	title = {"{gx@map}: ", {get_map_name}, " | {gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
 	name = "main",
 	menu = {
-		{"[⬆️] Wall Breach: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
-		{"[⏭] Farms", {gx.open_menu, {"farmmenu"}}},
-		{"[🌀] Teleporter", {gx.open_menu, {"teleportermenu"}}},
-		{"[🪑] Prop Hack", {propmenu}},
-		{"[💻] Open (UI)", {gx.open_menu, {"uimenu"}}},
-		{"[💫] Spells", {dospell}},
-		{"[🎉] Fun!", {gx.open_menu, {"funmenu"}}},
-		{"[🦋] Wings", {gx.open_menu, {"wingmenu"}}},
-		{"[💨] No Wind Wall", {nowind}},
-		{"[✨] Other Hacks", {gx.open_menu, {"hacksmenu"}}},
-		{"[⚙️] Settings", {gx.open_menu, {"settingsmenu"}}}
+		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
+		{"[⏭] {gx@farm}", {gx.open_menu, {"farmmenu"}}},
+		{"[🌀] {gx@teleporter}", {gx.open_menu, {"teleportermenu"}}},
+		{"[🪑] {gx@prophack}", {propmenu}},
+		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
+		{"[💫] {gx@spells}", {dospell}},
+		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
+		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
+		{"[💨] {gx@nowindwall}", {nowind}},
+		{"[✨] {gx@otherhacks}", {gx.open_menu, {"hacksmenu"}}},
+		{"[⚙️] {gx@settings}", {gx.open_menu, {"settingsmenu"}}}
 	},
 	type = "choice"
 })
 
 gx.add_menu({
-	title = {"Current map: ", {get_map_name}},
+	title = {"{gx@currentmap}: ", {get_map_name}},
 	name = "farmmenu",
 	menu = {
-		{"[▶️] Semi-AutoCR", {semiautocr}},
-		{"[📍] Teleport to WL", {tptowl}},
-		{"[📍] Teleport WLs to yourself", {tpwls}},
-		-- {"[📍] Teleport Statues to yourself⚠️", {tpstatues}},
-		{"[☀️] Collect Waxes", {collect_waxes}},
-		{"[⭐] Collect WLs", {collect_wls}},
-		{"[🔓] Unlock Elders", {unlockelders}},
+		{"[▶️] {gx@semiautocr}", {semiautocr}},
+		{"[📍] {gx@tptowl}", {tptowl}},
+		{"[📍] {gx@tpwltoy}", {tpwls}},
+		{"[📍] {gx@tpsttoy}", {tpstatues}},
+		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
+		{"[⭐] {gx@collectwls}", {collect_wls}},
+		{"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
 	type = "back"
 })
 
 gx.add_menu({
-	title = {"Current map: ", {get_map_name}},
+	title = {"{gx@currentmap}: ", {get_map_name}},
 	name = "teleportermenu",
 	menu = {
-		{"[⏩] Change Map", {changemapmenu}},
-		{"[🚩] Go to", {gotomenu}}
+		{"[⏩] {gx@changemap}", {changemapmenu}},
+		{"[🚩] {gx@goto}", {gotomenu}}
 	},
 	type = "back"
 })
 
 gx.add_menu({
-	title = "Open UI:",
+	title = "{gx@openui2}:",
 	name = "uimenu",
 	f = {uiopen, {"{gxindex}"}},
 	menu = {
-		{"[🧥] Closet"},
-		{"[🌌] Constellation (buggy)"}
+		{"[🧥] {gx@closet}"},
+		{"[🌌] {gx@constellation}"}
 	},
 	use_single_function = true,
 	type = "back"
 })
 
 gx.add_menu({
-	title = "Fun Stuffs:",
+	title = "{gx@funstuff}:",
 	name = "funmenu",
 	menu = {
-		{"{gxsign} Infinity Fireworks 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
-		{"{gxsign} Fake sleeping 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
-		{"{gxsign} Walk with Instrument 🎹", {gx.editor.switch, {tostring(pbase + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
-		{"{gxsign} Read Chats", {gx.editor.switch, {tostring(bootloader + offsets.chat).."a 4043309695D | 704644064D", "{gxbool}"}}}
+		{"{gxsign} {gx@infinityfireworks} 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
+		{"{gxsign} {gx@fakesleeping} 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
+		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(pbase + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}}
 	},
 	type = "xback",
 	menu_repeat = true
 })
 
 gx.add_menu({
-	title = {"WL Count: ", {tostring, {"{gx:w}"}}},
+	title = {"{gx@wlcount}: ", {tostring, {"{gx:w}"}}},
 	name = "wingmenu",
 	pre_f = {uwc},
 	menu = {
-		{"[🔢] Set WL count", {setwl}},
-		{"[🌟] Throw WL⚠️", {throwwl}},
-		{"[💥] Explode WLs⚠️", {explodewl}}
+		{"[🔢] {gx@setwlcount}", {setwl}},
+		{"[🌟] {gx@throwwl}", {throwwl}},
+		{"[💥 ] {gx@explodewl}", {explodewl}}
 	},
 	type = "back"
 })
 
 gx.add_menu({
-	title = "Select Hacks:",
+	title = "{gx@selecthacks}:",
 	name = "hacksmenu",
 	menu = {
-		{"{gxsign} Autoburn 🔥", {set_autoburn, {"{gxbool}"}}},
-		{"{gxsign} Unlock All Cosmetics & Emotes 🔓", {unlock_all, {"{gxbool}"}}},
-		{"{gxsign} Unlock Friendship Nodes 🔓", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
-		{"{gxsign} Unlimited Energy ♾️", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff", "{gxbool}"}}},
-		{"{gxsign} Quick Steps ⚡", {gx.editor.switch, {quick_results}}},
-		{"{gxsign} Remove Clouds ☁️", {gx.editor.switch, {clouds_results}}},
-		{"{gxsign} God Mode", {gx.editor.switch, {tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@autoburn}", {set_autoburn, {"{gxbool}"}}},
+		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
+		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
+		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
 	},
 	type = "xback",
 	menu_repeat = true
 })
 
 gx.add_menu({
-	title = "Settings:",
+	title = "{gx@settings}:",
 	name = "settingsmenu",
 	menu = {
-		{"Wall breach distance: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
-		{"Use Autoburn in AutoCR: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
-		{"Show player coords in menu title: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
-		{"No Prop Recharge {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
-		{"Old Style sitting {gx:settings.oldstylesit}", {gx.set_var, {"settings.oldstylesit", "!{gx:settings.oldstylesit}"}}},
+		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
+		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
+		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
+		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
+		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
+		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
+		{"{gx@language}", {gx.open_menu, {"langmenu"}}}
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
 	type = "xback"
 })
 
+gx.add_menu({
+	title = "Language:",
+	name = "langmenu",
+	menu = makelangmenu(),
+	type = "choice"
+})
+
 gx.set_back_text("|⬅️| Back")
 gx.set_signs({[false] = off, [true] = on})
 
 function _init()
+	load_langs()
 	load_settings()
 	changelog()
-	_text = "gxost-"..version.." loaded"
+	_text = "[𝖗𝖊]𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
@@ -2513,7 +2600,7 @@ end
 interval = 100
 _init()
 
-gx.loop(interval, update, false)
+gx.loop(interval, update, gx.vars.settings.ggvisible)
 
 --[[
 

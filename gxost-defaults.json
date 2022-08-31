@@ -2,5 +2,9 @@
 	"wbdistance" : 5.0,
 	"useautoburn" : true,
 	"show_coords" : false,
+	"fastitem" : false,
+	"menuaftercr" : true,
+	"langcode" : "?",
+	"ggvisible" : false,
 	"version" : "?"
 }
