@@ -6,24 +6,38 @@
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
 -- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
 
--- local url = "http://192.168.1.100:9999"
--- local response = gg.makeRequest(url.."/gx/gx.lua")
-local response = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua")
--- gx = require("gx.gx")
-gx = load(response.content)()
+git_branch = "dev"
+local debug_mode = "off"
+url = "http://192.168.1.100:9999"
 
-scriptv = {process = {'com.tgc.sky.android', "git.artdeell.skymodloader"}, version = 199070}
+if debug_mode ~= "local" then
+	if debug_mode == "lan" then
+		gx = load(gg.makeRequest(url.."/gx/gx.lua").content)()
+		defsets = gg.makeRequest(url.."/gxost-defaults.json").content
+		langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
+	else
+		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
+		defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content
+		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
+	end
+else
+	gx = require("gx.gx")
+end
+
+scriptv = {process = {'com.tgc.sky.android'}, version = 199070}
+
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
 version = "0.1.5"
 languages = {
 	{"en", "English"},
-	{"ru", "Russian"}
+	{"ru", "Russian"},
+	{"es", "Español"}
 }
 
 function vcheck()
-	if gameinfo.packageName ~= scriptv.process[1] and gameinfo.packageName ~= scriptv.process[2] then
+	if gameinfo.packageName ~= scriptv.process[1] then
 		gg.alert('[Error] You have selected wrong process!\nprocess: ' .. gameinfo.packageName)
 		os.exit()
 	end
@@ -39,8 +53,6 @@ end
 
 
 function load_settings()
-	local defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/gxost-defaults.json").content
-	-- local defsets = gg.makeRequest(url.."/gxost-defaults.json").content
 	settings = gx.load_json_file(config_path)
 	if settings == nil then
 		settings = gx.json.decode(defsets)
@@ -91,16 +103,26 @@ function changelog()
 	if version ~= gx.vars.settings.version then
 		gx.vars.settings.version = version
 		save_settings()
-		local chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/changelogs.json").content)[gx.vars.settings.version]['content']
-		-- local chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
-		-- local chtext = gx.json.decode(io.open("changelogs.json"):read("*a"))[gx.vars.settings.version]['content']
-		gg.alert(chtext[gx.vars.settings.langcode], "OK")
+
+		if debug_mode ~= "local" then
+			if debug_mode == "lan" then
+				chtext = gx.json.decode(gg.makeRequest(url.."/changelogs.json").content)[gx.vars.settings.version]['content']
+			else
+				chtext = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/changelogs.json").content)[gx.vars.settings.version]['content']
+			end
+		else
+			chtext = gx.json.decode(io.open("changelogs.json"):read("*a"))[gx.vars.settings.version]['content']
+		end
+
+		if gx.vars.settings.langcode ~= nil then
+			gg.alert(chtext[gx.vars.settings.langcode], "OK")
+		else
+			gg.alert(chtext["en"], "OK")
+		end
 	end
 end
 
 function load_langs()
-	local langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/dev/languages.json").content)
-	-- local langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
 	gx.load_languages(langlist)
 end
 
@@ -1167,27 +1189,112 @@ estatues = {
 	[68] = 0x5a50
 }
 
+imgs = {
+	"Arial32",
+	"Black",
+	"Blue",
+	"BlueD1",
+	"BlueD2",
+	"BlueD3",
+	"BlueL1",
+	"BlueL2",
+	"BlueL3",
+	"Brown",
+	"Clear",
+	"Consolas32",
+	"Cyan",
+	"CyanD1",
+	"CyanD2",
+	"CyanD3",
+	"CyanL1",
+	"CyanL2",
+	"CyanL3",
+	"Gray",
+	"GrayD1",
+	"GrayD2",
+	"GrayL1",
+	"GrayL2",
+	"Green",
+	"GreenD1",
+	"GreenD2",
+	"GreenD3",
+	"GreenGray",
+	"GreenL1",
+	"GreenL2",
+	"GreenL3",
+	"Lime",
+	"LimeD1",
+	"LimeD2",
+	"LimeD3",
+	"LimeL1",
+	"LimeL2",
+	"LimeL3",
+	"Magenta",
+	"MagentaD1",
+	"MagentaD2",
+	"MagentaD3",
+	"MagentaL1",
+	"MagentaL2",
+	"MagentaL3",
+	"Orange",
+	"OrangeD1",
+	"OrangeD2",
+	"OrangeD3",
+	"OrangeL1",
+	"OrangeL2",
+	"OrangeL3",
+	"PaintBlue",
+	"PaintBlueD1",
+	"PaintBlueD2",
+	"PaintBlueD3",
+	"PaintBlueL1",
+	"PaintBlueL2",
+	"PaintBlueL3",
+	"Red",
+	"RedD1",
+	"RedD2",
+	"RedD3",
+	"RedD4",
+	"RedD5",
+	"RedL1",
+	"RedL2",
+	"RedL3",
+	"White",
+	"Wisteria",
+	"Yellow",
+	"YellowD1",
+	"YellowD2",
+	"YellowD3",
+	"YellowL1",
+	"YellowL2",
+	"YellowL3",
+	"TiktokLogo",
+	"UIBar",
+	"UIBGGalaxy",
+	"UIEye",
+	"UIFade",
+	"UILogo",
+	"UiMiscBubbleB",
+	"UiMiscCircle",
+	"UiMiscCircleFade",
+	"UIRing",
+	"UIRingBigMedium",
+	"UIRingBigThick",
+	"UIRingBigThin",
+	"UIRingBigThinner",
+	"UIRingBloom",
+	"UIRingBold",
+	"UISphere",
+	"UISphereFade",
+	"UISpot",
+	"UIStarGlow",
+}
+
 local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
 sarray = {}
-
--- friend_node(each) to node_price offset -2C
--- nentity to darkplants  (511) or (315) or (256)
-
--- PTOPBASE IS 424848 -this is just wing light count of the player (I didn't event know about it before)
-
--- MOV W0, W0			704,644,064 	<- IDK
--- MOV W0, #0x1 		1,384,120,352 	<- IDK
--- ????????????			4,043,309,695 	<- Chats 				h 3B 00 00 14 (7F) 02 00 F1 E8
--- CBZ W8, [PC, #0xC]	872,415,336 	<- Friendship Nodes 	h 08 E1 79 39 (68) 00 00 34 FC
--- LDR W8, [X28,#0x28]	-1,186,976,888 	<- ptoemotes			h 7C 00 00 B4 (88) 2B 40 B9 48
--- CSET W0, WZR, NE 	446,629,856 	<- Cosmetics 			h 1F 00 00 F1 (E0) 07 9F 1A FD 7B 41 A9
-
--- players -> 12800
--- player wing charge -> 5BC8
--- player code -> 10B00
 
 offsets = {
 	chat = 0x5BD8A4,
@@ -1219,6 +1326,7 @@ offsets = {
 	famount_off = 0x472B24 + 0x15D0,
 	plants = 0xD05A08,
 	portal_off = 0x4239D8,
+	portal2_off = -0x58A0,
 	vcandles = 0x56DAC4,
 	vcandles_dist = 0x70,
 	curmap_off = -0x168472C,
@@ -1229,6 +1337,16 @@ gg.setRanges(gg.REGION_C_ALLOC)
 
 on  = '🟢'
 off = '⚪'
+
+function imgsmenu()
+	local img_ind = gg.choice(imgs, nil, "Choose Image")
+
+	if img_ind == nil then
+		return
+	end
+
+	gx.vars.settings.tpimg = imgs[img_ind]
+end
 
 function getadd(add,flag)
 	local a = {
@@ -1610,7 +1728,55 @@ function change_map(mp)
 	pmagic(8, 0)
 end
 
-function changemapmenu()
+function change_map2(mp)
+	-- AHHAHHAHA I like this method moree
+	gg.toast(mp)
+	gg.setVisible(false)
+	xr1 = 0
+	xr2 = 0
+	xar = {}
+	xtr = nentity + offsets.portal2_off
+	
+	setstr(xtr + 0x39D0,24,mp)
+	setstr(xtr + 0x39F0,28, gx.vars.settings.tpimg)
+	
+	xar = {
+		{address = xtr - 0x34, flags=gg.TYPE_QWORD,value=49},
+		{address = xtr - 0x30, flags=gg.TYPE_DWORD,value=0},
+
+		{address = xtr - 0x6C, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x6C+0x4, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x6C+0xC, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x80, flags=gg.TYPE_FLOAT,value=80000}, -- 0x80
+		{address = xtr - 0x80+0x4, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x80+0xC, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x94, flags=gg.TYPE_FLOAT,value=80000}, -- 0x94
+		{address = xtr - 0x94+0x4, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0x94+0xC, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0xA8, flags=gg.TYPE_FLOAT,value=80000}, -- 0xA8
+		{address = xtr - 0xA8+0x4, flags=gg.TYPE_FLOAT,value=80000},
+		{address = xtr - 0xA8+0xC, flags=gg.TYPE_FLOAT,value=80000},
+
+		{address = xtr - 0x2C, flags=gg.TYPE_DWORD,value=28},
+		{address = xtr - 0x24, flags=gg.TYPE_QWORD,value=xtr + 0x39D0},
+		{address = xtr + 0x39AC, flags = gg.TYPE_DWORD,value = #mp},
+		{address = xtr - 0x1C, flags=gg.TYPE_DWORD,value=49},
+		{address = xtr - 0x18, flags=gg.TYPE_DWORD,value=0},
+		{address = xtr - 0x14, flags=gg.TYPE_DWORD,value=10},
+		{address = xtr - 0x10, flags=gg.TYPE_DWORD,value=0},
+		{address = xtr - 0xC, flags=gg.TYPE_QWORD,value=xtr+0x39F0},
+		{address = xtr, flags = gg.TYPE_DWORD,value = 666}
+	}
+
+	gg.setValues(xar)
+	
+	set_game_speed(10)
+	gg.sleep(1000)
+	set_game_speed(1)
+end
+
+function changemapmenu(method)
+	if method == nil then method = 1 end
 	local mps = {}
 	for i, v in ipairs(maps) do
 		table.insert(mps, v[1])
@@ -1620,9 +1786,9 @@ function changemapmenu()
 	
 	if mpchoice == nil then
 		return
-	else
-		change_map(maps[mpchoice][2])
 	end
+
+	({change_map, change_map2})[method](maps[mpchoice][2]) -- Lua syntax is..... strange..
 end
 
 function getposit()
@@ -2498,7 +2664,8 @@ gx.add_menu({
 	title = {"{gx@currentmap}: ", {get_map_name}},
 	name = "teleportermenu",
 	menu = {
-		{"[⏩] {gx@changemap}", {changemapmenu}},
+		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
+		{"[⏩] {gx@changemap} (II)", {changemapmenu}},
 		{"[🚩] {gx@goto}", {gotomenu}}
 	},
 	type = "back"
@@ -2566,6 +2733,7 @@ gx.add_menu({
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
+		{"Change Teleport Image", {imgsmenu}},
 		{"{gx@language}", {gx.open_menu, {"langmenu"}}}
 	},
 	post_f = {save_settings},
