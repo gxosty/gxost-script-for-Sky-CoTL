@@ -2665,7 +2665,7 @@ gx.add_menu({
 	name = "teleportermenu",
 	menu = {
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
-		{"[⏩] {gx@changemap} (II)", {changemapmenu}},
+		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
 		{"[🚩] {gx@goto}", {gotomenu}}
 	},
 	type = "back"
