@@ -24,7 +24,7 @@ else
 	gx = require("gx.gx")
 end
 
-scriptv = {process = {'com.tgc.sky.android'}, version = 199070}
+scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
