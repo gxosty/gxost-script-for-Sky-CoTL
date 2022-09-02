@@ -29,7 +29,7 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.5"
+version = "0.1.6"
 languages = {
 	{"en", "English"},
 	{"ru", "Russian"},
