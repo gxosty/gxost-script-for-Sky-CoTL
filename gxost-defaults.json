@@ -7,5 +7,6 @@
 	"langcode" : "?",
 	"ggvisible" : false,
 	"tpimg" : "White",
+	"alwayscandle" : true,
 	"version" : "?"
 }

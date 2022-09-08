@@ -25,5 +25,11 @@
 			"en" : "Hotfix v0.1.6:\n- Updated (kinda) to the latest version of Sky\n- Added \"Español\" language (Not Full)\n- Added New \"Change Map\" method (in case the first won't work)",
 			"ru" : "Исправление v0.1.6:\n- Обновлено (вроде бы) до последней версии Sky\n- Добавлен язык \"Español\" (неполный)\n- Добавлен новый метод \"Сменить Карту\" (в случае, если первый не работает)"
 		}
+	},
+	"0.1.6a" : {
+		"content" : {
+			"en" : "Tiny Update v0.1.6a\n- Added \"Chinese\" language\n- Added \"Player Brightness\" in \"Fun\" menu (Client sided only, I guess...)\n- Added new feature \"Always candles\". Allow you to keep candle on your hand and not disappear. Customizable for AutoCR in Settings\n- Added ability to AutoCR \"Wind Paths\" (Thanks to SKYSHOT)\n\n Full language compatibility will come in update v0.1.7",
+			"ru" : "Маленькое Обновление v0.1.6a\n- Добавлен \"Китайский\" язык\n- Добавлена \"Яркость игрока\" в меню \"Веселье\" (только на стороне клиента, наверное...)\n- Добавлена новая функция \"Держать на руке свечу\". Позволяет держать свечу на руке всегда. Можно настроить в Настройках для Фарма\n- Добавлена возможность Фарма \"Wind Paths\" (спасибо SKYSHOT-у)\n\nПолная языковая совместимость появится в обновлении v0.1.7"
+		}
 	}
 }
