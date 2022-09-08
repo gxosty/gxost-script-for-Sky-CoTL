@@ -6,22 +6,24 @@
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
 -- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
 
-git_branch = "dev"
+git_branch = "lan"
 local debug_mode = "off"
 url = "http://192.168.1.100:9999"
 
 if debug_mode ~= "local" then
 	if debug_mode == "lan" then
 		gx = load(gg.makeRequest(url.."/gx/gx.lua").content)()
-		defsets = gg.makeRequest(url.."/gxost-defaults.json").content
+		defsets = gx.json.decode(gg.makeRequest(url.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
 	else
 		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
-		defsets = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content
+		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
 else
 	gx = require("gx.gx")
+	defsets = gx.load_json_file("gxost-defaults.json")
+	langlist = gx.load_json_file("languages.json")
 end
 
 scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
@@ -31,9 +33,10 @@ a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
 version = "0.1.6"
 languages = {
-	{"en", "English"},
-	{"ru", "Russian"},
-	{"es", "Español"}
+	{"en", "[🇺🇸] English"},
+	{"ru", "[🇷🇺] Русский"},
+	{"es", "[🇪🇸] Español"},
+	{"zh", "[🇨🇳] 中国人"}
 }
 
 function vcheck()
@@ -51,11 +54,10 @@ function vcheck()
 	end
 end
 
-
 function load_settings()
 	settings = gx.load_json_file(config_path)
 	if settings == nil then
-		settings = gx.json.decode(defsets)
+		settings = defsets
 		gg.toast("Using default config", true)
 		while true do
 			gx.open_menu("langmenu")
@@ -67,12 +69,13 @@ function load_settings()
 		gx.vars.settings = settings
 		save_settings()
 	else
-		settings = check_settings(settings, gx.json.decode(defsets))
+		settings = check_settings(settings, defsets)
 		gx.vars.settings = settings
 		save_settings()
 	end
 
 	gx.set_language(settings.langcode)
+	gx.set_fallback_language("en")
 end
 
 function save_settings()
@@ -227,56 +230,6 @@ propsid = {
 	{-699266735,     "Pillow Xmas"},
 	{2035109393,     "Nothing"},
 	{0,              "Disable ❌"}
-}
-
-capesid = {
-	{0,          "Invisible Cape"},
-	{2219120716, "Office Cape 🏢"},
-	{320385458,  "Nintendo Red Cape ➕"},
-	{496297629,  "Nintendo Blue Cape ➖"},
-	{-2049687945, "Brown Cape"},
-	{-4950150, "Yellow Cape"},
-	{2038455273, "Red Cape"},
-	{-1127259402, "Yellow Cape"},
-	{1611389272, "Cyan Cape"},
-	{1676224199, "Blue Cape"},
-	{-828166640, "Purple Cape"},
-	{-285876082, "Pink Cape"},
-	{-12114331, "Black Cape"},
-	{-1652732985, "White Cape"},
-	{-1837707668, "Yellow 2 Cape"},
-	{1589470987, "Red 2 Cape"},
-	{928886892, "Green 2 Cape"},
-	{-630540182, "Cyan 2 Cape"},
-	{-293636075, "Blue 2 Cape"},
-	{-47832514, "Purple 2 Cape"},
-	{-26990752, "Pink 2 Cape"},
-	{1428342959, "Black 2 Cape"},
-	{338030121, "White 2 Cape"},
-	{1433045050, "Xmas Red Cape"},
-	{511060416, "Bloom Cape"},
-	{1462163205, "Rainbow Cape"},
-	{-990430825, "Mischief Leaf Cape"},
-	{1205733815, "Dismiss Cape"},
-	{1516488095, "Petal Cape"},
-	{1740444614, "Wise Grandparent Cape"},
-	{-292359195, "Playfight Cape"},
-	{2091421626, "Butterfly Cape"},
-	{798847432, "Sunbather Cape"},
-	{-120474176, "Water Prophet Cape"},
-	{-1268890918, "Dreams Red Cape"},
-	{1685782319, "LPrince Tattered Cape"},
-	{-1079163088, "LPrince Lamplighter Cape"},
-	{11666630, "Abyss Canoneer Cape"},
-	{-998976810, "Performance Ult Cape"},
-	{1176158362, "Joker Cape"},
-	{1502325329, "Rocksta Cape"},
-	{716837019, "Dark Plant Cape"},
-	{-788868796, "Krill Cape"},
-	{-119428063, "Baby Manta Cape"},
-	{1867773122, "Jellyfish Cape"},
-	{549718023, "Shattering Manta Ult Cape"},
-	{0,          "Disable ❌"}
 }
 
 magicsid = {
@@ -1244,12 +1197,6 @@ imgs = {
 	"OrangeL2",
 	"OrangeL3",
 	"PaintBlue",
-	"PaintBlueD1",
-	"PaintBlueD2",
-	"PaintBlueD3",
-	"PaintBlueL1",
-	"PaintBlueL2",
-	"PaintBlueL3",
 	"Red",
 	"RedD1",
 	"RedD2",
@@ -1307,6 +1254,8 @@ offsets = {
 	gamespeed_off = -0x15D17BC,
 	gesture = 0x33E0C,
 	camera = 0xE37F7C, -- camera yaw | cam distance: -C |
+	plbright = 0x470DF4,
+	hcandle = 0x601C20,
 	ptonentity = 0x7F942C,
 	wing_charge = 0x470D4C,
 	sleeping = 0x4752A0,
@@ -1315,7 +1264,6 @@ offsets = {
 	constel_menu = 0x15DF4A8,
 	ptofastitem = -0xE9C8,
 	fastitem = 0x270,
-	-- fasthome = 0x46CE90,
 	vwing = 0x470D9C,
 	damage = 0x470E08,
 	pos_off = 0x46B1C0,
@@ -2482,8 +2430,9 @@ function ChangeMapDoPoints(map)
 	DoPoints(make_points_list(map))
 end
 
-function DoPoints(points, cr_mode, use_candle)
+function DoPoints(points, cr_mode)
 	local b = false
+	local c = false
 	local stopped = false
 
 	if gx.vars.settings.useautoburn then
@@ -2493,8 +2442,12 @@ function DoPoints(points, cr_mode, use_candle)
 		end
 	end
 
-	if use_candle == nil then
-		use_candle = false
+	if gx.vars.settings.alwayscandle then
+		if gx.editor.get(tostring(nentity + offsets.hcandle).."a B")[1].value == 1 then
+			c = true
+		else
+			gx.editor.set(tostring(nentity + offsets.hcandle).."a 1Bf")
+		end
 	end
 
 	if cr_mode == nil then
@@ -2514,10 +2467,6 @@ function DoPoints(points, cr_mode, use_candle)
 
 	while i <= #points do
 		gg.toast(tostring(i).." / "..#points)
-	
-		if use_candle then
-			gg.setValues({{address = candle, flags = gg.TYPE_BYTE, value = 1}})
-		end
 	
 		gg.setValues({
 			{address = coords['x'], flags = gg.TYPE_FLOAT, value = points[i].x},
@@ -2582,8 +2531,10 @@ function DoPoints(points, cr_mode, use_candle)
 		set_autoburn(false)
 	end
 
-	if use_candle then
-		gg.setValues({{address = candle, flags = gg.TYPE_BYTE, value = 0}})
+	if gx.vars.settings.alwayscandle then
+		if not(c) then
+			gx.editor.set(tostring(nentity + offsets.hcandle).."a 0B")
+		end
 	end
 
 	if stopped == false and gx.vars.settings.menuaftercr then
@@ -2690,7 +2641,8 @@ gx.add_menu({
 		{"{gxsign} {gx@infinityfireworks} 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
 		{"{gxsign} {gx@fakesleeping} 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(pbase + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
-		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}}
+		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
+		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
 	},
 	type = "xback",
 	menu_repeat = true
@@ -2716,6 +2668,7 @@ gx.add_menu({
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
 		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
 	},
@@ -2732,8 +2685,9 @@ gx.add_menu({
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
+		{"{gx@usecandle}: {gx:settings.alwayscandle}", {gx.set_var, {"settings.alwayscandle", "!{gx:settings.alwayscandle}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
-		{"Change Teleport Image", {imgsmenu}},
+		{"{gx@chtpimg}", {imgsmenu}},
 		{"{gx@language}", {gx.open_menu, {"langmenu"}}}
 	},
 	post_f = {save_settings},
