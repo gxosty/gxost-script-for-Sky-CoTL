@@ -31,7 +31,7 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.6"
+version = "0.1.6a"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -118,7 +118,11 @@ function changelog()
 		end
 
 		if gx.vars.settings.langcode ~= nil then
-			gg.alert(chtext[gx.vars.settings.langcode], "OK")
+			if chtext[gx.vars.settings.langcode] ~= nil then
+				gg.alert(chtext[gx.vars.settings.langcode], "OK")
+			else
+				gg.alert(chtext["en"], "OK")
+			end
 		else
 			gg.alert(chtext["en"], "OK")
 		end
@@ -654,6 +658,32 @@ crpoints = {
 	{family = "Forest", name = "Forest Cave", map = "Rain_Cave", x = -198.94265747070312, y = 132.4135284423828, z = -53.605995178222656},
 	{family = "Forest", name = "Forest Cave", map = "Rain_Cave", x = -197.06515502929688, y = 132.30697631835938, z = -38.47796630859375},
 	{family = "Forest", name = "Forest Cave", map = "Rain_Cave", x = -194.4332733154297, y = 133.1480255126953, z = -34.38194274902344},
+
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 267.375, y = 332.397, z = -120.680},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 245.839, y = 367.077, z = -146.051},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 273.569, y = 327.611, z = -147.687},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 214.075, y = 315.975, z = -138.198},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 128.261, y = 350.825, z = -92.770},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 123.525, y = 359.633, z = -107.510},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 131.597, y = 338.295, z = -134.803},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 155.135, y = 323.591, z = -135.115},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 325.290, y = 367.150, z = -220.587},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 335.149, y = 378.517, z = -214.938},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 334.877, y = 364.053, z = -201.844},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 361.274, y = 345.678, z = -165.847},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 364.935, y = 341.374, z = -151.819},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 348.168, y = 332.000, z = -155.022},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 381.581, y = 331.177, z = 337.934},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 429.284, y = 320.199, z = 522.703},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 441.475, y = 319.398, z = 525.655},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 276.076, y = 335.565, z = 581.796},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 340.497, y = 343.845, z = 690.805},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 235.033, y = 352.802, z = 389.350},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 202.937, y = 306.784, z = 374.721},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 97.293, y = 312.991, z = 219.590},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 164.531, y = 319.641, z = 631.402},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 75.486, y = 346.333, z = 419.043},
+	{family = "Forest", name = "Wind Paths", map = "Skyway", x = 280.755, y = 380.818, z = 11.880},
 
 	{family = "Valley", name = "Valley Ice Rink", map = "Sunset", x = -118.13933563232422, y = 259.9162292480469, z = -102.75277709960938},
 	{family = "Valley", name = "Valley Ice Rink", map = "Sunset", x = -110.9569091796875, y = 267.4853210449219, z = -126.63736724853516},
