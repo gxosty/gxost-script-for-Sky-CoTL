@@ -6,7 +6,7 @@
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
 -- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
 
-git_branch = "lan"
+git_branch = "dev"
 local debug_mode = "off"
 url = "http://192.168.1.100:9999"
 
