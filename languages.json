@@ -52,7 +52,9 @@
 		"usecandle" : "Use Candle in AutoCR",
 		"ggvisible" : "GG visible",
 		"chtpimg" : "Change Teleport Image",
-		"language" : "Language"
+		"language" : "Language",
+		"oonaki" : "Super Shout",
+		"SpamCape" : "Auto Change Cape"
 	},
 	"ru" : {
 		"map" : "Карта",
@@ -107,7 +109,9 @@
 		"usecandle" : "Использовать свечу во время фарма",
 		"ggvisible" : "Показать GG",
 		"chtpimg" : "Сменить Рисунок Телепорта",
-		"language" : "Язык"
+		"language" : "Язык",
+		"oonaki" : "Супер крик.",
+		"SpamCape" : "Автозамена Мыс"
 	},
 	"es" : {
 		"map" : "Map",
@@ -162,7 +166,9 @@
 		"usecandle" : "Use Candle in AutoCR",
 		"ggvisible" : "{GG visible}",
 		"chtpimg" : "{Change Teleport Image}",
-		"language" : "Idioma"
+		"language" : "Idioma",
+		"oonaki" : "Super Shout.",
+		"SpamCape" : "Auto Change Cape"
 	},
 	"zh" : {
 		"map" : "地图",
@@ -217,7 +223,9 @@
 		"usecandle" : "Use Candle in AutoCR",
 		"ggvisible" : "GG 看得见",
 		"chtpimg" : "传送图像",
-		"language" : "语"
+		"language" : "语",
+		"oonaki" : "超级喊话。",
+		"SpamCape" : "自动换Cape。"
 	},
 	"ja" : {
 		"map" : "マップ",
@@ -272,6 +280,8 @@
 		"usecandle" : "キャンマラのときにキャンドルを使う？",
 		"ggvisible" : "GGを表示する?",
 		"chtpimg" : "テレポートの画像？を変更",
-		"language" : "言語"
+		"language" : "言語",
+		"oonaki" : "連続で大泣き",
+		"SpamCape" : "ケープをずっと変える奴(3周して止まんなかったらscriptを停止してください!!)"
 	},
 }
