@@ -418,7 +418,7 @@ maps = {
 	{"Planets", "NightDesert_Planets", 0},
 	{"Office", "TGCOffice", 0},
 	{"Void of Shattering", "StormEvent_VoidSpace", 0},
-	{"Days of Mischief", "Event_DaysOfMischief", 0},
+	{"Days of Mischief (2021 Halloween)", "Event_DaysOfMischief", 0},
 	{"Nintendo area", "Nintendo_CandleSpace", 0},
 	{"Eden", "StormStart", 1},
 	{"Eden mid", "Storm", 9},
