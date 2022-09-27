@@ -8,6 +8,7 @@
 
 git_branch = "main"
 local debug_mode = "on"
+-- Not Working lan
 url = "http://192.168.1.100:9999"
 
 if debug_mode ~= "local" then
