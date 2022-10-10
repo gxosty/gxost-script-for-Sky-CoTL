@@ -31,5 +31,11 @@
 			"en" : "Tiny Update v0.1.6a\n- Added \"Chinese\" language\n- Added \"Player Brightness\" in \"Fun\" menu (Client sided only, I guess...)\n- Added new feature \"Always candles\". Allow you to keep candle on your hand and not disappear. Customizable for AutoCR in Settings\n- Added ability to AutoCR \"Wind Paths\" (Thanks to SKYSHOT)\n\n Full language compatibility will come in update v0.1.7",
 			"ru" : "Маленькое Обновление v0.1.6a\n- Добавлен \"Китайский\" язык\n- Добавлена \"Яркость игрока\" в меню \"Веселье\" (только на стороне клиента, наверное...)\n- Добавлена новая функция \"Держать на руке свечу\". Позволяет держать свечу на руке всегда. Можно настроить в Настройках для Фарма\n- Добавлена возможность Фарма \"Wind Paths\" (спасибо SKYSHOT-у)\n\nПолная языковая совместимость появится в обновлении v0.1.7"
 		}
+	},
+	"0.1.7" : {
+		"content" : {
+			"en" : "Update: v0.1.7 (lazyyyyy)\n- Added new \"Camera\" section.\n- A bit language engine updates\n- Full language compatibility will come in the future (not in this update, sor...)\n\nSo guys, as you all know, many players are using Canvas now and I think it is making a huge progress in sphere of hacking Sky. Mods started being created and will be more in the future. Not sure if GG is still used and even if it is used, not as before. I might probably stop developing this script. BTW anyone can learn from the script, offsets are free to use. Enjoy :)",
+			"ru" : "Обновление v0.1.7 (леньььььь)\n- Добавлен новый меню \"Камера\"\n- Улучшение языкового движка\n- Полная поддержка языков будет доступен в будущем"
+		}
 	}
 }
