@@ -6,9 +6,13 @@
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
 -- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
 
+gg.toast('Loading Config.')
+gg.toast('Loading Config..')
+
 git_branch = "main"
 local debug_mode = "on"
--- Not Working lan
+gg.toast('Loading Config...')
+gg.sleep(1000)
 url = "http://192.168.1.100:9999"
 
 if debug_mode ~= "local" then
@@ -19,7 +23,7 @@ if debug_mode ~= "local" then
 	else
 		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
-		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
+		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/yutodadil/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
 else
 	gx = require("gx.gx")
@@ -27,12 +31,17 @@ else
 	langlist = gx.load_json_file("languages.json")
 end
 
+gg.toast('Config Loaded!!')
+gg.sleep(200)
+
 scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
 version = "0.1.6a"
+gg.toast('This Script Version is ' .. version)
+gg.sleep(2000)
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -173,11 +182,11 @@ propsid = {
 	{-644161211,     "Transparent Umbrella ☂️"},
 	{992885953,      "Table 🪑"},
 	{-1444947170,    "XMas table 🪑"},
-	{3580839943,     "Swing ❤"},
+	{3580839943,     "Swing ❄1�71ￄ1�77"},
 	{3779226149,     "Campfire 🔥"},
 	{-1030495085,    "Seesaw 🔨"},
 	{3634028466,     "Flower Umbrella🌂"},
-	{2574095143,     "Umbrella ☔"},
+	{2574095143,     "Umbrella ☄1�71ￄ1�77"},
 	{3269660804,     "Guitar 🎻"},
 	{2352004821,     "Ukulele 🎸"},
 	{-1382855507,    "Pipa 🎸"},
@@ -202,12 +211,12 @@ propsid = {
 	{1079120316,     "Bookcase 📚"},
 	{1994487329,     "Hammock 🛌"},
 	{-1762117817,    "Torch 🔥"},
-	{-1513173800,    "Tent ⛺"},
+	{-1513173800,    "Tent ⛄1�71ￄ1�77"},
 	{-2094712299,    "lantern? 🏮"},
 	{1661108877,     "Hoop 🏀"},
 	{3314486409,     "Tea table 🍵"},
 	{351343999,      'Rose 🌹'},
-	{638976622,      'Star lamp ⭐'},
+	{638976622,      'Star lamp ⭄1�71ￄ1�77'},
 	{-1723880395,    'Fox 🦊'},
 	{-777390487,     'Electro guitar 🎸'},
 	{-994414187,     'Birthday flag 🎉'},
@@ -217,10 +226,10 @@ propsid = {
 	{-1352265746,    'Wooden Double chair 🪑🪑'},
 	{1192794220,     'Pipe'},
 	{9427151,        'Beach ball 🏐'},
-	{-1192675672,    'Beach bed 🛏️'},
+	{-1192675672,    'Beach bed 🛏︄1�71ￄ1�77'},
 	{1793801900,     'Stone fire 🔥'},
 	{313507026,      'Mini stone fire 🔥'},
-	{90660037,       "Aviary Flag 🏳️‍"},
+	{90660037,       "Aviary Flag 🏳️�1ￄ1�77ￄ1�71ￄ1�77"},
 	{3772092866,     "Nightbook 🔹"},
 	{3454884039,     "Light Ball 🏐"},
 	{946432484,      "Island Umbrella ⛱️"}, 
@@ -235,7 +244,7 @@ propsid = {
 	{1931354705,     "Snow Globe 🔮"},
 	{-699266735,     "Pillow Xmas"},
 	{2035109393,     "Nothing"},
-	{0,              "Disable ❌"}
+	{0,              "Disable ❄1�71ￄ1�77"}
 }
 
 magicsid = {
@@ -364,6 +373,9 @@ magicsid = {
 	{'👗️Wisteria Cape 2022', -1244390069},
 	{'👑️Rainbow Double Flower', -1014212311},
 	{'🧸️TGC Anniversary Guitar', 332997197},
+	{'🆕Marshmallow Bonfire', -1129614302},
+	{'🆕Summer Tent', 1414743743},
+	{'🆕Krill hat', -705906186},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -420,7 +432,7 @@ maps = {
 	{"Planets", "NightDesert_Planets", 0},
 	{"Office", "TGCOffice", 0},
 	{"Void of Shattering", "StormEvent_VoidSpace", 1},
-	{"Days of Mischief (2021 Halloween)", "Event_DaysOfMischief", 0},
+	{"Days of Mischief　(2021 Halloween)", "Event_DaysOfMischief", 0},
 	{"Nintendo area", "Nintendo_CandleSpace", 0},
 	{"Eden", "StormStart", 1},
 	{"Eden mid", "Storm", 9},
@@ -1450,6 +1462,18 @@ function get_map_name()
 	return nil
 end
 
+function get_map_codename()
+	local c = get_map()
+
+	for i, v in ipairs(maps) do
+		if v[2] == c then
+			return v[2]
+		end
+	end
+
+	return nil
+end
+
 function get_map_max_wl_count()
 	local c = get_map()
 
@@ -1685,7 +1709,7 @@ quick_results[1].value = {'3.5', '200'}
 quick_results[1].bool = "{gxbool}"
 gg.clearResults()
 
--- ここから大泣きです。 --
+-- ここから大泣きです�1ￄ1�77ￄ1�71ￄ1�77 --
 
 function oonaki()
     gg.setVisible(false)
@@ -3240,7 +3264,7 @@ function getAction()
 	actionmenu = gg.choice({
 		"⬅️ Previous",
 		"➡️ Next",
-		"❌ EndHere!",
+		"❄1�71ￄ1�77 EndHere!",
 		"🛑 ABORT!"
 	}, nil, "Choose action:")
 
@@ -3503,7 +3527,7 @@ end
 
 
 gx.add_menu({
-	title = {"{gx@map}: ", {get_map_name}, " | {gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
+	title = {"{gx@map}: ", {get_map_name}, " \n ", "{gx@mapcn}: ", {get_map_codename} \n", | {gx@wlsinmap}: ", {get_wl_count, {true}}, "\n", {getpositstring}},
 	name = "main",
 	menu = {
 		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
@@ -3529,7 +3553,7 @@ gx.add_menu({
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
+		{"[⭐] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
 		{"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
