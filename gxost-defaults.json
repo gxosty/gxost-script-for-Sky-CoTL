@@ -8,5 +8,6 @@
 	"ggvisible" : false,
 	"tpimg" : "White",
 	"alwayscandle" : true,
+	"cam_speed" : 5.0,
 	"version" : "?"
 }
