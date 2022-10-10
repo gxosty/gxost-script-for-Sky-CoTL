@@ -3527,7 +3527,7 @@ end
 
 
 gx.add_menu({
-	title = {"{gx@map}: ", {get_map_name}, " \n ", "{gx@mapcn}: ", {get_map_codename} \n", | {gx@wlsinmap}: ", {get_wl_count, {true}}, "\n", {getpositstring}},
+	title = {"{gx@map}: ", {get_map_name}, " \n ", "{gx@mapcn}: ", {get_map_codename} "\n", "{gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
 	name = "main",
 	menu = {
 		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
