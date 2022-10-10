@@ -1,6 +1,7 @@
 {
 	"en" : {
 		"map" : "Map",
+		"mapcn" : "Map Name in Code",
 		"wlsinmap" : "WLs in map",
 		"wallbreach" : "Wall Breach",
 		"farm" : "Farm",
@@ -58,6 +59,7 @@
 	},
 	"ru" : {
 		"map" : "Карта",
+		"mapcn" : "Название карты в коде",
 		"wlsinmap" : "КС на карте",
 		"wallbreach" : "ТП вперёд",
 		"farm" : "Фарм",
@@ -115,6 +117,7 @@
 	},
 	"es" : {
 		"map" : "Map",
+		"mapcn" : "Nombre del mapa en código",
 		"wlsinmap" : "Alas en el mapa",
 		"wallbreach" : "Rompemuro",
 		"farm" : "Farm",
@@ -172,6 +175,7 @@
 	},
 	"zh" : {
 		"map" : "地图",
+		"mapcn" : "代码中的地图名称",
 		"wlsinmap" : "地图中的翅膀数",
 		"wallbreach" : "穿墙",
 		"farm" : "自动",
@@ -229,6 +233,7 @@
 	},
 	"ja" : {
 		"map" : "マップ",
+		"mapcn" : "コード上でのMap名",
 		"wlsinmap" : "マップの光の子",
 		"wallbreach" : "ウォールブリーチ？",
 		"farm" : "自動化",
