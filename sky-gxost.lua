@@ -376,6 +376,7 @@ magicsid = {
 	{'🆕Marshmallow Bonfire', -1129614302},
 	{'🆕Summer Tent', 1414743743},
 	{'🆕Krill hat', -705906186},
+	{'🆕Krillcat curse', 847145578},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
