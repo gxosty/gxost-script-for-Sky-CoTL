@@ -417,6 +417,7 @@ maps = {
 	{"Wasteland Lobby", "DuskStart", 0},
 	{"Wasteland", "Dusk", 2},
 	{"Abyss Area", "Dusk_Triangle", 2},
+	{"Abyss Area End", "Dusk_TriangleEnd", 2},
 	{"Wasteland Graveyard", "DuskGraveyard", 6},
 	{"Forgotten Ark", "DuskOasis", 2},
 	{"Crab Fields", "Dusk_CrabField", 3},
@@ -433,7 +434,7 @@ maps = {
 	{"Planets", "NightDesert_Planets", 0},
 	{"Office", "TGCOffice", 0},
 	{"Void of Shattering", "StormEvent_VoidSpace", 1},
-	{"Days of Mischief　(2021 Halloween)", "Event_DaysOfMischief", 0},
+	{"Days of Mischief (Halloween maps)", "Event_DaysOfMischief", 0},
 	{"Nintendo area", "Nintendo_CandleSpace", 0},
 	{"Eden", "StormStart", 1},
 	{"Eden mid", "Storm", 9},
@@ -442,6 +443,7 @@ maps = {
 	{"!!! Orbit 2 !!!", "OrbitEnd", 0},
 	{"!!! Heaven !!!", "CandleSpaceEnd", 0},
 	{"Credits map", "Credits", 0},
+	{"Unknown Map (Probably Bugged)", "WorldEmpty", 0}
 }
 
 -- AUTO CANDLE RUN POINTS --
