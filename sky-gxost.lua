@@ -443,7 +443,12 @@ maps = {
 	{"!!! Orbit 2 !!!", "OrbitEnd", 0},
 	{"!!! Heaven !!!", "CandleSpaceEnd", 0},
 	{"Credits map", "Credits", 0},
-	{"Unknown Map (Probably Bugged)", "WorldEmpty", 0}
+	{"Unknown Map (Probably Bugged)", "WorldEmpty", 0},
+	{"🆕️ Aurora collaboration", "AP16Runaway", 0},
+	{"🆕️ Aurora collaboration2", "AP16SoftInside", 0},
+	{"🆕️ Aurora collaboration3", "AP16TheSeed", 0},
+	{"🆕️ Aurora collaboration4", "AP16EyesOfChild", 0},
+	{"🆕️ Aurora collaboration5", "AP16VoidSpace", 0}
 }
 
 -- AUTO CANDLE RUN POINTS --
