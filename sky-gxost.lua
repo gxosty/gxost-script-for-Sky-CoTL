@@ -1284,7 +1284,7 @@ sarray = {}
 
 offsets = {
 	chat = 0x5BBF84, --
-	ptoemotes = 0xA52768, --??
+	-- ptoemotes = 0xA52768, ||
 	ptocloset = 0x3DCB44, --
 	ptofnodes = 0x821420, --
 	ptoplayer = 0x14B4238, --
@@ -1311,7 +1311,7 @@ offsets = {
 	damage = 0x45C22C + 0xBC, --
 	pos_off = 0x457020, --
 	wl_pos = 0x4B4F34, --
-	statue_pos = -0x82446C,
+	statue_pos = -0x83053C, --
 	magic = 0x4681B0, --
 	props_off = 0x45E104, --
 	famount_off = 0x45E104 + 0x15D0, --
@@ -1965,15 +1965,16 @@ function explodewl()
 	end
 end
 
-function pmagic(arr,id,sil)
+function pmagic(arr, id, sil, freeze)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
 	if sil == nil then sil = 360 end
+	if freeze == nil then freeze = false end
 	gx.editor.set({
-		{address = tgt, 		value = id, 	flags = "D"},
-		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
-		{address = tgt + 0x28, 	value = sil, 	flags = "D"},
-		{address = player + offsets.magic + 0xC00, value = 20, 	flags = "D"}
+		{address = tgt, 							value = id, flags = "D"},
+		{address = tgt + 0xC, 						value = -1, flags = "D"},
+		{address = tgt + 0x28, 						value = sil,flags = "D", freeze = freeze},
+		{address = player + offsets.magic + 0xCBC, 	value = 20, flags = "D"}
 	})
 end
 
@@ -2107,11 +2108,11 @@ end
 function unlock_all(b)
 	if b then
 		cosmetics = on
-		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
+		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 1384120352, false)
 	else
 		cosmetics = off
-		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
+		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 446629856, false)
 	end
 end
@@ -2760,6 +2761,7 @@ gx.add_menu({
 		{"{gxsign} {gx@fakesleeping} 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
+		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
 	},
 	type = "xback",
