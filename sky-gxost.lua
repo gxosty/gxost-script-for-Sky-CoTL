@@ -6,14 +6,11 @@
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
 -- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
 
-gg.toast('Loading Config.')
-gg.toast('Loading Config..')
+-- Türkmenler barmaý?? XD
 
 git_branch = "main"
-local debug_mode = "on"
-gg.toast('Loading Config...')
-gg.sleep(1000)
-url = "http://192.168.1.100:9999"
+local debug_mode = "off"
+url = "http://192.168.1.108:9999"
 
 if debug_mode ~= "local" then
 	if debug_mode == "lan" then
@@ -30,9 +27,6 @@ else
 	defsets = gx.load_json_file("gxost-defaults.json")
 	langlist = gx.load_json_file("languages.json")
 end
-
-gg.toast('Config Loaded!!')
-gg.sleep(200)
 
 scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 
@@ -380,7 +374,7 @@ magicsid = {
 	{'🆕Marshmallow Bonfire', -1129614302},
 	{'🆕Summer Tent', 1414743743},
 	{'🆕Krill hat', -705906186},
-	{'🆕Krillcat curse', 383062578},
+	{'🆕Krillcat', 847145578},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -421,7 +415,7 @@ maps = {
 	{"Wasteland Lobby", "DuskStart", 0},
 	{"Wasteland", "Dusk", 2},
 	{"Abyss Area", "Dusk_Triangle", 2},
-	{"Abyss Area End", "Dusk_TriangleEnd", 2},
+	{"Abyss Area End", "Dusk_TriangleEnd", 0},
 	{"Wasteland Graveyard", "DuskGraveyard", 6},
 	{"Forgotten Ark", "DuskOasis", 2},
 	{"Crab Fields", "Dusk_CrabField", 3},
@@ -438,7 +432,7 @@ maps = {
 	{"Planets", "NightDesert_Planets", 0},
 	{"Office", "TGCOffice", 0},
 	{"Void of Shattering", "StormEvent_VoidSpace", 1},
-	{"Days of Mischief (Halloween maps)", "Event_DaysOfMischief", 0},
+	{"Days of Mischief", "Event_DaysOfMischief", 0},
 	{"Nintendo area", "Nintendo_CandleSpace", 0},
 	{"Eden", "StormStart", 1},
 	{"Eden mid", "Storm", 9},
@@ -447,7 +441,6 @@ maps = {
 	{"!!! Orbit 2 !!!", "OrbitEnd", 0},
 	{"!!! Heaven !!!", "CandleSpaceEnd", 0},
 	{"Credits map", "Credits", 0},
-	{"Unknown Map (Probably Bugged)", "WorldEmpty", 0},
 	{"🆕️ Aurora collaboration", "AP16Runaway", 0},
 	{"🆕️ Aurora collaboration2", "AP16SoftInside", 0},
 	{"🆕️ Aurora collaboration3", "AP16TheSeed", 0},
@@ -1488,18 +1481,6 @@ function get_map_name()
 	return nil
 end
 
-function get_map_codename()
-	local c = get_map()
-
-	for i, v in ipairs(maps) do
-		if v[2] == c then
-			return v[2]
-		end
-	end
-
-	return nil
-end
-
 function get_map_max_wl_count()
 	local c = get_map()
 
@@ -1712,9 +1693,6 @@ quick = off
 quick_results = nil
 clouds = off
 clouds_results = nil
-oonaki = off
-oonaki_resulfs = nil
-capespam = off
 cosmetic_lock = off
 chat_read = off
 noknock = off
@@ -1734,6 +1712,18 @@ quick_results = gg.getResults(1)
 quick_results[1].value = {'3.5', '200'}
 quick_results[1].bool = "{gxbool}"
 gg.clearResults()
+
+------------------------------------
+
+------ Finding Value of Clouds -----
+
+gg.searchNumber('1D;0.15000000596F;0.5F;1.0F;0.40000000596F::25', gg.TYPE_DWORD)
+clouds_results = gg.getResults(1)
+clouds_results[1].value = {1, 0}
+clouds_results[1].bool = "{gxbool}"
+gg.clearResults()
+
+------------------------------------
 
 -- ここから大泣きです�1ￄ1�77ￄ1�71ￄ1�77 --
 
@@ -2625,18 +2615,6 @@ function capespam()
    end
 end
 
-------------------------------------
-
------- Finding Value of Clouds -----
-
-gg.searchNumber('1D;0.15000000596F;0.5F;1.0F;0.40000000596F::25', gg.TYPE_DWORD)
-clouds_results = gg.getResults(1)
-clouds_results[1].value = {1, 0}
-clouds_results[1].bool = "{gxbool}"
-gg.clearResults()
-
-------------------------------------
-
 function set_game_speed(speed)
 	setadd(nentity + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
 end
@@ -3332,7 +3310,7 @@ function getAction()
 	actionmenu = gg.choice({
 		"⬅️ Previous",
 		"➡️ Next",
-		"❄1�71ￄ1�77 EndHere!",
+		"❌ EndHere!",
 		"🛑 ABORT!"
 	}, nil, "Choose action:")
 
@@ -3593,7 +3571,7 @@ end
 
 
 gx.add_menu({
-	title = {"{gx@map}: ", {get_map_name}, " \n", "{gx@mapcn}: ", {get_map_codename}, "\n", "{gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
+	title = {"{gx@map}: ", {get_map_name}, " | {gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
 	name = "main",
 	menu = {
 		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
@@ -3619,12 +3597,10 @@ gx.add_menu({
 		{"[▶️] {gx@semiautocr}", {semiautocr}},
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
-		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		{"[⭐] {gx@collectwaxes}", {collect_waxes}},
 		-- {"[📍] {gx@tpsttoy}", {tpstatues}},
 		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		{"[🔓] {gx@unlockelders}", {unlockelders}},
+		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
 	type = "back"
 })
@@ -3716,14 +3692,12 @@ gx.add_menu({
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
-		{"[⏩] {gx@oonaki} ", {oonaki}},
-		{"[⏩] {gx@SpamCape} ", {capespam}},
+		{"[gxsign] {gx@oonaki} ", {oonaki}},
+		{"[gxsign] {gx@SpamCape} ", {capespam}}
 	},
 	type = "xback",
 	menu_repeat = true
 })
-
-
 
 gx.add_menu({
 	title = "{gx@settings}:",
