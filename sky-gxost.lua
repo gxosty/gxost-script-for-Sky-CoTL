@@ -3619,10 +3619,12 @@ gx.add_menu({
 		{"[▶️] {gx@semiautocr}", {semiautocr}},
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
+		{"[📍] {gx@tpsttoy}", {tpstatues}},
+		{"[⭐] {gx@collectwaxes}", {collect_waxes}},
 		-- {"[📍] {gx@tpsttoy}", {tpstatues}},
 		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
+		{"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
 	type = "back"
 })
