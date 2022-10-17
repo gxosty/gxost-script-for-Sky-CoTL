@@ -74,6 +74,8 @@
 		"language" : "Language",
 		"yes" : "Yes",
 		"no" : "No",
+		"oonaki" : "Super Shout",
+		"SpamCape" : "Auto Change Cape",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
@@ -216,7 +218,9 @@
 		"usecandle" : "Использовать свечу во время фарма",
 		"ggvisible" : "Показать GG",
 		"chtpimg" : "Сменить Рисунок Телепорта",
-		"language" : "Язык"
+		"language" : "Язык",
+		"oonaki" : "Супер крик.",
+		"SpamCape" : "Автозамена Мыс"
 	},
 	"es" : {
 		"map" : "Map",
@@ -271,7 +275,9 @@
 		"usecandle" : "Use Candle in AutoCR",
 		"ggvisible" : "{GG visible}",
 		"chtpimg" : "{Change Teleport Image}",
-		"language" : "Idioma"
+		"language" : "Idioma",
+		"oonaki" : "Super Shout.",
+		"SpamCape" : "Auto Change Cape"
 	},
 	"zh" : {
 		"map" : "地图",
@@ -327,6 +333,8 @@
 		"ggvisible" : "GG 看得见",
 		"chtpimg" : "传送图像",
 		"language" : "语",
+		"oonaki" : "超级喊话。",
+		"SpamCape" : "自动换Cape。"
 	},
 	"ja" : {
 		"map" : "マップ",
@@ -403,6 +411,8 @@
 		"language" : "言語",
 		"yes" : "はい",
 		"no" : "いいえ",
+		"oonaki" : "連続で大泣き",
+		"SpamCape" : "ケープをずっと変える奴(3周して止まんなかったらscriptを停止してください!!)",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
