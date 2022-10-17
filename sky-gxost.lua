@@ -33,7 +33,7 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7"
+version = "0.1.7a"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -2696,10 +2696,10 @@ gx.add_menu({
 		{"[▶️] {gx@semiautocr}", {semiautocr}},
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
-		{"[📍] {gx@tpsttoy}", {tpstatues}},
+		-- {"[📍] {gx@tpsttoy}", {tpstatues}},
 		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		{"[🔓] {gx@unlockelders}", {unlockelders}},
+		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
 	type = "back"
 })
@@ -2829,7 +2829,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "[𝖗𝖊]𝕴𝖓𝖈.gx-"..version.." loaded"
+	_text = "{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
