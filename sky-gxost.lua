@@ -34,14 +34,12 @@ end
 gg.toast('Config Loaded!!')
 gg.sleep(200)
 
-scriptv = {process = {'com.tgc.sky.android'}, version = 199846}
+scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.6a"
-gg.toast('This Script Version is ' .. version)
-gg.sleep(2000)
+version = "0.1.7a"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -85,8 +83,9 @@ function load_settings()
 		save_settings()
 	end
 
-	gx.set_language(settings.langcode)
 	gx.set_fallback_language("en")
+	gx.set_language(settings.langcode)
+	set_lang(settings.langcode)
 end
 
 function save_settings()
@@ -152,6 +151,11 @@ function set_lang(lang)
 		gx.vars.settings['langcode'] = lang
 	end
 	gx.set_language(lang)
+	update_lang_for_lists()
+end
+
+function update_lang_for_lists()
+	propsid = gx.text.translate(_propsid)
 end
 
 function makelangmenu()
@@ -176,75 +180,75 @@ if gg.isVisible(true) then
 	gg.setVisible(false)
 end
 
-propsid = {
-	{57978849,       "Windmill🏅"},
-	{-677716449,     "Purple Umbrella ☂️"},
-	{-644161211,     "Transparent Umbrella ☂️"},
-	{992885953,      "Table 🪑"},
-	{-1444947170,    "XMas table 🪑"},
-	{3580839943,     "Swing ❄1�71ￄ1�77"},
-	{3779226149,     "Campfire 🔥"},
-	{-1030495085,    "Seesaw 🔨"},
-	{3634028466,     "Flower Umbrella🌂"},
-	{2574095143,     "Umbrella ☄1�71ￄ1�77"},
-	{3269660804,     "Guitar 🎻"},
-	{2352004821,     "Ukulele 🎸"},
-	{-1382855507,    "Pipa 🎸"},
-	{396560731,      "Flute 🎶"},
-	{1237767078,     "Pan flute 🎺"},
-	{1889256860,     "Piano 🎹"},
-	{3275797515,     "White Piano 🎼"},
-	{3280753494,     "Firework 🎆"},
-	{4246711693,     "Shaker 🔔"},
-	{4196378836,     "Daser"},
-	{900914909,      "Steel Drum 🥁"},
-	{3499881140,     "Big Quilt Drum 🥁"},
-	{2003040587,     "Small Double Drum 🥁"},
-	{2671000446,     "Harp"},
-	{399957901,      "Xiloph"},
-	{1064146256,     "Circle Harp"},
-	{1021011859,     "Horn 📯"},
-	{2186944737,     "Ancestor Jar "},
-	{2041015009,     "Ancestral Kettle"},
-	{776794517,      "Ancestral Spear 🔱"},
-	{-896102798,     "Cornet 🎷"},
-	{1079120316,     "Bookcase 📚"},
-	{1994487329,     "Hammock 🛌"},
-	{-1762117817,    "Torch 🔥"},
-	{-1513173800,    "Tent ⛄1�71ￄ1�77"},
-	{-2094712299,    "lantern? 🏮"},
-	{1661108877,     "Hoop 🏀"},
-	{3314486409,     "Tea table 🍵"},
-	{351343999,      'Rose 🌹'},
-	{638976622,      'Star lamp ⭄1�71ￄ1�77'},
-	{-1723880395,    'Fox 🦊'},
-	{-777390487,     'Electro guitar 🎸'},
-	{-994414187,     'Birthday flag 🎉'},
-	{1638144370,     'Ocarina 🎵'},
-	{-2058340788,    'Yellow Umbrella ☂️'},
-	{1480625729,     'Double Chair 🪑🪑'},
-	{-1352265746,    'Wooden Double chair 🪑🪑'},
-	{1192794220,     'Pipe'},
-	{9427151,        'Beach ball 🏐'},
-	{-1192675672,    'Beach bed 🛏︄1�71ￄ1�77'},
-	{1793801900,     'Stone fire 🔥'},
-	{313507026,      'Mini stone fire 🔥'},
-	{90660037,       "Aviary Flag 🏳️�1ￄ1�77ￄ1�71ￄ1�77"},
-	{3772092866,     "Nightbook 🔹"},
-	{3454884039,     "Light Ball 🏐"},
-	{946432484,      "Island Umbrella ⛱️"}, 
-	{660764419,      "Brazier 3 🔥"},
-	{2546683657,     "Pumpkin 🎃"},
-	{2657110838,     "Kalimba 🎹"},
-	{1279207725,     "Mischief Table 🎃🪑"},
-	{-481291981,     "Spell Water 🌊"},
-	{1713655968,     "Spell Earth ⛰️"},
-	{-283779536,     "Spell Wind 💨"},
-	{2026179880,     "Spell Fire 🔥"},
-	{1931354705,     "Snow Globe 🔮"},
-	{-699266735,     "Pillow Xmas"},
-	{2035109393,     "Nothing"},
-	{0,              "Disable ❄1�71ￄ1�77"}
+_propsid = {
+	{57978849,       '{gx@prop.windmil}'},
+	{-677716449,     '{gx@prop.purpleumbrella}'},
+	{-644161211,     '{gx@prop.transparentumbrella}'},
+	{992885953,      '{gx@prop.table}'},
+	{-1444947170,    '{gx@prop.xmastable}'},
+	{3580839943,     '{gx@prop.swing}'},
+	{3779226149,     '{gx@prop.campfire}'},
+	{-1030495085,    '{gx@prop.seesaw}'},
+	{3634028466,     '{gx@prop.flowerumbrell}'},
+	{2574095143,     '{gx@prop.umbrella}'},
+	{3269660804,     '{gx@prop.guitar}'},
+	{2352004821,     '{gx@prop.ukulele}'},
+	{-1382855507,    '{gx@prop.pipa}'},
+	{396560731,      '{gx@prop.flute}'},
+	{1237767078,     '{gx@prop.panflute}'},
+	{1889256860,     '{gx@prop.piano}'},
+	{3275797515,     '{gx@prop.whitepiano}'},
+	{3280753494,     '{gx@prop.firework}'},
+	{4246711693,     '{gx@prop.shaker}'},
+	{4196378836,     '{gx@prop.daser}'},
+	{900914909,      '{gx@prop.steeldrum}'},
+	{3499881140,     '{gx@prop.bigquiltdrum}'},
+	{2003040587,     '{gx@prop.smalldoubledrum}'},
+	{2671000446,     '{gx@prop.harp}'},
+	{399957901,      '{gx@prop.xiloph}'},
+	{1064146256,     '{gx@prop.circleharp}'},
+	{1021011859,     '{gx@prop.horn}'},
+	{2186944737,     '{gx@prop.ancestorjar}'},
+	{2041015009,     '{gx@prop.ancestralkettle}'},
+	{776794517,      '{gx@prop.ancestralspear}'},
+	{-896102798,     '{gx@prop.cornet}'},
+	{1079120316,     '{gx@prop.bookcase}'},
+	{1994487329,     '{gx@prop.hammock}'},
+	{-1762117817,    '{gx@prop.torch}'},
+	{-1513173800,    '{gx@prop.tent}'},
+	{-2094712299,    '{gx@prop.lantern}'},
+	{1661108877,     '{gx@prop.hoop}'},
+	{3314486409,     '{gx@prop.teatable}'},
+	{351343999,      '{gx@prop.rose}'},
+	{638976622,      '{gx@prop.starlamp}'},
+	{-1723880395,    '{gx@prop.fox}'},
+	{-777390487,     '{gx@prop.electroguitar}'},
+	{-994414187,     '{gx@prop.birthdayflag}'},
+	{1638144370,     '{gx@prop.ocarina}'},
+	{-2058340788,    '{gx@prop.yellowumbrella}'},
+	{1480625729,     '{gx@prop.doublechair}'},
+	{-1352265746,    '{gx@prop.woodendoublechair}'},
+	{1192794220,     '{gx@prop.pipe}'},
+	{9427151,        '{gx@prop.beachball}'},
+	{-1192675672,    '{gx@prop.beachbed}'},
+	{1793801900,     '{gx@prop.stonefire}'},
+	{313507026,      '{gx@prop.ministonefire}'},
+	{90660037,       '{gx@prop.aviaryflag}'},
+	{3772092866,     '{gx@prop.nightbook}'},
+	{3454884039,     '{gx@prop.lightball}'},
+	{946432484,      '{gx@prop.islandumbrella}'},
+	{660764419,      '{gx@prop.brazier3}'},
+	{2546683657,     '{gx@prop.pumpkin}'},
+	{2657110838,     '{gx@prop.kalimba}'},
+	{1279207725,     '{gx@prop.mischieftable}'},
+	{-481291981,     '{gx@prop.spellwater}'},
+	{1713655968,     '{gx@prop.spellearth}'},
+	{-283779536,     '{gx@prop.spellwind}'},
+	{2026179880,     '{gx@prop.spellfire}'},
+	{1931354705,     '{gx@prop.snowglobe}'},
+	{-699266735,     '{gx@prop.pillowxmas}'},
+	{2035109393,     '{gx@prop.nothing}'},
+	{0,              '{gx@prop.disable}'}
 }
 
 magicsid = {
@@ -1293,44 +1297,49 @@ local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
+freecam = false
 sarray = {}
 
 offsets = {
-	chat = 0x5BD8A4,
-	ptoemotes = 0xA52768,
-	ptocloset = 0x3DD9F8,
-	ptofnodes = 0x836F68,
-	ptoplayer = 0x14A36C8,
-	ptopbase = 0x449B18,
-	ptoentity = 0x1794B38,
-	gamespeed_off = -0x15D17BC,
-	gesture = 0x33E0C,
-	camera = 0xE37F7C, -- camera yaw | cam distance: -C |
-	plbright = 0x470DF4,
-	hcandle = 0x601C20,
-	ptonentity = 0x7F942C,
-	wing_charge = 0x470D4C,
-	sleeping = 0x4752A0,
-	pose = 0x46E5A8,
-	closet_menu = 0x15DB988,
-	constel_menu = 0x15DF4A8,
-	ptofastitem = -0xE9C8,
-	fastitem = 0x270,
-	vwing = 0x470D9C,
-	damage = 0x470E08,
-	pos_off = 0x46B1C0,
-	wl_pos = 0x53C744,
-	statue_pos = -0x82446C,
-	magic = 0x47CBC0,
-	props_off = 0x472B24,
-	famount_off = 0x472B24 + 0x15D0,
-	plants = 0xD05A08,
-	portal_off = 0x4239D8,
-	portal2_off = -0x58A0,
-	vcandles = 0x56DAC4,
-	vcandles_dist = 0x70,
-	curmap_off = -0x168472C,
-	wind_off = -0x86DBAC
+	chat = 0x5BBF84, --
+	-- ptoemotes = 0xA52768, ||
+	ptocloset = 0x3DCB44, --
+	ptofnodes = 0x821420, --
+	ptoplayer = 0x14B4238, --
+	ptopbase = 0x4348E8, --
+	ptoentity = 0x17BC6E8, --
+	-- pvector = -0x114CA2C, ||
+	gamespeed_off = -0x15BA868, --
+	gesture = 0x468F34, --
+	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x60 | cam pos -0x70 --
+	cam_dist = -0xC, --
+	cam_fov = -0x60, --
+	cam_pos = -0x70, --
+	plbright = 0x45C2D4, --
+	hcandle = 0x57A410, --
+	ptonentity = 0x7FB50C, --
+	wing_charge = 0x45C22C, --
+	sleeping = 0x460890, --
+	pose = 0x45A428, --
+	closet_menu = 0x15B0F68, --
+	constel_menu = 0x15B4A88, --
+	ptofastitem = -0x10FA8, --
+	fastitem = 0x26C, --
+	-- vwing = 0x470D9C, ||
+	damage = 0x45C22C + 0xBC, --
+	pos_off = 0x457020, --
+	wl_pos = 0x4B4F34, --
+	statue_pos = -0x83053C, --
+	magic = 0x4681B0, --
+	props_off = 0x45E104, --
+	famount_off = 0x45E104 + 0x15D0, --
+	plants = 0xCB21C8, --
+	portal_off = 0x230DE0, --
+	portal2_off = -0x7840, --
+	vcandles = 0x4E62B4, --
+	vcandles_dist = 0x70, --
+	curmap_off = -0x1680E6C, --
+	wind_off = -0x87A6CC --
 }
 
 gg.setRanges(gg.REGION_C_ALLOC)
@@ -1437,6 +1446,15 @@ function has(t, a)
 	end
 
 	return false
+end
+
+function freeze_ask(data)
+	if gg.alert(gx.text.translate("{gx@lockit_q}"), gx.text.translate("Yes"), gx.text.translate("No")) == 1 then
+		for k, v in pairs(data) do
+			data[k].freeze = true
+		end
+	end
+	return data
 end
 
 -----------------------------------
@@ -2696,12 +2714,20 @@ function changemapmenu(method)
 	({change_map, change_map2})[method](maps[mpchoice][2]) -- Lua syntax is..... strange..
 end
 
-function getposit()
+function getposit(bool)
 	local values = gg.getValues({
 		{address = coords["z"], flags = gg.TYPE_FLOAT},
 		{address = coords["y"], flags = gg.TYPE_FLOAT},
 		{address = coords["x"], flags = gg.TYPE_FLOAT},
 	})
+
+	if bool then
+		return {
+			values[1].value,
+			values[2].value,
+			values[3].value
+		}
+	end
 
 	return {
 		x = values[1].value,
@@ -2723,25 +2749,76 @@ function getpositstring()
 	end
 end
 
-function setposit(mx,my,mz)
+function getcamposit(bool)
+	local offset = nentity + offsets.cam_pos
+	local values = gg.getValues({
+		{address = offset, flags = gg.TYPE_FLOAT},
+		{address = offset + 0x4, flags = gg.TYPE_FLOAT},
+		{address = offset + 0x8, flags = gg.TYPE_FLOAT},
+	})
+
+	if bool then
+		return {
+			values[1].value,
+			values[2].value,
+			values[3].value
+		}
+	end
+
+	return {
+		x = values[1].value,
+		y = values[2].value,
+		z = values[3].value
+	}
+end
+
+function setposit(mx,my,mz, freeze)
 	jh = {
 		{
 			address = coords['z'],
 			flags = gg.TYPE_FLOAT,
-			value = mx
+			value = mx,
+			freeze = freeze
 		},
 		{
 			address = coords['y'],
 			flags = gg.TYPE_FLOAT,
-			value = my
+			value = my,
+			freeze = freeze
 		},
 		{
 			address = coords['x'],
 			flags = gg.TYPE_FLOAT,
-			value = mz
+			value = mz,
+			freeze = freeze
 		}
 	}
-	gg.setValues(jh)
+	gx.editor.set(jh)
+end
+
+function setcamposit(mx,my,mz, freeze)
+	local offset = nentity + offsets.cam_pos
+	jh = {
+		{
+			address = offset,
+			flags = gg.TYPE_FLOAT,
+			value = mx,
+			freeze = freeze
+		},
+		{
+			address = offset + 0x4,
+			flags = gg.TYPE_FLOAT,
+			value = my,
+			freeze = freeze
+		},
+		{
+			address = offset + 0x8,
+			flags = gg.TYPE_FLOAT,
+			value = mz,
+			freeze = freeze
+		}
+	}
+	gx.editor.set(jh)
 end
 
 function pmove(dis)
@@ -2811,15 +2888,16 @@ function explodewl()
 	end
 end
 
-function pmagic(arr,id,sil)
+function pmagic(arr, id, sil, freeze)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
 	if sil == nil then sil = 360 end
+	if freeze == nil then freeze = false end
 	gx.editor.set({
-		{address = tgt, 		value = id, 	flags = "D"},
-		{address = tgt + 0xC, 	value = -1, 	flags = "D"},
-		{address = tgt + 0x28, 	value = sil, 	flags = "D"},
-		{address = player + offsets.magic + 0xC00, value = 20, 	flags = "D"}
+		{address = tgt, 							value = id, flags = "D"},
+		{address = tgt + 0xC, 						value = -1, flags = "D"},
+		{address = tgt + 0x28, 						value = sil,flags = "D", freeze = freeze},
+		{address = player + offsets.magic + 0xCBC, 	value = 20, flags = "D"}
 	})
 end
 
@@ -2953,11 +3031,11 @@ end
 function unlock_all(b)
 	if b then
 		cosmetics = on
-		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
+		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 1384120352, false)
 	else
 		cosmetics = off
-		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
+		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 446629856, false)
 	end
 end
@@ -3054,14 +3132,9 @@ end
 
 function dump_shop_items()
 	local bs = player + offsets.shop_menu + 0x70 -- 0x30 item offset between them
-
-
 end
 
-function uiopen(m)
-	if type(m) == "table" then
-		m = m[1]
-	end
+function opencloset(c)
 	local cconv = {
 		[1] = 0,
 		[2] = 3,
@@ -3069,38 +3142,25 @@ function uiopen(m)
 		[4] = 1,
 		[5] = 8
 	}
-	local sconv = {
-		"SpellShop_Oasis_Scroll",
-		"SpellShop_Oasis_Potion",
-		"SpellShop_Oasis_Spell"
+
+	local values = {
+		{address = player + offsets.closet_menu, value = 1, flags = gg.TYPE_DWORD},
+		{address = player + offsets.closet_menu + 0x3C - 0x4, value = 0, flags = gg.TYPE_DWORD},
+		{address = player + offsets.closet_menu + 0x3C, value = cconv[c[1]], flags = gg.TYPE_DWORD},
+		{address = player + offsets.closet_menu + 0x3C + 0x4, value = 1, flags = gg.TYPE_DWORD}
 	}
 
-	if m == 1 then
-		local cmenu = {
-			"[👖] Pants",
-			"[👺] Masks",
-			"[🦱] Hairs",
-			"[🧣] Capes",
-			"[🪑] Props"
-		}
+	gg.setValues(values)
+end
 
-		cmenu = gg.choice(cmenu, nil, "Open:")
-
-		if cmenu == nil then
-			return
-		end
-
-		local values = {
-			{address = player + offsets.closet_menu, value = 1, flags = gg.TYPE_DWORD},
-			{address = player + offsets.closet_menu + 0x3C - 0x4, value = 0, flags = gg.TYPE_DWORD},
-			{address = player + offsets.closet_menu + 0x3C, value = cconv[cmenu], flags = gg.TYPE_DWORD},
-			{address = player + offsets.closet_menu + 0x3C + 0x4, value = 1, flags = gg.TYPE_DWORD}
-		}
-
-		gg.setValues(values)
-	elseif m == 2 then
-		setadd(player + offsets.constel_menu, gg.TYPE_DWORD, 1, false)
-	end
+function switch_freecam(bool)
+	local posit = getposit()
+	setposit(posit.x, posit.y, posit.z, bool)
+	local cp = nentity + offsets.cam_pos
+	local values = gx.editor.get(tostring(cp).."a F;"..tostring(cp + 0x4).."a F;"..tostring(cp + 0x8).."a F")
+	values = gx.pack.args(values, {bool, bool, bool}, "freeze")
+	gx.editor.set(values)
+	freecam = bool
 end
 
 function get_wl_count(b)
@@ -3523,13 +3583,11 @@ function update()
 			gg.setValues({{address = itemtime_pointer.value + offsets.fastitem, value = 0, flags = gg.TYPE_FLOAT}})
 		end
 	end
-	if gx.vars.settings.oldstylesit then
-		local value = gg.getValues({{address = player + offsets.pose, flags = gg.TYPE_DWORD}})[1]
-		if value.value == 2 then
-			value.value = 4
-			gg.setValues({value})
-		end
+	if freecam then
+		
 	end
+
+	prev_time = os.clock()
 end
 
 
@@ -3543,6 +3601,7 @@ gx.add_menu({
 		{"[🌀] {gx@teleporter}", {gx.open_menu, {"teleportermenu"}}},
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
+		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
 		{"[💫] {gx@spells}", {dospell}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
@@ -3560,10 +3619,10 @@ gx.add_menu({
 		{"[▶️] {gx@semiautocr}", {semiautocr}},
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
-		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		{"[⭐] {gx@collectwaxes}", {collect_waxes}},
+		-- {"[📍] {gx@tpsttoy}", {tpstatues}},
+		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		{"[🔓] {gx@unlockelders}", {unlockelders}},
+		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
 	type = "back"
 })
@@ -3580,12 +3639,38 @@ gx.add_menu({
 })
 
 gx.add_menu({
+	title = "{gx@cameratitle}",
+	name = "cameramenu",
+	menu = {
+		{"[X] {gx@camerapitch}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + 0x4).."a F", {"{gx@pitchprompt}"}, freeze_ask}}},
+		{"[Y] {gx@camerayaw}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera).."a F", {"{gx@yawprompt}"}, freeze_ask}}},
+		{"[Z] {gx@cameraroll}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + 0x8).."a F", {"{gx@rollprompt}"}, freeze_ask}}},
+		{"[↔️] {gx@cameradist}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_dist).."a F", {"{gx@distanceprompt}"}, freeze_ask}}},
+		{"[∢] {gx@camerafov}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_fov).."a F", {"{gx@fovprompt}"}, freeze_ask}}},
+	},
+	type = "back"
+})
+
+gx.add_menu({
 	title = "{gx@openui2}:",
 	name = "uimenu",
-	f = {uiopen, {"{gxindex}"}},
 	menu = {
-		{"[🧥] {gx@closet}"},
-		{"[🌌] {gx@constellation}"}
+		{"[🧥] {gx@closet}", {gx.open_menu, {"closetmenu"}}},
+		{"[🌌] {gx@constellation}", {setadd, {player + offsets.constel_menu, gg.TYPE_DWORD, 1, false}}}
+	},
+	type = "back"
+})
+
+gx.add_menu({
+	title = "{gx@openui2}:",
+	name = "closetmenu",
+	f = {opencloset, {"{gxindex}"}},
+	menu = {
+		{"[👖] Pants"},
+		{"[👺] Masks"},
+		{"[🦱] Hairs"},
+		{"[🧣] Capes"},
+		{"[🪑] Props"}
 	},
 	use_single_function = true,
 	type = "back"
@@ -3597,8 +3682,9 @@ gx.add_menu({
 	menu = {
 		{"{gxsign} {gx@infinityfireworks} 🎆", {gx.editor.switch, {tostring(player + offsets.famount_off).."a 5D | -1D", "{gxbool}"}}},
 		{"{gxsign} {gx@fakesleeping} 💤", {gx.editor.switch, {tostring(player + offsets.sleeping).."a 1D | 257Df", "{gxbool}"}}},
-		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(pbase + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
+		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
 	},
 	type = "xback",
@@ -3612,7 +3698,7 @@ gx.add_menu({
 	menu = {
 		{"[🔢] {gx@setwlcount}", {setwl}},
 		{"[🌟] {gx@throwwl}", {throwwl}},
-		{"[💥 ] {gx@explodewl}", {explodewl}}
+		{"[💥] {gx@explodewl}", {explodewl}}
 	},
 	type = "back"
 })
@@ -3670,7 +3756,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "[𝖗𝖊]𝕴𝖓𝖈-"..version.." loaded"
+	_text = "{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
