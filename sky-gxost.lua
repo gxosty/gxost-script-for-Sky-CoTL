@@ -3693,7 +3693,8 @@ gx.add_menu({
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
 		{"[gxsign] {gx@oonaki} ", {oonaki}},
-		{"[gxsign] {gx@SpamCape} ", {capespam}}
+		{"[gxsign] {gx@SpamCape} ", {capespam}},
+		{"{gxsign} test function", {pmagic, {8, 1725047129, 1, "{gxbool}"}}},
 	},
 	type = "xback",
 	menu_repeat = true
