@@ -76,6 +76,7 @@
 		"no" : "No",
 		"oonaki" : "Super Shout",
 		"SpamCape" : "Auto Change Cape",
+		"unlimitedswimenergy" : "Unlimited breath",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
@@ -220,7 +221,8 @@
 		"chtpimg" : "Сменить Рисунок Телепорта",
 		"language" : "Язык",
 		"oonaki" : "Супер крик.",
-		"SpamCape" : "Автозамена Мыс"
+		"SpamCape" : "Автозамена Мыс",
+		"unlimitedswimenergy" : "Неограниченное дыхание"
 	},
 	"es" : {
 		"map" : "Map",
@@ -277,7 +279,8 @@
 		"chtpimg" : "{Change Teleport Image}",
 		"language" : "Idioma",
 		"oonaki" : "Super Shout.",
-		"SpamCape" : "Auto Change Cape"
+		"SpamCape" : "Auto Change Cape",
+		"unlimitedswimenergy" : "Aliento ilimitado"
 	},
 	"zh" : {
 		"map" : "地图",
@@ -334,7 +337,8 @@
 		"chtpimg" : "传送图像",
 		"language" : "语",
 		"oonaki" : "超级喊话。",
-		"SpamCape" : "自动换Cape。"
+		"SpamCape" : "自动换Cape。",
+		"unlimitedswimenergy" : "无限的呼吸"
 	},
 	"ja" : {
 		"map" : "マップ",
@@ -413,6 +417,7 @@
 		"no" : "いいえ",
 		"oonaki" : "連続で大泣き",
 		"SpamCape" : "ケープをずっと変える奴(3周して止まんなかったらscriptを停止してください!!)",
+		"unlimitedswimenergy" : "息無限"
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
