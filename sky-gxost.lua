@@ -1700,6 +1700,7 @@ godmode = off
 walkwithinst = off
 cur_cape = nil
 cur_world1 = nil
+testfunction = off
 
 gg.setRanges(old_ranges)
 gg.clearResults()
@@ -3694,7 +3695,7 @@ gx.add_menu({
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
 		{"[gxsign] {gx@oonaki} ", {oonaki}},
 		{"[gxsign] {gx@SpamCape} ", {capespam}},
-		{"{gxsign} test function", {pmagic, {8, 1725047129, 1, "{gxbool}"}}},
+		{"{gxsign} testfunction", {pmagic, {8, 1725047129, 1, "{gxbool}"}}},
 	},
 	type = "xback",
 	menu_repeat = true
