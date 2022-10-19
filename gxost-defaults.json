@@ -6,8 +6,8 @@
 	"menuaftercr" : true,
 	"langcode" : "?",
 	"ggvisible" : false,
-	"tpimg" : "White",
+	"tpimg" : "Black",
 	"alwayscandle" : true,
-	"cam_speed" : 5.0,
+	"fly_speed" : 15.0,
 	"version" : "?"
 }
