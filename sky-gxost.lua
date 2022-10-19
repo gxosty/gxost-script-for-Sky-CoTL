@@ -31,12 +31,13 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7a"
+version = "0.1.7b"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
 	{"es", "[🇪🇸] Español"},
-	{"zh", "[🇨🇳] 中国人"}
+	{"zh", "[🇨🇳] 中国人"},
+	{"ja", "[🇯🇵] 日本語"}
 }
 
 function vcheck()
@@ -1186,7 +1187,7 @@ offsets = {
 	plants = 0xCB21C8, --
 	portal_off = 0x40EB08, --
 	portal2_off = -0x7840, --
-	-- portal3_off = , --
+	-- portal3_off = -0x129E044, --
 	vcandles = 0x4E62B4, --
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
@@ -1317,7 +1318,7 @@ function get_map()
 	for i = 0, 23 do
 		c1 = getadd(curmap + i, gg.TYPE_BYTE)
 
-		if c1 == 47 then
+		if c1 == 47 or c1 < 0 then
 			break
 		end
 
@@ -2649,7 +2650,7 @@ gx.add_menu({
 		{"[Z] {gx@cameraroll}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + 0x8).."a F", {"{gx@rollprompt}"}, freeze_ask}}},
 		{"[↔️] {gx@cameradist}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_dist).."a F", {"{gx@distanceprompt}"}, freeze_ask}}},
 		{"[∢] {gx@camerafov}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_fov).."a F", {"{gx@fovprompt}"}, freeze_ask}}},
-		{"[] {gx@breakscenes}", {gx.editor.switch, {tostring(nentity + offsets.camera + offsets.cam_break[1]).."a 65793D | 65793Df; "..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df", "{gxbool}"}}}
+		{"[🎬] {gx@breakscenes}", {gx.editor.switch, {tostring(nentity + offsets.camera + offsets.cam_break[1]).."a 65793D | 65793Df; "..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df", "{gxbool}"}}}
 	},
 	type = "back"
 })

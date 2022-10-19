@@ -43,5 +43,11 @@
 			"en" : "Update 0.1.7a\n- Updated for the latest version of Sky (202986)\n- Added \"Spam Sparkle\" in fun menu\n- Removed \"Unlock Elders\" due to changes in Sky\n- Removed \"Unlock Emotes\"\n- Removed \"TP statues to yourself\" (will be added later)",
 			"ru" : "Обновление v0.1.7a\n- Обновлено до последней версии Sky\n- Добавлен \"Спам блеска\"\n- Удалено \"Разблокировать Старейшин\" изза сильных изменений в Sky\n- Удалено \"Разблокировка Эмоции\"\n- Удалено \"Телепорт всех статуй к себе\" (Будет добавлен позже)"
 		}
+	},
+	"0.1.7b" : {
+		"content" : {
+			"en" : "Update v0.1.7b\n- Added \"Japanese\" language support (thanks to yutodadil https://github.com/yutodadil)\n- Added \"Break Cutscenes\" in \"Camera\" menu\n- Added \"FreeFly\" mode. Speed can be adjusted in settings\n- Added new Aurora maps\n!- v0.1.7c will come out soon",
+			"ru" : "Обновление v0.1.7b\n- Добавлен Японский язык (Благодаря yutodadil https://github.com/yutodadil)\n- Добавлен \"Убрать кат-сцены\" в меню \"Камера\"\n- Добавлен режим \"Свободный палёт\". Скорость можно настроить в настройках\n- Добавлены новые карты Авроры\n!- v0.1.7v будет доступна скоро"
+		}
 	}
 }

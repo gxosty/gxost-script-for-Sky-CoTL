@@ -8,6 +8,6 @@
 	"ggvisible" : false,
 	"tpimg" : "Black",
 	"alwayscandle" : true,
-	"fly_speed" : 15.0,
+	"fly_speed" : 20.0,
 	"version" : "?"
 }
