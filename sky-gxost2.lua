@@ -3643,12 +3643,13 @@ gx.add_menu({
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
 		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedswimenergy}", {gx.editor.switch, {tostring(player + offsets.swim).."a 1F | 1Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
 		{"{gx@oonaki} ", {oonaki}},
-		{"{gx@SpamCape} ", {capespam}},
-		{"{gxsign} {gx@testfunc}", {pmagic, {8, 1725047129, 1, "{gxbool}"}}}
+		{"{gx@SpamCape} ", {capespam}}
+--		{"{gxsign} {gx@testfunc}", {pmagic, {8, 1725047129, 1, "{gxbool}"}}}
 	},
 	type = "xback",
 	menu_repeat = true
