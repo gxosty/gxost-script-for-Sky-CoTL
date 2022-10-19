@@ -80,6 +80,7 @@
 		"SpamCape" : "Auto Change Cape",
 		"unlimitedswimenergy" : "Unlimited breath",
 		"testfunc" : "Test Functionn",
+		"fps60" : "60 FPS",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
@@ -228,7 +229,8 @@
 		"oonaki" : "Супер крик.",
 		"SpamCape" : "Автозамена Мыс",
 		"unlimitedswimenergy" : "Неограниченное дыхание",
-		"testfunc" : "Test Functionn"
+		"testfunc" : "Test Functionn",
+		"fps60" : "60 FPS"
 	},
 	"es" : {
 		"map" : "Map",
@@ -287,7 +289,8 @@
 		"oonaki" : "Super Shout.",
 		"SpamCape" : "Auto Change Cape",
 		"unlimitedswimenergy" : "Aliento ilimitado",
-		"testfunc" : "Test Functionn"
+		"testfunc" : "Test Functionn",
+		"fps60" : "60 FPS"
 	},
 	"zh" : {
 		"map" : "地图",
@@ -346,7 +349,8 @@
 		"oonaki" : "超级喊话。",
 		"SpamCape" : "自动换Cape。",
 		"unlimitedswimenergy" : "无限的呼吸",
-		"testfunc" : "Test Functionn"
+		"testfunc" : "Test Functionn",
+		"fps60" : "60 FPS"
 	},
 	"ja" : {
 		"map" : "マップ",
@@ -428,6 +432,7 @@
 		"oonaki" : "連続で大泣き",
 		"SpamCape" : "ケープをずっと変える奴(3周して止まんなかったらscriptを停止してください!!)",
 		"unlimitedswimenergy" : "息無限",
+		"fps60" : "60 FPS"
 		"testfunc" : "Test Functionn",
 		"60fps" : "60FPS"
 		"prop.ancestorjar": "Ancestor Jar",
