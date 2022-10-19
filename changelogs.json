@@ -46,8 +46,8 @@
 	},
 	"0.1.7b" : {
 		"content" : {
-			"en" : "Update v0.1.7b\n- Added \"Japanese\" language support (thanks to yutodadil https://github.com/yutodadil)\n- Added \"Break Cutscenes\" in \"Camera\" menu\n- Added \"FreeFly\" mode. Speed can be adjusted in settings\n- Added new Aurora maps\n!- v0.1.7c will come out soon",
-			"ru" : "Обновление v0.1.7b\n- Добавлен Японский язык (Благодаря yutodadil https://github.com/yutodadil)\n- Добавлен \"Убрать кат-сцены\" в меню \"Камера\"\n- Добавлен режим \"Свободный палёт\". Скорость можно настроить в настройках\n- Добавлены новые карты Авроры\n!- v0.1.7v будет доступна скоро"
+			"en" : "Update v0.1.7b\n- Added \"Japanese\" language support (thanks to yutodadil https://github.com/yutodadil)\n- Added \"Break Cutscenes\" in \"Camera\" menu\n- Added \"FreeFly\" mode. Speed can be adjusted in settings\n- Added new Aurora maps\n- Fixed \"Change map (I)\"\n!- v0.1.7c will come out soon",
+			"ru" : "Обновление v0.1.7b\n- Добавлен Японский язык (Благодаря yutodadil https://github.com/yutodadil)\n- Добавлен \"Убрать кат-сцены\" в меню \"Камера\"\n- Добавлен режим \"Свободный палёт\". Скорость можно настроить в настройках\n- Добавлены новые карты Авроры\n- Исправлен \"Сменить карту (I)\"\n!- v0.1.7v будет доступна скоро"
 		}
 	}
 }
