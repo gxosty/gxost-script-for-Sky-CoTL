@@ -1,5 +1,3 @@
--- Check out "Hellboy" project -> https://github.com/Kiojeen/HellBoy (BY: Kiojeen)
-
 -- I am tired of doing, updating and improving this script because it needs a lot attention and I don't have much time to take care of it
 -- So let me say some words. You can use this script in educational purpose and is allowed to modify it.
 -- This script should always remain free and open source and readable, any kind of obfuscation is not allowed
@@ -33,12 +31,13 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7a"
+version = "0.1.7b"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
 	{"es", "[🇪🇸] Español"},
-	{"zh", "[🇨🇳] 中国人"}
+	{"zh", "[🇨🇳] 中国人"},
+	{"ja", "[🇯🇵] 日本語"}
 }
 
 function vcheck()
@@ -435,6 +434,12 @@ maps = {
 	{"!!! Orbit 2 !!!", "OrbitEnd", 0},
 	{"!!! Heaven !!!", "CandleSpaceEnd", 0},
 	{"Credits map", "Credits", 0},
+	{"Eyes of Child", "AP16EyesOfChild", 0},
+	{"Runaway", "AP16Runaway", 0},
+	{"Soft Inside", "AP16SoftInside", 0},
+	{"The Seed", "AP16TheSeed", 0},
+	{"Void Space", "AP16VoidSpace", 0},
+	{"Warrior", "AP16Warrior", 0}
 }
 
 -- AUTO CANDLE RUN POINTS --
@@ -1109,168 +1114,29 @@ posits = {
 	{map='Skyway',name='Back to Rain',x=133.41851806640625,y=384.35552978515625,z=281.2737731933594}
 }
 
-estatues = {
-	[1] = 0x280,
-	[2] = 0x0,
-	[3] = 0xa0,
-	[4] = 0x3c0,
-	[5] = 0xf0,
-	[6] = 0x50,
-	[7] = 0x140,
-	[8] = 0x1e0,
-	[9] = 0x54b0,
-	[10] = 0x5460,
-	[11] = 0x2620,
-	[12] = 0x2800,
-	[13] = 0x2d50,
-	[14] = 0x1f40,
-	[15] = 0x1ef0,
-	[16] = 0x14f0,
-	[17] = 0x500,
-	[18] = 0xbe0,
-	[19] = 0x36b0,
-	[20] = 0x4e70,
-	[21] = 0x5190,
-	[22] = 0x5140,
-	[23] = 0x3de0,
-	[24] = 0x30c0,
-	[25] = 0xfa0,
-	[26] = 0x820,
-	[27] = 0x17c0,
-	[28] = 0x18b0,
-	[29] = 0x2080,
-	[30] = 0x2170,
-	[31] = 0x2940,
-	[32] = 0x4470,
-	[33] = 0x4150,
-	[34] = 0x34d0,
-	[35] = 0x1310,
-	[36] = 0x410,
-	[37] = 0x1a40,
-	[38] = 0x1d60,
-	[39] = 0x24e0,
-	[40] = 0x2580,
-	[41] = 0x2c10,
-	[42] = 0x2d00,
-	[43] = 0x2e90,
-	[44] = 0x28f0,
-	[45] = 0x2850,
-	[46] = 0x1fe0,
-	[47] = 0x1f90,
-	[48] = 0x1680,
-	[49] = 0x1590,
-	[50] = 0xd70,
-	[51] = 0xe10,
-	[52] = 0x2ee0,
-	[53] = 0x37f0,
-	[54] = 0x46a0,
-	[55] = 0x50f0,
-	[56] = 0x2ad0,
-	[57] = 0x23f0,
-	[58] = 0x19f0,
-	[59] = 0x1950,
-	[60] = 0x870,
-	[61] = 0x1090,
-	[62] = 0x32a0,
-	[63] = 0x5230,
-	[64] = 0x5280,
-	[65] = 0x5370,
-	[66] = 0x4f9c0,
-	[67] = 0x5320,
-	[68] = 0x5a50
-}
-
 imgs = {
 	"Arial32",
 	"Black",
-	"Blue",
-	"BlueD1",
-	"BlueD2",
-	"BlueD3",
-	"BlueL1",
-	"BlueL2",
-	"BlueL3",
+	"Blue",	"BlueD1",	"BlueD2",	"BlueD3",	"BlueL1",	"BlueL2",	"BlueL3",
 	"Brown",
 	"Clear",
 	"Consolas32",
-	"Cyan",
-	"CyanD1",
-	"CyanD2",
-	"CyanD3",
-	"CyanL1",
-	"CyanL2",
-	"CyanL3",
-	"Gray",
-	"GrayD1",
-	"GrayD2",
-	"GrayL1",
-	"GrayL2",
-	"Green",
-	"GreenD1",
-	"GreenD2",
-	"GreenD3",
-	"GreenGray",
-	"GreenL1",
-	"GreenL2",
-	"GreenL3",
-	"Lime",
-	"LimeD1",
-	"LimeD2",
-	"LimeD3",
-	"LimeL1",
-	"LimeL2",
-	"LimeL3",
-	"Magenta",
-	"MagentaD1",
-	"MagentaD2",
-	"MagentaD3",
-	"MagentaL1",
-	"MagentaL2",
-	"MagentaL3",
-	"Orange",
-	"OrangeD1",
-	"OrangeD2",
-	"OrangeD3",
-	"OrangeL1",
-	"OrangeL2",
-	"OrangeL3",
+	"Cyan",	"CyanD1",	"CyanD2",	"CyanD3",	"CyanL1",	"CyanL2",	"CyanL3",
+	"Gray",	"GrayD1",	"GrayD2",	"GrayL1",	"GrayL2",
+	"Green",	"GreenD1",	"GreenD2",	"GreenD3",	"GreenGray",	"GreenL1",	"GreenL2",	"GreenL3",
+	"Lime",	"LimeD1",	"LimeD2",	"LimeD3",	"LimeL1",	"LimeL2",	"LimeL3",
+	"Magenta",	"MagentaD1",	"MagentaD2",	"MagentaD3",	"MagentaL1",	"MagentaL2",	"MagentaL3",
+	"Orange",	"OrangeD1",	"OrangeD2",	"OrangeD3",	"OrangeL1",	"OrangeL2",	"OrangeL3",
 	"PaintBlue",
-	"Red",
-	"RedD1",
-	"RedD2",
-	"RedD3",
-	"RedD4",
-	"RedD5",
-	"RedL1",
-	"RedL2",
-	"RedL3",
+	"Red",	"RedD1",	"RedD2",	"RedD3",	"RedD4",	"RedD5",	"RedL1",	"RedL2",	"RedL3",
 	"White",
 	"Wisteria",
-	"Yellow",
-	"YellowD1",
-	"YellowD2",
-	"YellowD3",
-	"YellowL1",
-	"YellowL2",
-	"YellowL3",
+	"Yellow",	"YellowD1",	"YellowD2",	"YellowD3",	"YellowL1",	"YellowL2",	"YellowL3",
 	"TiktokLogo",
-	"UIBar",
-	"UIBGGalaxy",
-	"UIEye",
-	"UIFade",
-	"UILogo",
-	"UiMiscBubbleB",
-	"UiMiscCircle",
-	"UiMiscCircleFade",
-	"UIRing",
-	"UIRingBigMedium",
-	"UIRingBigThick",
-	"UIRingBigThin",
-	"UIRingBigThinner",
-	"UIRingBloom",
-	"UIRingBold",
-	"UISphere",
-	"UISphereFade",
+	"UIBar",	"UIBGGalaxy",	"UIEye",	"UIFade",	"UILogo",
+	"UiMiscBubbleB",	"UiMiscCircle",	"UiMiscCircleFade",
+	"UIRing",	"UIRingBigMedium",	"UIRingBigThick",	"UIRingBigThin",	"UIRingBigThinner",	"UIRingBloom",	"UIRingBold",
+	"UISphere",	"UISphereFade",
 	"UISpot",
 	"UIStarGlow",
 }
@@ -1279,7 +1145,7 @@ local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
-freecam = false
+freefly = false
 sarray = {}
 
 offsets = {
@@ -1287,16 +1153,19 @@ offsets = {
 	-- ptoemotes = 0xA52768, ||
 	ptocloset = 0x3DCB44, --
 	ptofnodes = 0x821420, --
+	ptospeed = 0x13E728C,
 	ptoplayer = 0x14B4238, --
 	ptopbase = 0x4348E8, --
 	ptoentity = 0x17BC6E8, --
-	-- pvector = -0x114CA2C, ||
+	pvector = -0x1144EFC, --
 	gamespeed_off = -0x15BA868, --
 	gesture = 0x468F34, --
+	force_move = -0x11444F0, --
 	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x60 | cam pos -0x70 --
 	cam_dist = -0xC, --
 	cam_fov = -0x60, --
 	cam_pos = -0x70, --
+	cam_break = {0x380, 0x6B0}, --
 	plbright = 0x45C2D4, --
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
@@ -1316,8 +1185,9 @@ offsets = {
 	props_off = 0x45E104, --
 	famount_off = 0x45E104 + 0x15D0, --
 	plants = 0xCB21C8, --
-	portal_off = 0x230DE0, --
+	portal_off = 0x40EB08, --
 	portal2_off = -0x7840, --
+	-- portal3_off = -0x129E044, --
 	vcandles = 0x4E62B4, --
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
@@ -1326,8 +1196,8 @@ offsets = {
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '🟢'
-off = '⚪'
+on  = '💠'
+off = '🔹'
 
 function imgsmenu()
 	local img_ind = gg.choice(imgs, nil, "Choose Image")
@@ -1448,7 +1318,7 @@ function get_map()
 	for i = 0, 23 do
 		c1 = getadd(curmap + i, gg.TYPE_BYTE)
 
-		if c1 == 47 then
+		if c1 == 47 or c1 < 0 then
 			break
 		end
 
@@ -1696,10 +1566,12 @@ gg.clearResults()
 -- Finding Value of Speed of Walk --
 
 gg.setRanges(gg.REGION_C_DATA)
-gg.searchNumber('3.5', gg.TYPE_FLOAT)
-quick_results = gg.getResults(1)
+-- gg.searchNumber('3.5', gg.TYPE_FLOAT)
+-- quick_results = gg.getResults(1)
+quick_results = gx.editor.get({{address = bootloader + offsets.ptospeed, flags = "F"}})
 quick_results[1].value = {'3.5', '200'}
 quick_results[1].bool = "{gxbool}"
+-- gg.alert(tostring(quick_results))
 gg.clearResults()
 
 ------------------------------------
@@ -1788,7 +1660,20 @@ function changemapmenu(method)
 		return
 	end
 
+	local _b = false
+	if freefly then
+		_b = true
+		freefly = false
+		local position = getposit(true)
+		setposit(position[1], position[2], position[3], false)
+	end
+
 	({change_map, change_map2})[method](maps[mpchoice][2]) -- Lua syntax is..... strange..
+
+	if _b then
+		gg.sleep(2000)
+		freefly = true
+	end
 end
 
 function getposit(bool)
@@ -2207,8 +2092,8 @@ function capeset(id, freeze)
 	gg.setValues(n)
 end
 
-function dump_shop_items()
-	local bs = player + offsets.shop_menu + 0x70 -- 0x30 item offset between them
+function dump_spells()
+	
 end
 
 function opencloset(c)
@@ -2230,14 +2115,13 @@ function opencloset(c)
 	gg.setValues(values)
 end
 
-function switch_freecam(bool)
+function switch_fly(bool)
 	local posit = getposit()
 	setposit(posit.x, posit.y, posit.z, bool)
-	local cp = nentity + offsets.cam_pos
-	local values = gx.editor.get(tostring(cp).."a F;"..tostring(cp + 0x4).."a F;"..tostring(cp + 0x8).."a F")
-	values = gx.pack.args(values, {bool, bool, bool}, "freeze")
-	gx.editor.set(values)
-	freecam = bool
+	if not bool then
+		gx.set_loop_interval(100)
+	end
+	freefly = bool
 end
 
 function get_wl_count(b)
@@ -2653,18 +2537,59 @@ function semiautocr()
 	end
 end
 
+prev_time = os.clock()
+prev_map = get_map()
 function update()
+	start_time = os.clock()
+	current_map = get_map()
 	if gx.vars.settings.fastitem then
 		itemtime_pointer = gg.getValues({{address = player + offsets.closet_menu + offsets.ptofastitem, flags = gg.TYPE_QWORD}})[1]
 		if itemtime_pointer.value ~= 0 then
 			gg.setValues({{address = itemtime_pointer.value + offsets.fastitem, value = 0, flags = gg.TYPE_FLOAT}})
 		end
 	end
-	if freecam then
-		
-	end
 
-	prev_time = os.clock()
+	if freefly then
+		if prev_map == current_map then
+			local vals = gg.getValues({
+				{address = nentity + offsets.pvector, flags = gg.TYPE_FLOAT},
+				{address = nentity + offsets.pvector + 0x4, flags = gg.TYPE_FLOAT},
+				{address = nentity + offsets.camera, flags = gg.TYPE_FLOAT},
+				{address = nentity + offsets.camera + 0x4, flags = gg.TYPE_FLOAT}
+			})
+			
+			if (vals[1].value + vals[2].value ~= 0) then
+	            gx.set_loop_interval(0)
+	            local delta = start_time - prev_time
+				local position = getposit(true)
+	            local angle = vals[3].value
+			    local angle2 = vals[4].value
+
+			    local cs = math.cos(-angle)
+			    local sn = math.sin(-angle)
+	        
+
+			    vx = vals[1].value * cs + vals[2].value * sn
+			    vz = vals[1].value * sn - vals[2].value * cs
+
+			    position[3] = position[3] - vz * gx.vars.settings.fly_speed * delta
+			    position[1] = position[1] - vx * gx.vars.settings.fly_speed * delta
+
+			    position[2] = position[2] + angle2 * gx.vars.settings.fly_speed * delta * vals[2].value
+
+			    setposit(position[1], position[2], position[3], true)
+		    else
+	            gx.set_loop_interval(250)
+	        end
+		else
+			local position = getposit(true)
+			setposit(position[1], position[2], position[3], false)
+			gg.sleep(2000)
+		end
+    end
+
+	prev_time = start_time
+	prev_map = current_map
 end
 
 
@@ -2679,6 +2604,7 @@ gx.add_menu({
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
+		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
 		{"[💫] {gx@spells}", {dospell}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
@@ -2724,6 +2650,7 @@ gx.add_menu({
 		{"[Z] {gx@cameraroll}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + 0x8).."a F", {"{gx@rollprompt}"}, freeze_ask}}},
 		{"[↔️] {gx@cameradist}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_dist).."a F", {"{gx@distanceprompt}"}, freeze_ask}}},
 		{"[∢] {gx@camerafov}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_fov).."a F", {"{gx@fovprompt}"}, freeze_ask}}},
+		{"[🎬] {gx@breakscenes}", {gx.editor.switch, {tostring(nentity + offsets.camera + offsets.cam_break[1]).."a 65793D | 65793Df; "..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df", "{gxbool}"}}}
 	},
 	type = "back"
 })
@@ -2743,7 +2670,7 @@ gx.add_menu({
 	name = "closetmenu",
 	f = {opencloset, {"{gxindex}"}},
 	menu = {
-		{"[👖] Pants"},
+		{"[??] Pants"},
 		{"[👺] Masks"},
 		{"[🦱] Hairs"},
 		{"[🧣] Capes"},
@@ -2801,6 +2728,7 @@ gx.add_menu({
 	name = "settingsmenu",
 	menu = {
 		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
+		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
@@ -2835,10 +2763,12 @@ function _init()
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
 	end
 
+	gx.editor.set(tostring(nentity + offsets.force_move).."a 1Ff; "..tostring(nentity + offsets.force_move + 0x4).."a 1Ff")
+
 	gg.toast(_text)
 end
 
-interval = 100
+interval = 0
 _init()
 
 gx.loop(interval, update, gx.vars.settings.ggvisible)
