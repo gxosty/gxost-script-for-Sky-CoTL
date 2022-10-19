@@ -1010,6 +1010,7 @@ posits = {
 	{map='NightDesert_Beach',name='Back to desert',x=464.6367492675781,y=8.204781532287598,z=552.7400512695312},
 	{map='Night_JarCave',name='Back',x=-81.74847412109375,y=28.22599983215332,z=373.6864013671875},
 	{map='Night2',name='Top',x=-0.18086150288581848,y=294.4930419921875,z=0.7263343930244446},
+	{map='Night2',name='Top oob',x=-2.15201473236084,y=515.6214599609375,z=-8.84313774108867},
 	{map='Storm',name='Skip',x=7,y=266,z=-250},
 	{map='Storm',name='End of Cave',x=61.72602462768555,y=272.8486022949219,z=-332.78521728515625},
 	{map='Storm',name='OOB Transparent',x=192,y=8,z=-489},
