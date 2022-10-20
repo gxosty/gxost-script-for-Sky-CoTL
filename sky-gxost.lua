@@ -375,6 +375,9 @@ magicsid = {
 	{'🆕Summer Tent', 1414743743},
 	{'🆕Krill hat', -705906186},
 	{'🆕Krillcat', 847145578},
+	{'🆕Aurora Pants', -1134828593},
+	{'🆕Aurora hair', 239584271},
+	{'🆕Aurora headaccessory', -1989753674},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
