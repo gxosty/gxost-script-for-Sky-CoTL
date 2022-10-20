@@ -377,7 +377,7 @@ magicsid = {
 	{'🆕Krillcat', 847145578},
 	{'🆕Aurora Pants', -1134828593},
 	{'🆕Aurora hair', 239584271},
-	{'🆕Aurora headaccessory', -1989753674},
+	{'🆕Aurora headaccessory', -1989753674}, -- 疲れた。
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
