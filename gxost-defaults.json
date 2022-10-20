@@ -9,5 +9,6 @@
 	"tpimg" : "Black",
 	"alwayscandle" : true,
 	"fly_speed" : 20.0,
+	"bscenes" : false,
 	"version" : "?"
 }

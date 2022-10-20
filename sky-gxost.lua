@@ -30,6 +30,7 @@ scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
+dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
 version = "0.1.7b"
 languages = {
@@ -296,7 +297,7 @@ magicsid = {
 	{'👑Dream Season Hair',1059767859,2},
 	{'🤡White Fox Mask', 784922793,2},
 	{'🤡Red Rabbit Mask', 964659005,2},
-	{'🤡Winter Mask with Sharp Mouth', -218615327,2},
+	{'🤡Admiring Actor Mask', -218615327,2},
 	{'🤡Tauren Mask',-849020465,2},
 	{'🤡Rose Mask',-938578505,2},
 	{'🤡Spring Red Face Mask',-1636163586,2},
@@ -369,6 +370,14 @@ magicsid = {
 	{'👗️Wisteria Cape 2022', -1244390069},
 	{'👑️Rainbow Double Flower', -1014212311},
 	{'🧸️TGC Anniversary Guitar', 332997197},
+	{"⛺Summer Tent", 1414743743},
+	{"🎧Moon Star Hair Acc", -1989753674},
+	{"👗️Runaway Pants", -1134828593},
+	{"👑️Runaway Hair", 239584271},
+	{"🐱Cat Hair", -25012636},
+	{"🐱Cat Cape", 583315364},
+	{"🐱Cat Mask", -901640940},
+	{"🐱Cat Prop", 1436679857}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -1114,6 +1123,68 @@ posits = {
 	{map='Skyway',name='Back to Rain',x=133.41851806640625,y=384.35552978515625,z=281.2737731933594}
 }
 
+-- only 60 for now ;(
+estatues = {0,
+80,
+160,
+240,
+320,
+480,
+560,
+880,
+1200,
+1600,
+1920,
+2080,
+2800,
+3360,
+3760,
+3920,
+4480,
+4960,
+5120,
+5680,
+5920,
+6080,
+6320,
+7120,
+7520,
+7600,
+7680,
+7760,
+7920,
+8160,
+8880,
+9120,
+9280,
+9440,
+10000,
+10160,
+10240,
+10640,
+11040,
+11280,
+11360,
+11760,
+11840,
+12000,
+12240,
+12640,
+13840,
+14160,
+15760,
+17680,
+18000,
+20800,
+20880,
+20960,
+21120,
+21200,
+21280,
+21440,
+21520,
+21600}
+
 imgs = {
 	"Arial32",
 	"Black",
@@ -1150,7 +1221,7 @@ sarray = {}
 
 offsets = {
 	chat = 0x5BBF84, --
-	-- ptoemotes = 0xA52768, ||
+	ptoemotes = 0xA42624, --
 	ptocloset = 0x3DCB44, --
 	ptofnodes = 0x821420, --
 	ptospeed = 0x13E728C,
@@ -1191,12 +1262,14 @@ offsets = {
 	vcandles = 0x4E62B4, --
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
-	wind_off = -0x87A6CC --
+	wind_off = -0x87A6CC, --
+
+	full_magics = 0x3FBC18
 }
 
 gg.setRanges(gg.REGION_C_ALLOC)
 
-on  = '💠'
+on  = '🎃'
 off = '🔹'
 
 function imgsmenu()
@@ -1701,9 +1774,9 @@ end
 function getpositstring()
 	if gx.vars.settings.show_coords == true then
 		local posit = getposit()
-		-- posit.x = gx.round(posit.x, 2)
-		-- posit.y = gx.round(posit.y, 2)
-		-- posit.z = gx.round(posit.z, 2)
+		posit.x = gx.round(posit.x, 3)
+		posit.y = gx.round(posit.y, 3)
+		posit.z = gx.round(posit.z, 3)
 		str = "\n[x: "..tostring(posit.x).."; y: "..tostring(posit.y).."; z: "..tostring(posit.z).."]"
 		return str
 	else
@@ -1854,6 +1927,7 @@ function pmagic(arr, id, sil, freeze)
 	nn = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
 	if sil == nil then sil = 360 end
+	if freeze == false then id = 0 end
 	if freeze == nil then freeze = false end
 	gx.editor.set({
 		{address = tgt, 							value = id, flags = "D"},
@@ -1993,11 +2067,11 @@ end
 function unlock_all(b)
 	if b then
 		cosmetics = on
-		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
+		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 1384120352, false)
 	else
 		cosmetics = off
-		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
+		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186977528, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 446629856, false)
 	end
 end
@@ -2025,6 +2099,41 @@ end
 
 function uwc()
 	gx.vars.w = gx.editor.get({{address = pbase, flags = "D"}})[1].value
+end
+
+function dump_all()
+	local _all = {}
+	local offset = player + offsets.full_magics
+
+	gg.toast("Scan started...")
+	for i = 0, 1024 do
+		local o = offset + (i * 0x80)
+		local p = gx.editor.get({
+			{address = o + 0x18, flags = "D"},
+			{address = o + 0x20, flags = "D"},
+		})
+
+		if p[1].value ~= 0 or p[2].value ~= 0 then
+			local _thing = {
+				name = gx.editor.get_string({{o + 0x1, 24}}),
+				id1 = gx.editor.get({
+					{address = o - 0x8, flags = "D"}
+				})[1].value,
+				id2 = gx.editor.get({
+					{address = o + 0x18, flags = "D"}
+				})[1].value
+			}
+
+			if #_thing["name"][1] < 1 then
+				_thing["name"] = gx.editor.get_string({{o + 0x29, 24}})
+			end
+
+			table.insert(_all, _thing)
+		end
+	end
+
+	gx.save_json_file(dump_path, _all)
+	gg.toast("Saved in -> "..dump_path)
 end
 
 function propset(id, freeze)
@@ -2092,10 +2201,6 @@ function capeset(id, freeze)
 	gg.setValues(n)
 end
 
-function dump_spells()
-	
-end
-
 function opencloset(c)
 	local cconv = {
 		[1] = 0,
@@ -2122,6 +2227,13 @@ function switch_fly(bool)
 		gx.set_loop_interval(100)
 	end
 	freefly = bool
+end
+
+function switch_cutscene_destroyer(bool)
+	local expr = tostring(nentity + offsets.camera + offsets.cam_break[1]).."a 65793D | 65793Df;"
+	expr = expr..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df"
+	gx.editor.switch(expr, bool)
+	gx.set_var("settings.bscenes", bool)
 end
 
 function get_wl_count(b)
@@ -2210,16 +2322,55 @@ function collect_wls()
 	end
 end
 
+function get_eden_statues()
+	local checks = {
+		[1] = 1065301660, -- -0x4
+		[2] = 1043045760 -- 0x10, 0x14, 0x18
+	}
+
+	estatues = {}
+	local count = 60
+	local offset = nentity + offsets.statue_pos
+	local _o = offset
+
+	local i = 0
+	while i ~= count do
+		gg.toast(tostring(i).." - "..string.format("%x", offset - _o))
+		local values = gx.editor.get({
+			{address = offset - 0x4, flags = "D"},
+			{address = offset + 0x10, flags = "D"},
+			{address = offset + 0x14, flags = "D"},
+			{address = offset + 0x18, flags = "D"},
+		})
+
+		-- if values[1].value == checks[1] then
+			if (values[2].value == checks[2]) and (values[3].value == checks[2]) and (values[4].value == checks[2]) then
+				table.insert(estatues, offset - _o)
+				i = i + 1
+			-- end
+		end
+
+		offset = offset + 0x50
+	end
+
+	gx.save_json_file("statues.json", estatues)
+
+	gg.toast("Found all!")
+end
+
 function tpstatues()
 	if get_map() ~= "StormEnd" then
 		gg.toast("You are not in Eden end")
 		return
 	end
 
-	if gg.alert("Please be under cover cuz rocks will aim you.", "I am safe, go", "Cancel") ~= 1 then
+	if gg.alert("Please be under cover cuz rocks may aim you.", "I am safe, go", "Cancel") ~= 1 then
 		return
 	end
-	-- setposit(803.8466796875,0.6778343915939331,-11.73253059387207)
+	
+	-- if estatues == nil then
+	-- 	get_eden_statues()
+	-- end
 
 	local _values = {}
 	local pcoords = getposit()
@@ -2252,11 +2403,11 @@ end
 
 function switch_chat(bool)
 	local data = ""
-	data = tostring(bootloader + offsets.chat).."a 4043309695D | 704644064D;"
-	data = data..tostring(bootloader + offsets.chat - 0x6F74).."a 924841046D | 1384120553D;"
-	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x4).."a 1796473471D | 4181778410D;"
-	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x8).."a 1409286208D | 957113193D;"
-	data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0xC).."a 907015158D | 958390601D"
+	data = tostring(bootloader + offsets.chat).."a 4043309695D | 704644064D;" --0x5BBF84
+	-- data = data..tostring(bootloader + offsets.chat - 0x6F74).."a 924841046D | 1384120553D;"
+	-- data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x4).."a 1796473471D | 4181778410D;"
+	-- data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0x8).."a 1409286208D | 957113193D;"
+	-- data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0xC).."a 907015158D | 958390601D"
 
 	gx.editor.switch(data, bool)
 end
@@ -2270,7 +2421,7 @@ end
 function gotomenu()
 	local map = get_map()
 	
-	ppoints = make_positions(map) -- AHHAHAHA HOW COULDN'T I KNOW ABOUT IT?
+	ppoints = make_positions(map)
 	
 	if ppoints ~= nil then
 		mp_names = get_names(ppoints)
@@ -2622,7 +2773,7 @@ gx.add_menu({
 		{"[▶️] {gx@semiautocr}", {semiautocr}},
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
-		-- {"[📍] {gx@tpsttoy}", {tpstatues}},
+		{"[📍] {gx@tpsttoy}", {tpstatues}},
 		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
 		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
@@ -2650,7 +2801,6 @@ gx.add_menu({
 		{"[Z] {gx@cameraroll}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + 0x8).."a F", {"{gx@rollprompt}"}, freeze_ask}}},
 		{"[↔️] {gx@cameradist}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_dist).."a F", {"{gx@distanceprompt}"}, freeze_ask}}},
 		{"[∢] {gx@camerafov}", {gx.editor.prompt_set, {tostring(nentity + offsets.camera + offsets.cam_fov).."a F", {"{gx@fovprompt}"}, freeze_ask}}},
-		{"[🎬] {gx@breakscenes}", {gx.editor.switch, {tostring(nentity + offsets.camera + offsets.cam_break[1]).."a 65793D | 65793Df; "..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df", "{gxbool}"}}}
 	},
 	type = "back"
 })
@@ -2734,9 +2884,11 @@ gx.add_menu({
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
 		{"{gx@usecandle}: {gx:settings.alwayscandle}", {gx.set_var, {"settings.alwayscandle", "!{gx:settings.alwayscandle}"}}},
+		{"{gx@breakscenes}: {gx:settings.bscenes}", {switch_cutscene_destroyer, --[[AHAHAHAHA]] {"!{gx:settings.bscenes}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
 		{"{gx@chtpimg}", {imgsmenu}},
-		{"{gx@language}", {gx.open_menu, {"langmenu"}}}
+		{"{gx@language}", {gx.open_menu, {"langmenu"}}},
+		{"Dump Items/Spells/Etc", {dump_all}}
 	},
 	post_f = {save_settings},
 	menu_repeat = true,
@@ -2764,6 +2916,7 @@ function _init()
 	end
 
 	gx.editor.set(tostring(nentity + offsets.force_move).."a 1Ff; "..tostring(nentity + offsets.force_move + 0x4).."a 1Ff")
+	switch_cutscene_destroyer(gx.vars.settings.bscenes)
 
 	gg.toast(_text)
 end
