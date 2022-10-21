@@ -55,6 +55,12 @@
 			"en" : "Update v0.1.7c\n- Added New Spells (Including Cat spells)\n- Added \"Teleport Statues to yourself\" back (Sorry, only 60 statues. LAZYY)\n- Added SemiCR for statues in Eden\n- \"Break Cutscene\" feature was moved to Settings\n- Fixed Unlock Emotes\n- (for devs) It is possible to dump spells in Settings.\n\n!Known Issue!\n- Cancelling one spell can cancel all other spells too.\n\nWait for the update v0.1.7d (yes, it will go till z until next update of sky comes)",
 			"ru" : "Обновление v0.1.7c\n- Добавлены новые заклинания (включая заклинания кошек)\n- Добавлены \"Телепортировать статуи к себе\" назад (только 60 статуй. Леньь)\n- Добавлен SemiCR для статуй в Эдеме\n- Функция \"Break Cutscene\" была перенесена в настройки\n- Исправлен проблема с разблокировкой всех эмоции \n- (для разработчиков) В настройках можно дампить заклинания.\n\n!Известная проблема!\n- Отмена одного заклинания может отменить все другие заклинания тоже.\n\nЖдите обновления v0.1.7d (да, оно будет идти до z, пока не выйдет следующее обновление Неба)"
 		}
+	},
+	"0.1.7d" : {
+		"content" : {
+			"en" : "Update v0.1.7d\n- Fixed \"Spam Sparkles\" from cousing other spells to cancel when disabling it\n- More organized \"Spell\" menu\n- Added \"Spam Call / Super Shout\" in \"Fun\" menu\n- Added Friendship nodes offering and requesting without being friends with others. (Note that when you request a friendship node, other players won't see it even when you hug/pat/piggyback/etc. In order to make them see you should light them)\n- Added \"Save Spells\" in Settings. Returns last active spells from your previous game when you run the script.\n\n!! Still issue with spells exist\n\nv0.1.7e will arrive in the nearest future",
+			"ru" : "Update v0.1.7d\nлень перевести, простите...\n\n- Fixed \"Spam Sparkles\" from cousing other spells to cancel when disabling it\n- More organized \"Spell\" menu\n- Added \"Spam Call / Super Shout\" in \"Fun\" menu\n- Added Friendship nodes offering and requesting without being friends with others. (Note that when you request a friendship node, other players won't see it even when you hug/pat/piggyback/etc. In order to make them see you should light them)\n- Added \"Save Spells\" in Settings. Returns last active spells from your previous game when you run the script.\n\n!! Still issue with spells exist\n\nv0.1.7e will arrive in the nearest future"
+		}
 	}
 }
 

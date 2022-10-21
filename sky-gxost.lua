@@ -1,10 +1,6 @@
--- I am tired of doing, updating and improving this script because it needs a lot attention and I don't have much time to take care of it
--- So let me say some words. You can use this script in educational purpose and is allowed to modify it.
+-- You can use this script in educational purposes and is allowed to modify it.
 -- This script should always remain free and open source and readable, any kind of obfuscation is not allowed
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
--- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
-
--- Türkmenler barmaý?? XD
 
 git_branch = "dev"
 local debug_mode = "off"
@@ -24,7 +20,7 @@ else
 	gx = require("gx.gx")
 	defsets = gx.load_json_file("gxost-defaults.json")
 	langlist = gx.load_json_file("languages.json")
-endf
+end
 
 scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 
@@ -32,7 +28,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7c"
+version = "0.1.7d"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -387,7 +383,8 @@ magicsid = {
 	{"🐱Cat Hair", -25012636, 3},
 	{"🐱Cat Cape", 583315364, 4},
 	{"🐱Cat Mask", -901640940, 2},
-	{"🐱Cat Prop", 1436679857, 5}
+	{"🐱Cat Prop", 1436679857, 5},
+	{"🐱Krill Cat", 847145578, 6}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -1302,11 +1299,41 @@ imgs = {
 	"UIStarGlow",
 }
 
+-- {name} -- id
+rellist = {
+	"Hand (light required)", -- 1
+	"Hug", -- 3
+	"HighFive", -- 4
+	"FistBump", -- 5
+	"Double Five", -- 6
+	"EdenHug?", -- 7
+	"Hug 2", -- 8
+	"HighFive 2", -- 9
+	"Fist Bump 2", -- 10
+	"Double Five 2", -- 11
+	"Piggyback (light required)", -- 12
+	"Piggyback 2 (light required)", -- 13
+	"Head Pat", -- 14
+	"Head Pat 2", -- 15
+	"Playfight", -- 16
+	"Playfight 2", -- 17
+	"Breahug", -- 18
+	"Breahug 2", -- 19
+	"Dance", -- 20
+	"Dance 2", -- 21
+	"Handshake", -- 22
+	"Handshake 2", -- 23
+
+	"manual", -- manual input
+}
+
 local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
 freefly = false
+sticktoplayer = false
+theplayer = nil
 sarray = {}
 
 -- 0x121F0
@@ -1719,16 +1746,10 @@ fakesleep = off
 autoburn = off
 candles = find_candles()
 plants = find_plants()
-cosmetics = off
-friendnode_unlock = off
-friend_nodes = nil -- this has to be found only after logging in { deprecated :) }
 energy = off
-quick = off
 quick_results = nil
-clouds = off
 clouds_results = nil
 cosmetic_lock = off
-chat_read = off
 noknock = off
 godmode = off
 walkwithinst = off
@@ -2359,8 +2380,36 @@ function get_players_list()
 		end
 	end
 
+	table.sort(players, function(a, b) return a.dist < b.dist end)
+
 	return players
 	-- gg.alert(tostring(players))
+end
+
+function choose_player(bool)
+	local pmenu = {}
+	local players = get_players_list()
+	for k, v in ipairs(players) do
+		table.insert(pmenu, v.text)
+	end
+	local p = gg.choice(pmenu, nil, "Choose player:")
+	if bool then
+		return players[p]
+	else
+		return p
+	end
+end
+
+function switch_stick_to_player(bool)
+	sticktoplayer = bool
+	if bool then
+		local p = choose_player(true)
+		if p == nil then
+			sticktoplayer = false
+			return
+		end
+		theplayer = p.pos
+	end
 end
 
 function set_relation_request()
@@ -2368,47 +2417,91 @@ function set_relation_request()
 end
 
 function set_all_relation()
-	local players = get_players_list()
+	gx._block_repeat = true
 
-	local rlist = {
-		"Hand",
-		"Hug",
-		"Carry",
-		"Bearhug",
-		"Pat",
-		"manual",
-		"remove"
-	}
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
 
-	local type = gg.choice(rlist, nil, "Choose request:")
+	local type = gg.choice(rlist, nil, "WARNING! Player must be lit:")
 	local freeze = true
+	local values = {}
 
 	if type == nil then return end
 
-	if type == 2 then
-		type = 8
-	elseif type == 3 then
-		type = 12
-	elseif type == 4 then
-		type = 18
-	elseif type == 5 then
-		type = 14
-	elseif type == #rlist - 1 then
-		type = gg.prompt({"Write relation id:"}, {0}, {"number"})
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
 		if type == nil then return end
 	elseif type == #rlist then
 		type = 0
 		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
 	end
 
-	for k, v in pairs(players) do
-		local values = {
-			{address = v.pos - offsets.prelation, value = type, flags = "D", freeze = freeze},
-			{address = v.pos - offsets.prelation, value = 41249, flags = "D", freeze = freeze}
-		}
-
-		gx.editor.set(values)
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation, value = type, flags = "D", freeze = freeze})
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
 	end
+
+	gx.editor.set(values)
+end
+
+function offer_all_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local freeze = true
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D", freeze = freeze})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
+
+	gx.editor.set(values)
+end
+
+function offer_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	local p = choose_player()
+	if p == nil then return end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D"})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D"})
+	table.insert(values, {address = player + offsets.pose, value = 6, flags = "D"})
+
+	gx.editor.set(values)
 end
 
 function get_wl_count(b)
@@ -3031,8 +3124,12 @@ gx.add_menu({
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
-		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
-		{"{gx@playerrelations}", {set_relation_request}},
+		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
+		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
+		{"[🤝] {gx@relofferto}", {offer_relation}},
+		{"[🤝] {gx@offertoall}", {offer_all_relation}},
+		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
 	type = "back",
 	menu_repeat = true
