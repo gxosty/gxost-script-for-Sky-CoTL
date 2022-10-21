@@ -60,6 +60,7 @@ function load_spells()
 	for k, v in ipairs(midslots) do
 		if v[2] ~= 0 then
 			pmagic(v[1], v[2], 0)
+			mslot[v[1]] = v[3]
 		end
 	end
 end
@@ -2035,10 +2036,11 @@ function pmagic(arr, id, sil, freeze)
 	gx.editor.set(values)
 end
 
-function update_sspell_list(slot, id)
+function update_sspell_list(slot, id, name)
 	for k, v in ipairs(midslots) do
 		if slot == v[1] then
 			v[2] = id
+			v[3] = name
 			break
 		end
 	end
@@ -2058,7 +2060,7 @@ function dospell(ind)
 		for i, v in pairs(slotmenu) do
 			mslot[i] = magicsid[1][1]
 			pmagic(i, magicsid[1][2], 0, false)
-			update_sspell_list(i, magicsid[1][2])
+			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
 		for i, v in ipairs(magicsid) do
@@ -2074,7 +2076,7 @@ function dospell(ind)
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = mlist[magicmenu]
 		pmagic(slotmenu, mids[magicmenu], 0)
-		update_sspell_list(slotmenu, mids[magicmenu])
+		update_sspell_list(slotmenu, mids[magicmenu], mlist[magicmenu])
 	end
 
 	save_settings()
