@@ -2027,7 +2027,8 @@ function pmagic(arr, id, sil, freeze)
 end
 
 function dospell(ind)
-	mlist = {}
+	local mlist = {}
+	local mids = {}
 	ind = ind[1]
 	if ind == 7 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
@@ -2042,6 +2043,7 @@ function dospell(ind)
 		for i, v in ipairs(magicsid) do
 			if v[3] == ind then
 				table.insert(mlist, v[1])
+				table.insert(mids, v[2])
 			end
 		end
 		magicmenu = gg.choice(mlist, nil, "Choose spell:")
@@ -2049,8 +2051,8 @@ function dospell(ind)
 			return
 		end
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
-		mslot[slotmenu] = magicsid[magicmenu][1]
-		pmagic(slotmenu, magicsid[magicmenu][2], 0)
+		mslot[slotmenu] = mlist[magicmenu]
+		pmagic(slotmenu, mids[magicmenu], 0)
 	end
 end
 
