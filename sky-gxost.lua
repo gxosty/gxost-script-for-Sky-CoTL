@@ -2889,17 +2889,17 @@ gx.add_menu({
 })
 
 gx.add_menu({
-	title = "{gx@spellcat}",
+	title = "{gx@spellcat}:",
 	name = "spellsmenu",
 	f = {dospell, {"{gxindex}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
-		{"[👺] {gx@masksandaccs}"},
-		{"[🦱] {gx@hairsandaccs}"},
-		{"[🧣] {gx@capes}"},
-		{"[🪑] {gx@props}"},
-		{"[❓] {gx@others}"},
-		{"[❌] {gx@remove}"}
+		-- {"[👺] {gx@masksandaccs}"},
+		-- {"[🦱] {gx@hairsandaccs}"},
+		-- {"[🧣] {gx@capes}"},
+		-- {"[🪑] {gx@props}"},
+		-- {"[❓] {gx@others}"},
+		-- {"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
 	type = "back"
