@@ -1301,6 +1301,7 @@ sarray = {}
 
 -- 0x469210 0x121F0
 -- C0
+-- 34C8
 
 offsets = {
 	chat = 0x5BBF84, --
@@ -2890,7 +2891,7 @@ gx.add_menu({
 gx.add_menu({
 	title = "{gx@spellcat}",
 	name = "spellsmenu",
-	f = {dospell, {"{gxindex}"}}
+	f = {dospell, {"{gxindex}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
 		{"[👺] {gx@masks} / {gx@headaccs}"},
