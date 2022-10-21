@@ -245,56 +245,56 @@ _propsid = {
 }
 
 magicsid = {
-	{'❌none',0,0},
-	{'💫Small',1692428656,0},
-	{'💫Smaller',2142718166,0},
-	{'💫Big',891098028,0},
-	{'💫Bigger',-1879316162,0},
-	{'💫Glow',1097748727,0},
-	{'💫Recharge',1750685908,0},
-	{'💫Floating',1860519737,0},
-	{'💫Anti Dragon',1067647386,0},
-	{'💫Anti Darkness',383062578,0},
-	{'💫Anti rain',-1463943689,0},
-	{'💫A lot of candlelight',-1727483534,0},
-	{'💞Flight Blessing',-1362469224,0},
-	{'💞Friendship Back to Back',1405645877,0},
-	{'💞Friendship Bear Hug',1677246236,0},
-	{'💞Friendship Warp',998754260,0},
-	{'🙀Dark Crab Calling',1725047129,0},
-	{'🙀Jellyfish Calling',-957441587,0},
-	{'🙀Manta Calling',1814753890,0},
-	{'🧸Lantern',1319710173,0},
-	{'🧸Table',256924066,0},
-	{'🧸Harp',-1001892262,0},
-	{'🧸Swing',1064080243,0},
-	{'🧸Seesaw',-2095749161,0},
-	{'🧸Tea table',10058409,0},
-	{'🧸Transparent Umbrella',1167393926,0},
-	{'👗Green Bud Cloak',2079599063,1},
-	{'👗TGC Cloak',540856305,1},
-	{'👗Bat Cloak',625581156,1},
-	{'👗Spider Silk Cloak',930203946,1},
-	{'👗Snowflake Cloak',-784831205,1},
-	{'👗Christmas Cloak',1306675982,1},
-	{'👗White bird cloak',-1623262339,1},
-	{'👗petal cloak',-6043825,1},
-	{'👗Lightseeker bulb',1375571404,1},
-	{'👗Cloak of Spring', -445538750,1},
-	{'👗Sakura Cloak',162066154,1},
-	{'👗Ocean Cloak',329684861,1},
-	{'👗Dream Season Red Velvet Cloak',-308941587,1},
-	{'👗Dream Season Graduation Cloak',-1822337532,1},
-	{'👗Rainbow Cloak', -195929339,1},
-	{'👑Rainbow Flower', 2141511649,2},
-	{'👑Rainbow Tassel', -290700605,2},
-	{'👑Pumpkin Hat',1046521292,2},
-	{'👑Witch Hat',1983755432,2},
-	{'👑Lion Dance Hat',2093744529,2},
-	{'👑Double Maru Head',-2099997114,2},
-	{'👑Felt Hat',-823266018,2},
-	{'👑Sakura Hairstyle',373243257,2},
-	{'👑Dream Season Hair',1059767859,2},
+	{'❌none',0,-1},
+	{'💫Small',1692428656,6},
+	{'💫Smaller',2142718166,6},
+	{'💫Big',891098028,6},
+	{'💫Bigger',-1879316162,6},
+	{'💫Glow',1097748727,6},
+	{'💫Recharge',1750685908,6},
+	{'💫Floating',1860519737,6},
+	{'💫Anti Dragon',1067647386,6},
+	{'💫Anti Darkness',383062578,6},
+	{'💫Anti rain',-1463943689,6},
+	{'💫A lot of candlelight',-1727483534,6},
+	{'💞Flight Blessing',-1362469224,6},
+	{'💞Friendship Back to Back',1405645877,6},
+	{'💞Friendship Bear Hug',1677246236,6},
+	{'💞Friendship Warp',998754260,6},
+	{'🙀Dark Crab Calling',1725047129,6},
+	{'🙀Jellyfish Calling',-957441587,6},
+	{'🙀Manta Calling',1814753890,6},
+	{'🧸Lantern',1319710173,5},
+	{'🧸Table',256924066,5},
+	{'🧸Harp',-1001892262,5},
+	{'🧸Swing',1064080243,5},
+	{'🧸Seesaw',-2095749161,5},
+	{'🧸Tea table',10058409,5},
+	{'🧸Transparent Umbrella',1167393926,5},
+	{'👗Green Bud Cloak',2079599063,4},
+	{'👗TGC Cloak',540856305,4},
+	{'👗Bat Cloak',625581156,4},
+	{'👗Spider Silk Cloak',930203946,4},
+	{'👗Snowflake Cloak',-784831205,4},
+	{'👗Christmas Cloak',1306675982,4},
+	{'👗White bird cloak',-1623262339,4},
+	{'👗Petal cloak',-6043825,4},
+	{'👗Lightseeker bulb',1375571404,4},
+	{'👗Cloak of Spring', -445538750,4},
+	{'👗Sakura Cloak',162066154,4},
+	{'👗Ocean Cloak',329684861,4},
+	{'👗Dream Season Red Velvet Cloak',-308941587,4},
+	{'👗Dream Season Graduation Cloak',-1822337532,4},
+	{'👗Rainbow Cloak', -195929339,4},
+	{'👑Rainbow Flower', 2141511649,3},
+	{'👑Rainbow Tassel', -290700605,3},
+	{'👑Pumpkin Hat',1046521292,3},
+	{'👑Witch Hat',1983755432,3},
+	{'👑Lion Dance Hat',2093744529,3},
+	{'👑Double Maru Head',-2099997114,3},
+	{'👑Felt Hat',-823266018,3},
+	{'👑Sakura Hairstyle',373243257,3},
+	{'👑Dream Season Hair',1059767859,3},
 	{'🤡White Fox Mask', 784922793,2},
 	{'🤡Red Rabbit Mask', 964659005,2},
 	{'🤡Admiring Actor Mask', -218615327,2},
@@ -307,77 +307,77 @@ magicsid = {
 	{'🤡Christmas hat',-1409683913,2},
 	{'🤡Banquet bow tie',8361886,2},
 	{'🤡Ocean Necklace',-1938239955,2},
-	{'👑Orange headgear',-1616733323,2},
-	{'🌠turquoise tail',1318288330,0},
-	{'🌠black tail',-176902809,0},
-	{'🌠blue tail',-1951801352,0},
-	{'🌠Cyan tail',1918290563,0},
-	{'🌠Green tail',637646527,0},
-	{'🌠Purple pink tail',-1527316661,0},
-	{'🌠orange tail',1237283438,0},
-	{'🌠purple tail',470393304,0},
-	{'🌠purple tail',-1071076330,0},
-	{'🌠Red tail',-1304862813,0},
-	{'🌠Yellow tail',-1354381164,0},
-	{'🌠Rainbow trail',147016038,0},
-	{'🧸Fox',2237536272,0},
-	{'👖Pants Sword',3799734077,0},
-	{'👗Scarf Cape',2207305370,1},
-	{'👗Asteroid Jacket',1402240423,1},
-	{'🧸️Beach Bed Wood',3136256372,0},
-	{'🧸️Chair Wood',472595010,0},
-	{'🧸Chair Cloth',2428135093,0},
-	{'👑Hair Pin',4123817368,0},
-	{'🧸️Brazier 2',160072902,0},
-	{'🧸️Summer Umbrella',2878211958,0},
-	{'👑️Summer Hat',2052387583,2},
-	{'🧸️Recliner',2875484078,0},
-	{'👗Golden Cape',330655056,1},
-	{'🙀️Kizuna AI Call',2413103828,0},
-	{'👑️Small rabit',-848739711,0},
-	{'🧸️Winter piano',-1202427550,0},
-	{'🆕️Crab Troll',901504997,0},
-	{'🆕️Anti Krill',3362316915,0}, 
-	{'👗️Canada Cape',769892976,1},
-	{'🆕️Halloween Pants',969946279,0},
-	{'🆕️Halloween Hair 1',116679863,0},
-	{'🆕️Halloween Hair 2',2534225385,0},
-	{'🆕️Halloween Pumpkin',125584301,0},
-	{'🆕️Halloween Chair',3497279169,0},
-	{'🆕️Halloween Horn',1123843208,2},
-	{'🆕️Witch Hat 2',4219181095,2},
-	{'🆕Winter Feast Scarf',70832281,0},
-	{'🆕Winter Feast Hat',2202141658,0}, 
-	{'🆕Winter Feast Cape',1762827508,2},
-	{'🆕Snow Globe',1440439821,0},
-	{'❤️Gondola', 303877523},
-	{'🧸️Triumph Handpan', 454864430},
-	{'🤡Tiger Mask', 475055967},
-	{'👑️Fish Head Acc', 551055685},
-	{'👑️Fish Hood', -1543558130},
-	{'👗️Fish Cape', 573237039},
-	{'❤️Flower Crown', 942365523},
-	{'🧸️Triumph Guitar', 970364197},
-	{'🧸️Triumph Harp', 1275481440},
-	{'👖Rainbow Trousers', 1482655023},
-	{'🧸️Bloom Table 2022', 1598845731},
-	{'🤡Turtle Necklace', 1943995802},
-	{'👗️Turtle Cape', -700035318},
-	{'👑️Kizuna Bant', 2050094531},
-	{'👑️Golden flower Head acc', 2141511649},
-	{'👑️Rainbow Headphones', -1769208928},
-	{'👑️Earings 2022', -1590289609},
-	{'👗️Wisteria Cape 2022', -1244390069},
-	{'👑️Rainbow Double Flower', -1014212311},
-	{'🧸️TGC Anniversary Guitar', 332997197},
-	{"⛺Summer Tent", 1414743743},
-	{"🎧Moon Star Hair Acc", -1989753674},
-	{"👗️Runaway Pants", -1134828593},
-	{"👑️Runaway Hair", 239584271},
-	{"🐱Cat Hair", -25012636},
-	{"🐱Cat Cape", 583315364},
-	{"🐱Cat Mask", -901640940},
-	{"🐱Cat Prop", 1436679857}
+	{'👑Orange headgear',-1616733323,3},
+	{'🌠turquoise tail',1318288330,6},
+	{'🌠black tail',-176902809,6},
+	{'🌠blue tail',-1951801352,6},
+	{'🌠Cyan tail',1918290563,6},
+	{'🌠Green tail',637646527,6},
+	{'🌠Purple pink tail',-1527316661,6},
+	{'🌠orange tail',1237283438,6},
+	{'🌠purple tail',470393304,6},
+	{'🌠purple tail',-1071076330,6},
+	{'🌠Red tail',-1304862813,6},
+	{'🌠Yellow tail',-1354381164,6},
+	{'🌠Rainbow trail',147016038,6},
+	{'🧸Fox',2237536272,5},
+	{'👖Pants Sword',3799734077,1},
+	{'👗Scarf Cape',2207305370,4},
+	{'👗Asteroid Jacket',1402240423,4},
+	{'🧸️Beach Bed Wood',3136256372,5},
+	{'🧸️Chair Wood',472595010,5},
+	{'🧸Chair Cloth',2428135093,5},
+	{'👑Hair Pin',4123817368,3},
+	{'🧸️Brazier 2',160072902,5},
+	{'🧸️Summer Umbrella',2878211958,5},
+	{'👑️Summer Hat',2052387583,3},
+	{'🧸️Recliner',2875484078,5},
+	{'👗Golden Cape',330655056,4},
+	{'🙀️Kizuna AI Call',2413103828,6},
+	{'👑️Small rabit',-848739711,3},
+	{'🧸️Winter piano',-1202427550,5},
+	{'🆕️Crab Troll',901504997,6},
+	{'🆕️Anti Krill',3362316915,6}, 
+	{'👗️Canada Cape',769892976,4},
+	{'🆕️Halloween Pants',969946279,1},
+	{'🆕️Halloween Hair 1',116679863,3},
+	{'🆕️Halloween Hair 2',2534225385,3},
+	{'🆕️Halloween Pumpkin',125584301,5},
+	{'🆕️Halloween Chair',3497279169,5},
+	{'🆕️Halloween Horn',1123843208,3},
+	{'🆕️Witch Hat 2',4219181095,3},
+	{'🆕Winter Feast Scarf',70832281,4},
+	{'🆕Winter Feast Hat',2202141658,3}, 
+	{'🆕Winter Feast Cape',1762827508,4},
+	{'🆕Snow Globe',1440439821,5},
+	{'❤️Gondola', 303877523, 5},
+	{'🧸️Triumph Handpan', 454864430, 5},
+	{'🤡Tiger Mask', 475055967, 2},
+	{'👑️Fish Head Acc', 551055685, 3},
+	{'👑️Fish Hood', -1543558130, 3},
+	{'👗️Fish Cape', 573237039, 4},
+	{'❤️Flower Crown', 942365523, 3},
+	{'🧸️Triumph Guitar', 970364197, 5},
+	{'🧸️Triumph Harp', 1275481440, 5},
+	{'👖Rainbow Trousers', 1482655023, 1},
+	{'🧸️Bloom Table 2022', 1598845731, 5},
+	{'🤡Turtle Necklace', 1943995802, 2},
+	{'👗️Turtle Cape', -700035318, 4},
+	{'👑️Kizuna Bant', 2050094531, 3},
+	{'👑️Golden flower Head acc', 2141511649, 3},
+	{'👑️Rainbow Headphones', -1769208928, 3},
+	{'👑️Earings 2022', -1590289609, 3},
+	{'👗️Wisteria Cape 2022', -1244390069, 4},
+	{'👑️Rainbow Double Flower', -1014212311, 3},
+	{'🧸️TGC Anniversary Guitar', 332997197, 5},
+	{"⛺Summer Tent", 1414743743, 5},
+	{"🎧Moon Star Hair Acc", -1989753674, 3},
+	{"👗️Runaway Pants", -1134828593, 1},
+	{"👑️Runaway Hair", 239584271, 3},
+	{"🐱Cat Hair", -25012636, 3},
+	{"🐱Cat Cape", 583315364, 4},
+	{"🐱Cat Mask", -901640940, 2},
+	{"🐱Cat Prop", 1436679857, 5}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -1299,6 +1299,9 @@ player = nil
 freefly = false
 sarray = {}
 
+-- 0x469210 0x121F0
+-- C0
+
 offsets = {
 	chat = 0x5BBF84, --
 	ptoemotes = 0xA42624, --
@@ -2022,35 +2025,29 @@ function pmagic(arr, id, sil, freeze)
 	gx.editor.set(values)
 end
 
-function dospell()
+function dospell(ind)
 	mlist = {}
-
-	for i, v in ipairs(magicsid) do
-		table.insert(mlist, v[1])
-	end
-
-	magicmenu = gg.choice(mlist, nil, "Choose spell:")
-
-	if magicmenu == nil then
-		return
-	end
-
-	if magicmenu == 1 then
+	if ind == 7 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
-	else
-		slotmenu = gg.choice(mslot, nil, "Choose slot:")
-	end
-
-	if slotmenu == nil then
-		return
-	end
-
-	if magicmenu == 1 then
+		if slotmenu == nil then
+			return
+		end
 		for i, v in pairs(slotmenu) do
-			mslot[i] = magicsid[magicmenu][1]
-			pmagic(i, magicsid[magicmenu][2], 0)
+			mslot[i] = magicsid[1][1]
+			pmagic(i, magicsid[1][2], 0, false)
 		end
 	else
+		if ind == 6 then ind == -1 end
+		for i, v in ipairs(magicsid) do
+			if v[3] == ind then
+				table.insert(mlist, v[1])
+			end
+		end
+		magicmenu = gg.choice(mlist, nil, "Choose spell:")
+		if magicmenu == nil then
+			return
+		end
+		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = magicsid[magicmenu][1]
 		pmagic(slotmenu, magicsid[magicmenu][2], 0)
 	end
@@ -2064,7 +2061,7 @@ function show_candles(bool)
 				table.insert(xv,{address = nentity + offsets.vcandles + (offsets.vcandles_dist * i),flags = gg.TYPE_DWORD,value = 28673})
 			else
 				table.insert(xv,{address = nentity + offsets.vcandles + (offsets.vcandles_dist * i),flags = gg.TYPE_DWORD,value = 0})
-			end			
+			end
 		else
 			break;
 		end
@@ -2841,7 +2838,7 @@ gx.add_menu({
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
 		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
-		{"[💫] {gx@spells}", {dospell}},
+		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
@@ -2891,6 +2888,22 @@ gx.add_menu({
 })
 
 gx.add_menu({
+	title = "{gx@spellcat}",
+	name = "spellsmenu",
+	f = {dospell, {"{gxindex}"}}
+	menu = {
+		{"[👖] {gx@pants}"},
+		{"[👺] {gx@masks} / {gx@headaccs}"},
+		{"[🦱] {gx@hairs} / {gx@hairaccs}"},
+		{"[🧣] {gx@capes}"},
+		{"[🪑] {gx@props}"},
+		{"[❓] {gx@others}"}
+	},
+	use_single_function = true,
+	type = "back"
+})
+
+gx.add_menu({
 	title = "{gx@openui2}:",
 	name = "uimenu",
 	menu = {
@@ -2905,11 +2918,11 @@ gx.add_menu({
 	name = "closetmenu",
 	f = {opencloset, {"{gxindex}"}},
 	menu = {
-		{"[??] Pants"},
-		{"[👺] Masks"},
-		{"[🦱] Hairs"},
-		{"[🧣] Capes"},
-		{"[🪑] Props"}
+		{"[👖] {gx@pants}"},
+		{"[👺] {gx@masks}"},
+		{"[🦱] {gx@hairs}"},
+		{"[🧣] {gx@capes}"},
+		{"[🪑] {gx@props}"}
 	},
 	use_single_function = true,
 	type = "back"
