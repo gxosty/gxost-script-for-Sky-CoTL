@@ -24,7 +24,7 @@ else
 	gx = require("gx.gx")
 	defsets = gx.load_json_file("gxost-defaults.json")
 	langlist = gx.load_json_file("languages.json")
-end
+endf
 
 scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
 
@@ -2359,8 +2359,56 @@ function get_players_list()
 		end
 	end
 
-	-- return players
-	gg.alert(tostring(players))
+	return players
+	-- gg.alert(tostring(players))
+end
+
+function set_relation_request()
+	-- COMING SOOOOOON legit
+end
+
+function set_all_relation()
+	local players = get_players_list()
+
+	local rlist = {
+		"Hand",
+		"Hug",
+		"Carry",
+		"Bearhug",
+		"Pat",
+		"manual",
+		"remove"
+	}
+
+	local type = gg.choice(rlist, nil, "Choose request:")
+	local freeze = true
+
+	if type == nil then return end
+
+	if type == 2 then
+		type = 8
+	elseif type == 3 then
+		type = 12
+	elseif type == 4 then
+		type = 18
+	elseif type == 5 then
+		type = 14
+	elseif type == #rlist - 1 then
+		type = gg.prompt({"Write relation id:"}, {0}, {"number"})
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	end
+
+	for k, v in pairs(players) do
+		local values = {
+			{address = v.pos - offsets.prelation, value = type, flags = "D", freeze = freeze},
+			{address = v.pos - offsets.prelation, value = 41249, flags = "D", freeze = freeze}
+		}
+
+		gx.editor.set(values)
+	end
 end
 
 function get_wl_count(b)
@@ -2984,7 +3032,7 @@ gx.add_menu({
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
-		{"{gx@playerrelations}", {gx.open_menu, {"relationsmenu"}}},
+		{"{gx@playerrelations}", {set_relation_request}},
 	},
 	type = "back",
 	menu_repeat = true
