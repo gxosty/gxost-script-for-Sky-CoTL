@@ -7,7 +7,7 @@
 -- Türkmenler barmaý?? XD
 
 git_branch = "dev"
-local debug_mode = "off"
+local debug_mode = "local"
 url = "http://192.168.1.108:9999"
 
 if debug_mode ~= "local" then
@@ -1309,9 +1309,10 @@ player = nil
 freefly = false
 sarray = {}
 
--- 0x469210 0x121F0
--- C0
+-- 0x121F0
+-- -0xC0
 -- 34C8
+-- ppos -> code 0x10798
 
 offsets = {
 	chat = 0x5BBF84, --
@@ -1357,6 +1358,9 @@ offsets = {
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
 	wind_off = -0x87A6CC, --
+	player_dist = 0x121F0,
+	prelation = -0xC0,
+	pcode = 0x10798,
 
 	full_magics = 0x3FBC18
 }
@@ -1465,6 +1469,10 @@ function has(t, a)
 	end
 
 	return false
+end
+
+function distance3D(a, b)
+	return math.sqrt((b[1] - a[1]) ^ 2 + (b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2)
 end
 
 function freeze_ask(data)
@@ -2288,30 +2296,6 @@ function propmenu()
 	end
 end
 
-function capeset(id, freeze)
-	if freeze == nil then
-		freeze = true
-	end
-
-	local n = gg.getValues({
-		{address = player + offsets.cape_off, flags = gg.TYPE_DWORD},
-		{address = player + offsets.cape2_off, flags = gg.TYPE_DWORD}
-	})
-
-	for i, v in ipairs(n) do
-		v.value = id
-		v.freeze = freeze
-	end
-
-	if freeze then
-		gg.addListItems(n)
-	else
-		gg.removeListItems(n)
-	end
-
-	gg.setValues(n)
-end
-
 function opencloset(c)
 	local cconv = {
 		[1] = 0,
@@ -2345,6 +2329,38 @@ function switch_cutscene_destroyer(bool)
 	expr = expr..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df"
 	gx.editor.switch(expr, bool)
 	gx.set_var("settings.bscenes", bool)
+end
+
+function get_players_list()
+	local players = {}
+	local values = {}
+
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+	end
+
+	values = gx.editor.get(values)
+
+	for i = 1, #values, 4 do
+		if values[i].value ~= 0 then
+			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
+			local code = values[i].value
+			local dist = distance3D(getposit(true), ppos)
+			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			table.insert(players, {
+				pos = values[i + 1].address,
+				code = values[i].value,
+				dist = dist,
+				text = text
+			})
+		end
+	end
+
+	-- return players
+	gg.alert(tostring(players))
 end
 
 function get_wl_count(b)
@@ -2967,10 +2983,20 @@ gx.add_menu({
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
-		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
+		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
+		{"{gx@playerrelations}", {gx.open_menu, {"relationsmenu"}}},
 	},
-	type = "xback",
+	type = "back",
 	menu_repeat = true
+})
+
+gx.add_menu({
+	title = "Player relations:",
+	name = "relationsmenu",
+	menu = {
+		{"Test Players", {get_players_list}}
+	},
+	type = "back"
 })
 
 gx.add_menu({
