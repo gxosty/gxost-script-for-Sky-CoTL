@@ -7,7 +7,7 @@
 -- Türkmenler barmaý?? XD
 
 git_branch = "dev"
-local debug_mode = "off"
+local debug_mode = "local"
 url = "http://192.168.1.108:9999"
 
 if debug_mode ~= "local" then
@@ -2038,7 +2038,7 @@ function dospell(ind)
 			pmagic(i, magicsid[1][2], 0, false)
 		end
 	else
-		if ind == 6 then ind == -1 end
+		if ind == 6 then ind = -1 end
 		for i, v in ipairs(magicsid) do
 			if v[3] == ind then
 				table.insert(mlist, v[1])
@@ -2894,11 +2894,12 @@ gx.add_menu({
 	f = {dospell, {"{gxindex}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
-		{"[👺] {gx@masks} / {gx@headaccs}"},
-		{"[🦱] {gx@hairs} / {gx@hairaccs}"},
+		{"[👺] {gx@masksandaccs}"},
+		{"[🦱] {gx@hairsandaccs}"},
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
-		{"[❓] {gx@others}"}
+		{"[❓] {gx@others}"},
+		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
 	type = "back"
