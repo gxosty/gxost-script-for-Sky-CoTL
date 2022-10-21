@@ -1,10 +1,6 @@
--- I am tired of doing, updating and improving this script because it needs a lot attention and I don't have much time to take care of it
--- So let me say some words. You can use this script in educational purpose and is allowed to modify it.
+-- You can use this script in educational purposes and is allowed to modify it.
 -- This script should always remain free and open source and readable, any kind of obfuscation is not allowed
 -- I am not master in creating scripts and I started it as hobby, so many things were revived from FChina.
--- BTW it doesn't mean I abandon this script. Just I will not be adding anything new, or I will add but rarely.
-
--- Türkmenler barmaý?? XD
 
 git_branch = "main"
 local debug_mode = "off"
@@ -16,7 +12,9 @@ if debug_mode ~= "local" then
 		defsets = gx.json.decode(gg.makeRequest(url.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
 	else
-		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
+		local resp = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content
+		-- gg.alert(tostring(resp))
+		gx = load(resp)()
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
@@ -32,7 +30,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7c"
+version = "0.1.7d"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -53,6 +51,15 @@ function vcheck()
 
 	if tonumber(gameinfo.versionCode) > scriptv.version then
 		gg.alert('[Error] Script needs update! \ngame : ' .. tonumber(gameinfo.versionCode) .. '\nscript : ' .. scriptv.version)
+	end
+end
+
+function load_spells()
+	for k, v in ipairs(midslots) do
+		if v[2] ~= 0 then
+			pmagic(v[1], v[2], 0)
+			mslot[v[1]] = v[3]
+		end
 	end
 end
 
@@ -79,6 +86,7 @@ function load_settings()
 	gx.set_fallback_language("en")
 	gx.set_language(settings.langcode)
 	set_lang(settings.langcode)
+	midslots = gx.vars.settings.saved_spells or {}
 end
 
 function save_settings()
@@ -245,56 +253,56 @@ _propsid = {
 }
 
 magicsid = {
-	{'❌none',0,0},
-	{'💫Small',1692428656,0},
-	{'💫Smaller',2142718166,0},
-	{'💫Big',891098028,0},
-	{'💫Bigger',-1879316162,0},
-	{'💫Glow',1097748727,0},
-	{'💫Recharge',1750685908,0},
-	{'💫Floating',1860519737,0},
-	{'💫Anti Dragon',1067647386,0},
-	{'💫Anti Darkness',383062578,0},
-	{'💫Anti rain',-1463943689,0},
-	{'💫A lot of candlelight',-1727483534,0},
-	{'💞Flight Blessing',-1362469224,0},
-	{'💞Friendship Back to Back',1405645877,0},
-	{'💞Friendship Bear Hug',1677246236,0},
-	{'💞Friendship Warp',998754260,0},
-	{'🙀Dark Crab Calling',1725047129,0},
-	{'🙀Jellyfish Calling',-957441587,0},
-	{'🙀Manta Calling',1814753890,0},
-	{'🧸Lantern',1319710173,0},
-	{'🧸Table',256924066,0},
-	{'🧸Harp',-1001892262,0},
-	{'🧸Swing',1064080243,0},
-	{'🧸Seesaw',-2095749161,0},
-	{'🧸Tea table',10058409,0},
-	{'🧸Transparent Umbrella',1167393926,0},
-	{'👗Green Bud Cloak',2079599063,1},
-	{'👗TGC Cloak',540856305,1},
-	{'👗Bat Cloak',625581156,1},
-	{'👗Spider Silk Cloak',930203946,1},
-	{'👗Snowflake Cloak',-784831205,1},
-	{'👗Christmas Cloak',1306675982,1},
-	{'👗White bird cloak',-1623262339,1},
-	{'👗petal cloak',-6043825,1},
-	{'👗Lightseeker bulb',1375571404,1},
-	{'👗Cloak of Spring', -445538750,1},
-	{'👗Sakura Cloak',162066154,1},
-	{'👗Ocean Cloak',329684861,1},
-	{'👗Dream Season Red Velvet Cloak',-308941587,1},
-	{'👗Dream Season Graduation Cloak',-1822337532,1},
-	{'👗Rainbow Cloak', -195929339,1},
-	{'👑Rainbow Flower', 2141511649,2},
-	{'👑Rainbow Tassel', -290700605,2},
-	{'👑Pumpkin Hat',1046521292,2},
-	{'👑Witch Hat',1983755432,2},
-	{'👑Lion Dance Hat',2093744529,2},
-	{'👑Double Maru Head',-2099997114,2},
-	{'👑Felt Hat',-823266018,2},
-	{'👑Sakura Hairstyle',373243257,2},
-	{'👑Dream Season Hair',1059767859,2},
+	{'❌none',0,-1},
+	{'💫Small',1692428656,6},
+	{'💫Smaller',2142718166,6},
+	{'💫Big',891098028,6},
+	{'💫Bigger',-1879316162,6},
+	{'💫Glow',1097748727,6},
+	{'💫Recharge',1750685908,6},
+	{'💫Floating',1860519737,6},
+	{'💫Anti Dragon',1067647386,6},
+	{'💫Anti Darkness',383062578,6},
+	{'💫Anti rain',-1463943689,6},
+	{'💫A lot of candlelight',-1727483534,6},
+	{'💞Flight Blessing',-1362469224,6},
+	{'💞Friendship Back to Back',1405645877,6},
+	{'💞Friendship Bear Hug',1677246236,6},
+	{'💞Friendship Warp',998754260,6},
+	{'🙀Dark Crab Calling',1725047129,6},
+	{'🙀Jellyfish Calling',-957441587,6},
+	{'🙀Manta Calling',1814753890,6},
+	{'🧸Lantern',1319710173,5},
+	{'🧸Table',256924066,5},
+	{'🧸Harp',-1001892262,5},
+	{'🧸Swing',1064080243,5},
+	{'🧸Seesaw',-2095749161,5},
+	{'🧸Tea table',10058409,5},
+	{'🧸Transparent Umbrella',1167393926,5},
+	{'👗Green Bud Cloak',2079599063,4},
+	{'👗TGC Cloak',540856305,4},
+	{'👗Bat Cloak',625581156,4},
+	{'👗Spider Silk Cloak',930203946,4},
+	{'👗Snowflake Cloak',-784831205,4},
+	{'👗Christmas Cloak',1306675982,4},
+	{'👗White bird cloak',-1623262339,4},
+	{'👗Petal cloak',-6043825,4},
+	{'👗Lightseeker bulb',1375571404,4},
+	{'👗Cloak of Spring', -445538750,4},
+	{'👗Sakura Cloak',162066154,4},
+	{'👗Ocean Cloak',329684861,4},
+	{'👗Dream Season Red Velvet Cloak',-308941587,4},
+	{'👗Dream Season Graduation Cloak',-1822337532,4},
+	{'👗Rainbow Cloak', -195929339,4},
+	{'👑Rainbow Flower', 2141511649,3},
+	{'👑Rainbow Tassel', -290700605,3},
+	{'👑Pumpkin Hat',1046521292,3},
+	{'👑Witch Hat',1983755432,3},
+	{'👑Lion Dance Hat',2093744529,3},
+	{'👑Double Maru Head',-2099997114,3},
+	{'👑Felt Hat',-823266018,3},
+	{'👑Sakura Hairstyle',373243257,3},
+	{'👑Dream Season Hair',1059767859,3},
 	{'🤡White Fox Mask', 784922793,2},
 	{'🤡Red Rabbit Mask', 964659005,2},
 	{'🤡Admiring Actor Mask', -218615327,2},
@@ -307,77 +315,78 @@ magicsid = {
 	{'🤡Christmas hat',-1409683913,2},
 	{'🤡Banquet bow tie',8361886,2},
 	{'🤡Ocean Necklace',-1938239955,2},
-	{'👑Orange headgear',-1616733323,2},
-	{'🌠turquoise tail',1318288330,0},
-	{'🌠black tail',-176902809,0},
-	{'🌠blue tail',-1951801352,0},
-	{'🌠Cyan tail',1918290563,0},
-	{'🌠Green tail',637646527,0},
-	{'🌠Purple pink tail',-1527316661,0},
-	{'🌠orange tail',1237283438,0},
-	{'🌠purple tail',470393304,0},
-	{'🌠purple tail',-1071076330,0},
-	{'🌠Red tail',-1304862813,0},
-	{'🌠Yellow tail',-1354381164,0},
-	{'🌠Rainbow trail',147016038,0},
-	{'🧸Fox',2237536272,0},
-	{'👖Pants Sword',3799734077,0},
-	{'👗Scarf Cape',2207305370,1},
-	{'👗Asteroid Jacket',1402240423,1},
-	{'🧸️Beach Bed Wood',3136256372,0},
-	{'🧸️Chair Wood',472595010,0},
-	{'🧸Chair Cloth',2428135093,0},
-	{'👑Hair Pin',4123817368,0},
-	{'🧸️Brazier 2',160072902,0},
-	{'🧸️Summer Umbrella',2878211958,0},
-	{'👑️Summer Hat',2052387583,2},
-	{'🧸️Recliner',2875484078,0},
-	{'👗Golden Cape',330655056,1},
-	{'🙀️Kizuna AI Call',2413103828,0},
-	{'👑️Small rabit',-848739711,0},
-	{'🧸️Winter piano',-1202427550,0},
-	{'🆕️Crab Troll',901504997,0},
-	{'🆕️Anti Krill',3362316915,0}, 
-	{'👗️Canada Cape',769892976,1},
-	{'🆕️Halloween Pants',969946279,0},
-	{'🆕️Halloween Hair 1',116679863,0},
-	{'🆕️Halloween Hair 2',2534225385,0},
-	{'🆕️Halloween Pumpkin',125584301,0},
-	{'🆕️Halloween Chair',3497279169,0},
-	{'🆕️Halloween Horn',1123843208,2},
-	{'🆕️Witch Hat 2',4219181095,2},
-	{'🆕Winter Feast Scarf',70832281,0},
-	{'🆕Winter Feast Hat',2202141658,0}, 
-	{'🆕Winter Feast Cape',1762827508,2},
-	{'🆕Snow Globe',1440439821,0},
-	{'❤️Gondola', 303877523},
-	{'🧸️Triumph Handpan', 454864430},
-	{'🤡Tiger Mask', 475055967},
-	{'👑️Fish Head Acc', 551055685},
-	{'👑️Fish Hood', -1543558130},
-	{'👗️Fish Cape', 573237039},
-	{'❤️Flower Crown', 942365523},
-	{'🧸️Triumph Guitar', 970364197},
-	{'🧸️Triumph Harp', 1275481440},
-	{'👖Rainbow Trousers', 1482655023},
-	{'🧸️Bloom Table 2022', 1598845731},
-	{'🤡Turtle Necklace', 1943995802},
-	{'👗️Turtle Cape', -700035318},
-	{'👑️Kizuna Bant', 2050094531},
-	{'👑️Golden flower Head acc', 2141511649},
-	{'👑️Rainbow Headphones', -1769208928},
-	{'👑️Earings 2022', -1590289609},
-	{'👗️Wisteria Cape 2022', -1244390069},
-	{'👑️Rainbow Double Flower', -1014212311},
-	{'🧸️TGC Anniversary Guitar', 332997197},
-	{"⛺Summer Tent", 1414743743},
-	{"🎧Moon Star Hair Acc", -1989753674},
-	{"👗️Runaway Pants", -1134828593},
-	{"👑️Runaway Hair", 239584271},
-	{"🐱Cat Hair", -25012636},
-	{"🐱Cat Cape", 583315364},
-	{"🐱Cat Mask", -901640940},
-	{"🐱Cat Prop", 1436679857}
+	{'👑Orange headgear',-1616733323,3},
+	{'🌠turquoise tail',1318288330,6},
+	{'🌠black tail',-176902809,6},
+	{'🌠blue tail',-1951801352,6},
+	{'🌠Cyan tail',1918290563,6},
+	{'🌠Green tail',637646527,6},
+	{'🌠Purple pink tail',-1527316661,6},
+	{'🌠orange tail',1237283438,6},
+	{'🌠purple tail',470393304,6},
+	{'🌠purple tail',-1071076330,6},
+	{'🌠Red tail',-1304862813,6},
+	{'🌠Yellow tail',-1354381164,6},
+	{'🌠Rainbow trail',147016038,6},
+	{'🧸Fox',2237536272,5},
+	{'👖Pants Sword',3799734077,1},
+	{'👗Scarf Cape',2207305370,4},
+	{'👗Asteroid Jacket',1402240423,4},
+	{'🧸️Beach Bed Wood',3136256372,5},
+	{'🧸️Chair Wood',472595010,5},
+	{'🧸Chair Cloth',2428135093,5},
+	{'👑Hair Pin',4123817368,3},
+	{'🧸️Brazier 2',160072902,5},
+	{'🧸️Summer Umbrella',2878211958,5},
+	{'👑️Summer Hat',2052387583,3},
+	{'🧸️Recliner',2875484078,5},
+	{'👗Golden Cape',330655056,4},
+	{'🙀️Kizuna AI Call',2413103828,6},
+	{'👑️Small rabit',-848739711,3},
+	{'🧸️Winter piano',-1202427550,5},
+	{'🆕️Crab Troll',901504997,6},
+	{'🆕️Anti Krill',3362316915,6}, 
+	{'👗️Canada Cape',769892976,4},
+	{'🆕️Halloween Pants',969946279,1},
+	{'🆕️Halloween Hair 1',116679863,3},
+	{'🆕️Halloween Hair 2',2534225385,3},
+	{'🆕️Halloween Pumpkin',125584301,5},
+	{'🆕️Halloween Chair',3497279169,5},
+	{'🆕️Halloween Horn',1123843208,3},
+	{'🆕️Witch Hat 2',4219181095,3},
+	{'🆕Winter Feast Scarf',70832281,4},
+	{'🆕Winter Feast Hat',2202141658,3}, 
+	{'🆕Winter Feast Cape',1762827508,4},
+	{'🆕Snow Globe',1440439821,5},
+	{'❤️Gondola', 303877523, 5},
+	{'🧸️Triumph Handpan', 454864430, 5},
+	{'🤡Tiger Mask', 475055967, 2},
+	{'👑️Fish Head Acc', 551055685, 3},
+	{'👑️Fish Hood', -1543558130, 3},
+	{'👗️Fish Cape', 573237039, 4},
+	{'❤️Flower Crown', 942365523, 3},
+	{'🧸️Triumph Guitar', 970364197, 5},
+	{'🧸️Triumph Harp', 1275481440, 5},
+	{'👖Rainbow Trousers', 1482655023, 1},
+	{'🧸️Bloom Table 2022', 1598845731, 5},
+	{'🤡Turtle Necklace', 1943995802, 2},
+	{'👗️Turtle Cape', -700035318, 4},
+	{'👑️Kizuna Bant', 2050094531, 3},
+	{'👑️Golden flower Head acc', 2141511649, 3},
+	{'👑️Rainbow Headphones', -1769208928, 3},
+	{'👑️Earings 2022', -1590289609, 3},
+	{'👗️Wisteria Cape 2022', -1244390069, 4},
+	{'👑️Rainbow Double Flower', -1014212311, 3},
+	{'🧸️TGC Anniversary Guitar', 332997197, 5},
+	{"⛺Summer Tent", 1414743743, 5},
+	{"🎧Moon Star Hair Acc", -1989753674, 3},
+	{"👗️Runaway Pants", -1134828593, 1},
+	{"👑️Runaway Hair", 239584271, 3},
+	{"🐱Cat Hair", -25012636, 3},
+	{"🐱Cat Cape", 583315364, 4},
+	{"🐱Cat Mask", -901640940, 2},
+	{"🐱Cat Prop", 1436679857, 5},
+	{"🐱Krill Cat", 847145578, 6}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -1292,12 +1301,47 @@ imgs = {
 	"UIStarGlow",
 }
 
+-- {name} -- id
+rellist = {
+	"Hand (light required)", -- 1
+	"Hug", -- 3
+	"HighFive", -- 4
+	"FistBump", -- 5
+	"Double Five", -- 6
+	"EdenHug?", -- 7
+	"Hug 2", -- 8
+	"HighFive 2", -- 9
+	"Fist Bump 2", -- 10
+	"Double Five 2", -- 11
+	"Piggyback (light required)", -- 12
+	"Piggyback 2 (light required)", -- 13
+	"Head Pat", -- 14
+	"Head Pat 2", -- 15
+	"Playfight", -- 16
+	"Playfight 2", -- 17
+	"Breahug", -- 18
+	"Breahug 2", -- 19
+	"Dance", -- 20
+	"Dance 2", -- 21
+	"Handshake", -- 22
+	"Handshake 2", -- 23
+
+	"manual", -- manual input
+}
+
 local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
 freefly = false
+sticktoplayer = false
+theplayer = nil
 sarray = {}
+
+-- 0x121F0
+-- -0xC0
+-- 34C8
+-- ppos -> code 0x10798
 
 offsets = {
 	chat = 0x5BBF84, --
@@ -1343,6 +1387,9 @@ offsets = {
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
 	wind_off = -0x87A6CC, --
+	player_dist = 0x121F0,
+	prelation = -0xC0,
+	pcode = 0x10798,
 
 	full_magics = 0x3FBC18
 }
@@ -1451,6 +1498,10 @@ function has(t, a)
 	end
 
 	return false
+end
+
+function distance3D(a, b)
+	return math.sqrt((b[1] - a[1]) ^ 2 + (b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2)
 end
 
 function freeze_ask(data)
@@ -1697,16 +1748,10 @@ fakesleep = off
 autoburn = off
 candles = find_candles()
 plants = find_plants()
-cosmetics = off
-friendnode_unlock = off
-friend_nodes = nil -- this has to be found only after logging in { deprecated :) }
 energy = off
-quick = off
 quick_results = nil
-clouds = off
 clouds_results = nil
 cosmetic_lock = off
-chat_read = off
 noknock = off
 godmode = off
 walkwithinst = off
@@ -2004,51 +2049,68 @@ function explodewl()
 end
 
 function pmagic(arr, id, sil, freeze)
-	nn = {}
+	local values = {}
 	tgt = player + (offsets.magic + (0x30 * (arr-1)))
 	if sil == nil then sil = 360 end
-	if freeze == false then id = 0 end
+	if freeze == false then
+		id = 0
+		sil = 257
+	else
+		table.insert(values, {address = player + offsets.magic + 0xCBC, value = 20, flags = "D"})
+	end
+
 	if freeze == nil then freeze = false end
-	gx.editor.set({
-		{address = tgt, 							value = id, flags = "D"},
-		{address = tgt + 0xC, 						value = -1, flags = "D"},
-		{address = tgt + 0x28, 						value = sil,flags = "D", freeze = freeze},
-		{address = player + offsets.magic + 0xCBC, 	value = 20, flags = "D"}
-	})
+	table.insert(values, {address = tgt, 							value = id, flags = "D"})
+	table.insert(values, {address = tgt + 0xC, 						value = -1, flags = "D"})
+	table.insert(values, {address = tgt + 0x28,						value = sil,flags = "D", freeze = freeze})
+
+	gx.editor.set(values)
 end
 
-function dospell()
-	mlist = {}
-
-	for i, v in ipairs(magicsid) do
-		table.insert(mlist, v[1])
+function update_sspell_list(slot, id, name)
+	for k, v in ipairs(midslots) do
+		if slot == v[1] then
+			v[2] = id
+			v[3] = name
+			break
+		end
 	end
 
-	magicmenu = gg.choice(mlist, nil, "Choose spell:")
+	gx.vars.settings.saved_spells = midslots
+end
 
-	if magicmenu == nil then
-		return
-	end
-
-	if magicmenu == 1 then
+function dospell(ind)
+	local mlist = {}
+	local mids = {}
+	ind = ind[1]
+	if ind == 7 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
-	else
-		slotmenu = gg.choice(mslot, nil, "Choose slot:")
-	end
-
-	if slotmenu == nil then
-		return
-	end
-
-	if magicmenu == 1 then
+		if slotmenu == nil then
+			return
+		end
 		for i, v in pairs(slotmenu) do
-			mslot[i] = magicsid[magicmenu][1]
-			pmagic(i, magicsid[magicmenu][2], 0)
+			mslot[i] = magicsid[1][1]
+			pmagic(i, magicsid[1][2], 0, false)
+			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
-		mslot[slotmenu] = magicsid[magicmenu][1]
-		pmagic(slotmenu, magicsid[magicmenu][2], 0)
+		for i, v in ipairs(magicsid) do
+			if v[3] == ind then
+				table.insert(mlist, v[1])
+				table.insert(mids, v[2])
+			end
+		end
+		magicmenu = gg.choice(mlist, nil, "Choose spell:")
+		if magicmenu == nil then
+			return
+		end
+		slotmenu = gg.choice(mslot, nil, "Choose slot:")
+		mslot[slotmenu] = mlist[magicmenu]
+		pmagic(slotmenu, mids[magicmenu], 0)
+		update_sspell_list(slotmenu, mids[magicmenu], mlist[magicmenu])
 	end
+
+	save_settings()
 end
 
 function show_candles(bool)
@@ -2059,7 +2121,7 @@ function show_candles(bool)
 				table.insert(xv,{address = nentity + offsets.vcandles + (offsets.vcandles_dist * i),flags = gg.TYPE_DWORD,value = 28673})
 			else
 				table.insert(xv,{address = nentity + offsets.vcandles + (offsets.vcandles_dist * i),flags = gg.TYPE_DWORD,value = 0})
-			end			
+			end
 		else
 			break;
 		end
@@ -2257,30 +2319,6 @@ function propmenu()
 	end
 end
 
-function capeset(id, freeze)
-	if freeze == nil then
-		freeze = true
-	end
-
-	local n = gg.getValues({
-		{address = player + offsets.cape_off, flags = gg.TYPE_DWORD},
-		{address = player + offsets.cape2_off, flags = gg.TYPE_DWORD}
-	})
-
-	for i, v in ipairs(n) do
-		v.value = id
-		v.freeze = freeze
-	end
-
-	if freeze then
-		gg.addListItems(n)
-	else
-		gg.removeListItems(n)
-	end
-
-	gg.setValues(n)
-end
-
 function opencloset(c)
 	local cconv = {
 		[1] = 0,
@@ -2314,6 +2352,158 @@ function switch_cutscene_destroyer(bool)
 	expr = expr..tostring(nentity + offsets.camera + offsets.cam_break[2]).."a 65793D | 65793Df"
 	gx.editor.switch(expr, bool)
 	gx.set_var("settings.bscenes", bool)
+end
+
+function get_players_list()
+	local players = {}
+	local values = {}
+
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+	end
+
+	values = gx.editor.get(values)
+
+	for i = 1, #values, 4 do
+		if values[i].value ~= 0 then
+			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
+			local code = values[i].value
+			local dist = distance3D(getposit(true), ppos)
+			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			table.insert(players, {
+				pos = values[i + 1].address,
+				code = values[i].value,
+				dist = dist,
+				text = text
+			})
+		end
+	end
+
+	table.sort(players, function(a, b) return a.dist < b.dist end)
+
+	return players
+	-- gg.alert(tostring(players))
+end
+
+function choose_player(bool)
+	local pmenu = {}
+	local players = get_players_list()
+	for k, v in ipairs(players) do
+		table.insert(pmenu, v.text)
+	end
+	local p = gg.choice(pmenu, nil, "Choose player:")
+	if bool then
+		return players[p]
+	else
+		return p
+	end
+end
+
+function switch_stick_to_player(bool)
+	sticktoplayer = bool
+	if bool then
+		local p = choose_player(true)
+		if p == nil then
+			sticktoplayer = false
+			return
+		end
+		theplayer = p.pos
+	end
+end
+
+function set_relation_request()
+	-- COMING SOOOOOON legit
+end
+
+function set_all_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
+
+	local type = gg.choice(rlist, nil, "WARNING! Player must be lit:")
+	local freeze = true
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation, value = type, flags = "D", freeze = freeze})
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
+	end
+
+	gx.editor.set(values)
+end
+
+function offer_all_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local freeze = true
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D", freeze = freeze})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
+
+	gx.editor.set(values)
+end
+
+function offer_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	local p = choose_player()
+	if p == nil then return end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D"})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D"})
+	table.insert(values, {address = player + offsets.pose, value = 6, flags = "D"})
+
+	gx.editor.set(values)
 end
 
 function get_wl_count(b)
@@ -2836,7 +3026,7 @@ gx.add_menu({
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
 		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
-		{"[💫] {gx@spells}", {dospell}},
+		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
@@ -2886,6 +3076,23 @@ gx.add_menu({
 })
 
 gx.add_menu({
+	title = "{gx@spellcat}:",
+	name = "spellsmenu",
+	f = {dospell, {"{gxindex}"}},
+	menu = {
+		{"[👖] {gx@pants}"},
+		{"[👺] {gx@masksandaccs}"},
+		{"[🦱] {gx@hairsandaccs}"},
+		{"[🧣] {gx@capes}"},
+		{"[🪑] {gx@props}"},
+		{"[❓] {gx@others}"},
+		{"[❌] {gx@remove}"}
+	},
+	use_single_function = true,
+	type = "back"
+})
+
+gx.add_menu({
 	title = "{gx@openui2}:",
 	name = "uimenu",
 	menu = {
@@ -2900,11 +3107,11 @@ gx.add_menu({
 	name = "closetmenu",
 	f = {opencloset, {"{gxindex}"}},
 	menu = {
-		{"[??] Pants"},
-		{"[👺] Masks"},
-		{"[🦱] Hairs"},
-		{"[🧣] Capes"},
-		{"[🪑] Props"}
+		{"[👖] {gx@pants}"},
+		{"[👺] {gx@masks}"},
+		{"[🦱] {gx@hairs}"},
+		{"[🧣] {gx@capes}"},
+		{"[🪑] {gx@props}"}
 	},
 	use_single_function = true,
 	type = "back"
@@ -2919,10 +3126,24 @@ gx.add_menu({
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
-		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
+		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
+		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
+		{"[🤝] {gx@relofferto}", {offer_relation}},
+		{"[🤝] {gx@offertoall}", {offer_all_relation}},
+		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
-	type = "xback",
+	type = "back",
 	menu_repeat = true
+})
+
+gx.add_menu({
+	title = "Player relations:",
+	name = "relationsmenu",
+	menu = {
+		{"Test Players", {get_players_list}}
+	},
+	type = "back"
 })
 
 gx.add_menu({
@@ -2960,6 +3181,7 @@ gx.add_menu({
 		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
+		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
@@ -2997,6 +3219,10 @@ function _init()
 
 	gx.editor.set(tostring(nentity + offsets.force_move).."a 1Ff; "..tostring(nentity + offsets.force_move + 0x4).."a 1Ff")
 	switch_cutscene_destroyer(gx.vars.settings.bscenes)
+
+	if gx.vars.settings.save_spells then
+		load_spells()
+	end
 
 	gg.toast(_text)
 end
