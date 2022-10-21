@@ -56,6 +56,14 @@ function vcheck()
 	end
 end
 
+function load_spells()
+	for k, v in ipairs(midslots) do
+		if v[2] ~= 0 then
+			pmagic(v[1], v[2], 0)
+		end
+	end
+end
+
 function load_settings()
 	settings = gx.load_json_file(config_path)
 	if settings == nil then
@@ -79,6 +87,7 @@ function load_settings()
 	gx.set_fallback_language("en")
 	gx.set_language(settings.langcode)
 	set_lang(settings.langcode)
+	midslots = gx.vars.settings.saved_spells or {}
 end
 
 function save_settings()
@@ -2026,6 +2035,15 @@ function pmagic(arr, id, sil, freeze)
 	gx.editor.set(values)
 end
 
+function update_sspell_list(slot, id)
+	for k, v in ipairs(midslots) do
+		if slot == v[1] then
+			v[2] = id
+			break
+		end
+	end
+end
+
 function dospell(ind)
 	local mlist = {}
 	local mids = {}
@@ -2038,6 +2056,7 @@ function dospell(ind)
 		for i, v in pairs(slotmenu) do
 			mslot[i] = magicsid[1][1]
 			pmagic(i, magicsid[1][2], 0, false)
+			update_sspell_list(i, magicsid[1][2])
 		end
 	else
 		for i, v in ipairs(magicsid) do
@@ -2053,6 +2072,7 @@ function dospell(ind)
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = mlist[magicmenu]
 		pmagic(slotmenu, mids[magicmenu], 0)
+		update_sspell_list(slotmenu, mids[magicmenu])
 	end
 end
 
@@ -2982,6 +3002,7 @@ gx.add_menu({
 		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
+		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}}
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
@@ -3019,6 +3040,10 @@ function _init()
 
 	gx.editor.set(tostring(nentity + offsets.force_move).."a 1Ff; "..tostring(nentity + offsets.force_move + 0x4).."a 1Ff")
 	switch_cutscene_destroyer(gx.vars.settings.bscenes)
+
+	if gx.vars.settings.save_spells then
+		load_spells()
+	end
 
 	gg.toast(_text)
 end

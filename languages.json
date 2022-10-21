@@ -72,6 +72,7 @@
 		"wbd" : "Wall Breach distance",
 		"fspeed" : "FreeFly speed",
 		"uaiacr" : "Use Autoburn in AutoCR",
+		"sspells" : "Save Spells",
 		"showpcoords" : "Show player coords in menu title",
 		"noproprecharge" : "Remove prop recharge",
 		"tpmenuaftercr" : "\"Teleport\" menu after AutoCR",

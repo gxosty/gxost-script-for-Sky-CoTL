@@ -10,5 +10,17 @@
 	"alwayscandle" : true,
 	"fly_speed" : 20.0,
 	"bscenes" : false,
-	"version" : "?"
+	"save_spells" : false,
+	"version" : "?",
+
+	"saved_spells" : [
+		[1, 0],
+		[2, 0],
+		[3, 0],
+		[4, 0],
+		[5, 0],
+		[6, 0],
+		[7, 0],
+		[8, 0],
+	]
 }
