@@ -12,7 +12,7 @@ if debug_mode ~= "local" then
 		defsets = gx.json.decode(gg.makeRequest(url.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
 	else
-		gx = load(gg.makeRequest("https://raw.githubusercontent.csom/gxosty/gx-gg/main/gx.lua").content)()
+		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
