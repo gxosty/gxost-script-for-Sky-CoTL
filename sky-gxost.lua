@@ -2028,6 +2028,7 @@ end
 
 function dospell(ind)
 	mlist = {}
+	ind = ind[1]
 	if ind == 7 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 		if slotmenu == nil then
@@ -2038,7 +2039,6 @@ function dospell(ind)
 			pmagic(i, magicsid[1][2], 0, false)
 		end
 	else
-		if ind == 6 then ind = -1 end
 		for i, v in ipairs(magicsid) do
 			if v[3] == ind then
 				table.insert(mlist, v[1])
@@ -2894,12 +2894,12 @@ gx.add_menu({
 	f = {dospell, {"{gxindex}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
-		-- {"[👺] {gx@masksandaccs}"},
-		-- {"[🦱] {gx@hairsandaccs}"},
-		-- {"[🧣] {gx@capes}"},
-		-- {"[🪑] {gx@props}"},
-		-- {"[❓] {gx@others}"},
-		-- {"[❌] {gx@remove}"}
+		{"[👺] {gx@masksandaccs}"},
+		{"[🦱] {gx@hairsandaccs}"},
+		{"[🧣] {gx@capes}"},
+		{"[🪑] {gx@props}"},
+		{"[❓] {gx@others}"},
+		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
 	type = "back"
