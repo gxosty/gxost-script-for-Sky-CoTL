@@ -49,5 +49,13 @@
 			"en" : "Update v0.1.7b\n- Added \"Japanese\" language support (thanks to yutodadil https://github.com/yutodadil)\n- Added \"Break Cutscenes\" in \"Camera\" menu\n- Added \"FreeFly\" mode. Speed can be adjusted in settings\n- Added new Aurora maps\n- Fixed \"Change map (I)\"\n!- v0.1.7c will come out soon",
 			"ru" : "Обновление v0.1.7b\n- Добавлен Японский язык (Благодаря yutodadil https://github.com/yutodadil)\n- Добавлен \"Убрать кат-сцены\" в меню \"Камера\"\n- Добавлен режим \"Свободный палёт\". Скорость можно настроить в настройках\n- Добавлены новые карты Авроры\n- Исправлен \"Сменить карту (I)\"\n!- v0.1.7v будет доступна скоро"
 		}
+	},
+	"0.1.7c" : {
+		"content" : {
+			"en" : "Update v0.1.7c\n- Added New Spells (Including Cat spells)\n- Added \"Teleport Statues to yourself\" back (Sorry, only 60 statues. LAZYY)\n- Added SemiCR for statues in Eden\n- \"Break Cutscene\" feature was moved to Settings\n- Fixed Unlock Emotes\n- (for devs) It is possible to dump spells in Settings.\n\n!Known Issue!\n- Cancelling one spell can cancel all other spells too.\n\nWait for the update v0.1.7d (yes, it will go till z until next update of sky comes)",
+			"ru" : "Обновление v0.1.7c\n- Добавлены новые заклинания (включая заклинания кошек)\n- Добавлены \"Телепортировать статуи к себе\" назад (только 60 статуй. Леньь)\n- Добавлен SemiCR для статуй в Эдеме\n- Функция \"Break Cutscene\" была перенесена в настройки\n- Исправлен проблема с разблокировкой всех эмоции \n- (для разработчиков) В настройках можно дампить заклинания.\n\n!Известная проблема!\n- Отмена одного заклинания может отменить все другие заклинания тоже.\n\nЖдите обновления v0.1.7d (да, оно будет идти до z, пока не выйдет следующее обновление Неба)"
+		}
 	}
 }
+
+
