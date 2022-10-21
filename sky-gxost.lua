@@ -7,7 +7,7 @@
 -- Türkmenler barmaý?? XD
 
 git_branch = "dev"
-local debug_mode = "local"
+local debug_mode = "off"
 url = "http://192.168.1.108:9999"
 
 if debug_mode ~= "local" then
