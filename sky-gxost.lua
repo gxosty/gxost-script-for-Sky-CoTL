@@ -2042,6 +2042,8 @@ function update_sspell_list(slot, id)
 			break
 		end
 	end
+
+	gx.vars.settings.saved_spells = midslots
 end
 
 function dospell(ind)
@@ -2074,6 +2076,8 @@ function dospell(ind)
 		pmagic(slotmenu, mids[magicmenu], 0)
 		update_sspell_list(slotmenu, mids[magicmenu])
 	end
+
+	save_settings()
 end
 
 function show_candles(bool)
@@ -3002,7 +3006,7 @@ gx.add_menu({
 		{"{gx@wbd}: {gx:settings.wbdistance}", {gx.prompt_set_var, {"settings.wbdistance", "Set distance for WB:"}}},
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
-		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}}
+		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
