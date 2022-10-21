@@ -28,7 +28,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7e"
+version = "0.1.7d"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
