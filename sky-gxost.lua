@@ -1496,6 +1496,10 @@ function has(t, a)
 	return false
 end
 
+function distance3D(a, b)
+	return math.sqrt((b[1] - a[1]) ^ 2 + (b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2)
+end
+
 function freeze_ask(data)
 	if gg.alert(gx.text.translate("{gx@lockit_q}"), gx.text.translate("Yes"), gx.text.translate("No")) == 1 then
 		for k, v in pairs(data) do
