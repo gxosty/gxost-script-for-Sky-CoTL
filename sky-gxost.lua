@@ -1346,7 +1346,7 @@ sarray = {}
 
 offsets = {
 	chat = 0x5BBF84, --
-	-- ptoemotes = 0xA52768, ||
+	ptoemotes = 0xA42624, --
 	ptocloset = 0x3DCB44, --
 	ptofnodes = 0x821420, --
 	ptoplayer = 0x14B4238, --
@@ -3065,11 +3065,11 @@ end
 function unlock_all(b)
 	if b then
 		cosmetics = on
-		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
+		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, 1384120352, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 1384120352, false)
 	else
 		cosmetics = off
-		-- setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
+		setadd(bootloader + offsets.ptoemotes, gg.TYPE_DWORD, -1186976888, false)
 		setadd(bootloader + offsets.ptocloset, gg.TYPE_DWORD, 446629856, false)
 	end
 end
