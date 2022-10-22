@@ -2962,7 +2962,7 @@ function dospell()
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 	elseif magicmenu == 2 then
 		input = gg.prompt({"Enter a Spell id"}, {[1] = ""}, {[1] = "number"})
-		slotmenu = gg.multiChoice(mslot, nil, "Choose slot:")
+		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 	else
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 	end
