@@ -247,7 +247,7 @@ _propsid = {
 
 magicsid = {
 	{'❌none',0,0},
-	{'Manual', input}
+	{'Manual', input},
 	{'💫Small',1692428656,0},
 	{'💫Smaller',2142718166,0},
 	{'💫Big',891098028,0},
