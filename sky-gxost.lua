@@ -1307,11 +1307,41 @@ imgs = {
 	"UIStarGlow",
 }
 
+-- {name} -- id
+rellist = {
+	"Hand (light required)", -- 1
+	"Hug", -- 3
+	"HighFive", -- 4
+	"FistBump", -- 5
+	"Double Five", -- 6
+	"EdenHug?", -- 7
+	"Hug 2", -- 8
+	"HighFive 2", -- 9
+	"Fist Bump 2", -- 10
+	"Double Five 2", -- 11
+	"Piggyback (light required)", -- 12
+	"Piggyback 2 (light required)", -- 13
+	"Head Pat", -- 14
+	"Head Pat 2", -- 15
+	"Playfight", -- 16
+	"Playfight 2", -- 17
+	"Breahug", -- 18
+	"Breahug 2", -- 19
+	"Dance", -- 20
+	"Dance 2", -- 21
+	"Handshake", -- 22
+	"Handshake 2", -- 23
+
+	"manual", -- manual input
+}
+
 local old_ranges = gg.getRanges()
 
 bootloader = nil
 player = nil
 freecam = false
+sticktoplayer = false
+theplayer = nil
 sarray = {}
 
 offsets = {
@@ -1354,7 +1384,10 @@ offsets = {
 	vcandles = 0x4E62B4, --
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
-	wind_off = -0x87A6CC --
+	wind_off = -0x87A6CC, --
+	player_dist = 0x121F0,
+	prelation = -0xC0,
+	pcode = 0x10798
 }
 
 gg.setRanges(gg.REGION_C_ALLOC)
@@ -3164,6 +3197,158 @@ function switch_freecam(bool)
 	freecam = bool
 end
 
+function get_players_list()
+	local players = {}
+	local values = {}
+
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+	end
+
+	values = gx.editor.get(values)
+
+	for i = 1, #values, 4 do
+		if values[i].value ~= 0 then
+			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
+			local code = values[i].value
+			local dist = distance3D(getposit(true), ppos)
+			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			table.insert(players, {
+				pos = values[i + 1].address,
+				code = values[i].value,
+				dist = dist,
+				text = text
+			})
+		end
+	end
+
+	table.sort(players, function(a, b) return a.dist < b.dist end)
+
+	return players
+	-- gg.alert(tostring(players))
+end
+
+function choose_player(bool)
+	local pmenu = {}
+	local players = get_players_list()
+	for k, v in ipairs(players) do
+		table.insert(pmenu, v.text)
+	end
+	local p = gg.choice(pmenu, nil, "Choose player:")
+	if bool then
+		return players[p]
+	else
+		return p
+	end
+end
+
+function switch_stick_to_player(bool)
+	sticktoplayer = bool
+	if bool then
+		local p = choose_player(true)
+		if p == nil then
+			sticktoplayer = false
+			return
+		end
+		theplayer = p.pos
+	end
+end
+
+function set_relation_request()
+	-- COMING SOOOOOON legit
+end
+
+function set_all_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
+
+	local type = gg.choice(rlist, nil, "WARNING! Player must be lit:")
+	local freeze = true
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	for i = 1, 7 do
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation, value = type, flags = "D", freeze = freeze})
+		table.insert(values, {address = coords.z + i * offsets.player_dist + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
+	end
+
+	gx.editor.set(values)
+end
+
+function offer_all_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+	table.insert(rlist, "remove")
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local freeze = true
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist - 1 then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type == #rlist then
+		type = 0
+		freeze = false
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D", freeze = freeze})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D", freeze = freeze})
+
+	gx.editor.set(values)
+end
+
+function offer_relation()
+	gx._block_repeat = true
+
+	local rlist = {}
+	gx.copy_table(rellist, rlist)
+
+	local type = gg.choice(rlist, nil, "Choose offer:")
+	local values = {}
+
+	if type == nil then return end
+
+	if type == #rlist then
+		type = gg.prompt({[1] = "Write relation id:"}, {[1] = 0}, {[1] = "number"})[1]
+		if type == nil then return end
+	elseif type > 1 and type < 23 then
+		type = type + 1
+	end
+
+	local p = choose_player()
+	if p == nil then return end
+
+	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D"})
+	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D"})
+	table.insert(values, {address = player + offsets.pose, value = 6, flags = "D"})
+
+	gx.editor.set(values)
+end
+
 function get_wl_count(b)
 	local count = 0
 	local offset = nentity + offsets.wl_pos
@@ -3686,7 +3871,12 @@ gx.add_menu({
 		{"{gxsign} {gx@walkwithinstrument} 🎹", {gx.editor.switch, {tostring(player + offsets.gesture).."a 16843008D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
-		{"{gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}}
+		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
+		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
+		{"[🤝] {gx@relofferto}", {offer_relation}},
+		{"[🤝] {gx@offertoall}", {offer_all_relation}},
+		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
 	type = "xback",
 	menu_repeat = true
@@ -3716,7 +3906,7 @@ gx.add_menu({
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
-		{"[gxsign] {gx@oonaki} ", {oonaki}},
+--		{"[gxsign] {gx@oonaki} ", {oonaki}},
 		{"[gxsign] {gx@SpamCape} ", {capespam}}
 --		{"{gxsign} testfunction", {pmagic, {8, 1725047129, 1, "{gxbool}"}}},
 	},
