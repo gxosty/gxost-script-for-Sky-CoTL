@@ -378,6 +378,11 @@ magicsid = {
 	{'🆕Aurora Pants', -1134828593},
 	{'🆕Aurora hair', 239584271},
 	{'🆕Aurora headaccessory', -1989753674}, -- 疲れた。
+	{'🆕Candle Troll', 1441565188},	
+	{"🐱Cat Hair", -25012636},
+	{"🐱Cat Cape", 583315364},
+	{"🐱Cat Mask", -901640940},
+	{"🐱Cat Prop", 1436679857},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
