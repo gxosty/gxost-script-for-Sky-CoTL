@@ -247,6 +247,7 @@ _propsid = {
 
 magicsid = {
 	{'❌none',0,0},
+	{'Manual', input}
 	{'💫Small',1692428656,0},
 	{'💫Smaller',2142718166,0},
 	{'💫Big',891098028,0},
@@ -2959,6 +2960,9 @@ function dospell()
 
 	if magicmenu == 1 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
+	if magicmenu == 2 then
+		input = gg.prompt({"Enter a Spell id"}, {[1] = ""}, {[1] = "number"})
+		slotmenu = gg.multiChoice(mslot, nil, "Choose slot:")
 	else
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 	end
