@@ -2977,10 +2977,8 @@ function dospell()
 			pmagic(i, magicsid[magicmenu][2], 0)
 		end
 	elseif magicmenu == 2 then
-		for i, v in pairs(slotmenu) do
-			mslot[i] = magicsid[magicmenu][1]
-			pmagic(i, input, 0)
-		end
+		mslot[i] = magicsid[magicmenu][1]
+		pmagic(i, input, 0)
 	else
 		mslot[slotmenu] = magicsid[magicmenu][1]
 		pmagic(slotmenu, magicsid[magicmenu][2], 0)
