@@ -86,6 +86,7 @@
 		"unlimitedswimenergy" : "Unlimited breath",
 		"testfunc" : "Test Functionn",
 		"fps60" : "60 FPS",
+		"disable10slot" : "Reset Spell Slot 10",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
@@ -443,6 +444,7 @@
 		"SpamCape" : "ケープをずっと変える奴(3周して止まんなかったらscriptを停止してください!!)",
 		"unlimitedswimenergy" : "息無限",
 		"fps60" : "60 FPS",
+		"disable10slot" : "魔法の10番目のスロットをリセットする",
 		"testfunc" : "Test Functionn",
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
