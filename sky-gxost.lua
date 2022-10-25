@@ -24,13 +24,13 @@ else
 	langlist = gx.load_json_file("languages.json")
 end
 
-scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
+scriptv = {process = {'com.tgc.sky.android'}, version = 204815}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7d"
+version = "0.1.8"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -386,7 +386,8 @@ magicsid = {
 	{"🐱Cat Cape", 583315364, 4},
 	{"🐱Cat Mask", -901640940, 2},
 	{"🐱Cat Prop", 1436679857, 5},
-	{"🐱Krill Cat", 847145578, 6}
+	{"🐱Krill Cat", 847145578, 6},
+	{"👻Candle Trick", 1441565188, 6}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -1343,53 +1344,63 @@ sarray = {}
 -- 34C8
 -- ppos -> code 0x10798
 
+-- pname_dist 0x2460
+-- pname_code 0xC4F
+-- player -> pname -0x4221B0
+
+-- fasthome
+-- on  505942017
+-- off 505589761
+
 offsets = {
-	chat = 0x5BBF84, --
-	ptoemotes = 0xA42624, --
+	chat = 0x5BC25C, --
+	ptoemotes = 0xA42AF4, --
 	ptocloset = 0x3DCB44, --
-	ptofnodes = 0x821420, --
-	ptospeed = 0x13E728C,
-	ptoplayer = 0x14B4238, --
+	ptofnodes = 0x821844, --
+	ptospeed = 0x13E928C, --
+	ptoplayer = 0x14B6238, --
 	ptopbase = 0x4348E8, --
-	ptoentity = 0x17BC6E8, --
-	pvector = -0x1144EFC, --
+	ptoentity = 0x17BE6E8, --
+	pvector = -0x1144EF8, --
 	gamespeed_off = -0x15BA868, --
 	gesture = 0x468F34, --
 	force_move = -0x11444F0, --
-	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x60 | cam pos -0x70 --
+	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x3C | cam pos -0x70
 	cam_dist = -0xC, --
-	cam_fov = -0x60, --
+	cam_fov = -0x3C, --
 	cam_pos = -0x70, --
 	cam_break = {0x380, 0x6B0}, --
 	plbright = 0x45C2D4, --
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
 	wing_charge = 0x45C22C, --
+	ptowcharge = 0x50D944, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
 	constel_menu = 0x15B4A88, --
 	ptofastitem = -0x10FA8, --
 	fastitem = 0x26C, --
-	-- vwing = 0x470D9C, ||
+	fasthome = 0x864850, --
+	-- vwing = 0x470D9C,
 	damage = 0x45C22C + 0xBC, --
 	pos_off = 0x457020, --
 	wl_pos = 0x4B4F34, --
 	statue_pos = -0x83053C, --
 	magic = 0x4681B0, --
 	props_off = 0x45E104, --
-	famount_off = 0x45E104 + 0x15D0, --
-	plants = 0xCB21C8, --
+	famount_off = 0x45E104 + 0x15D0,--
+	plants = 0xDB21C8, --
 	portal_off = 0x40EB08, --
 	portal2_off = -0x7840, --
-	-- portal3_off = -0x129E044, --
-	vcandles = 0x4E62B4, --
-	vcandles_dist = 0x70, --
+	-- portal3_off = -0x129E044,
+	-- vcandles = 0x4E62B4,
+	-- vcandles_dist = 0x70,
 	curmap_off = -0x1680E6C, --
 	wind_off = -0x87A6CC, --
-	player_dist = 0x121F0,
-	prelation = -0xC0,
-	pcode = 0x10798,
+	player_dist = 0x121F0, --
+	prelation = -0xC0, --
+	pcode = 0x10798, --
 
 	full_magics = 0x3FBC18
 }
@@ -2083,7 +2094,7 @@ function dospell(ind)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
-	if ind == 7 then
+	if ind == 8 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 		if slotmenu == nil then
 			return
@@ -2094,15 +2105,23 @@ function dospell(ind)
 			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
-		for i, v in ipairs(magicsid) do
-			if v[3] == ind then
-				table.insert(mlist, v[1])
-				table.insert(mids, v[2])
+		if ind == 7 then
+			magicmenu = 1
+			mlist[1] = "-- -- Manual -- --"
+			mids[1] = gg.prompt({[1] = "Write Spell ID:"}, {[1] = ""}, {[1] = "number"})
+			if mids[1] == nil then return end
+			mids[1] = mids[1][1]
+		else
+			for i, v in ipairs(magicsid) do
+				if v[3] == ind then
+					table.insert(mlist, v[1])
+					table.insert(mids, v[2])
+				end
 			end
-		end
-		magicmenu = gg.choice(mlist, nil, "Choose spell:")
-		if magicmenu == nil then
-			return
+			magicmenu = gg.choice(mlist, nil, "Choose spell:")
+			if magicmenu == nil then
+				return
+			end
 		end
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = mlist[magicmenu]
@@ -2357,29 +2376,64 @@ end
 function get_players_list()
 	local players = {}
 	local values = {}
+	local pmin = 0
+	local pmax = 0
+	local clrs = {[1] = '🟢', [2] = '🟡', [3] = '🟠', [4] = '🔴'}
 
-	for i = 1, 7 do
+	for i = 1, 16 do
 		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode + 0x8, flags = "D"})
 	end
 
 	values = gx.editor.get(values)
 
-	for i = 1, #values, 4 do
+	for i = 1, #values, 5 do
 		if values[i].value ~= 0 then
 			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
 			local code = values[i].value
 			local dist = distance3D(getposit(true), ppos)
-			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			local is_friend_address = values[i + 4].address
+			local is_friend = 0 ~= values[i + 4].value
+			local text = tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			if is_friend then
+				text = " Friend "..text
+			else
+				text = " Player "..text
+			end
+
 			table.insert(players, {
 				pos = values[i + 1].address,
 				code = values[i].value,
 				dist = dist,
+				is_friend_address = is_friend_address,
+				friend = is_friend,
 				text = text
 			})
 		end
+	end
+
+	if #players == 0 then gg.alert("No player was found", "ok") return end
+	-- gg.alert(tostring(players))
+
+	pmin = players[1].dist - 0.1
+	pmax = players[1].dist + 0.1
+
+	for k, v in ipairs(players) do
+		if pmin > v.dist then
+			pmin = v.dist
+		end
+		if pmax < v.dist then
+			pmax = v.dist
+		end
+	end
+
+	for k, v in ipairs(players) do
+		local d = (v.dist - pmin) / (pmax - pmin) * 3.8 + 0.1
+		-- gg.alert(tostring(d))
+		v.text = clrs[math.ceil(d)]..v.text
 	end
 
 	table.sort(players, function(a, b) return a.dist < b.dist end)
@@ -2389,8 +2443,10 @@ function get_players_list()
 end
 
 function choose_player(bool)
+	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
+	if players == nil then return end
 	for k, v in ipairs(players) do
 		table.insert(pmenu, v.text)
 	end
@@ -2400,6 +2456,27 @@ function choose_player(bool)
 	else
 		return p
 	end
+end
+
+function lightplayer()
+	gx._block_repeat = true
+	local player = choose_player(true)
+	if player == nil then return end
+	local values = {
+		{address = player.is_friend_address + 0x8, value = 1, flags = "D"}
+	}
+	gx.editor.set(values)
+end
+
+function lightall()
+	gx._block_repeat = true
+	local players = get_players_list()
+	if player == nil then return end
+	local values = {}
+	for k, p in ipairs(players) do
+		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
+	end
+	gx.editor.set(values)
 end
 
 function switch_stick_to_player(bool)
@@ -2504,6 +2581,16 @@ function offer_relation()
 	table.insert(values, {address = player + offsets.pose, value = 6, flags = "D"})
 
 	gx.editor.set(values)
+end
+
+function tptoplayer()
+	local p = choose_player(true)
+	local values = gx.editor.get({
+		{address = p.pos, flags = "F"},
+		{address = p.pos + 0x4, flags = "F"},
+		{address = p.pos + 0x8, flags = "F"},
+	})
+	setposit(table.unpack(gx.extract.values(values)))
 end
 
 function get_wl_count(b)
@@ -2680,6 +2767,22 @@ function switch_chat(bool)
 	-- data = data..tostring(bootloader + offsets.chat - 0x6F74 + 0xC).."a 907015158D | 958390601D"
 
 	gx.editor.switch(data, bool)
+end
+
+function switch_uwings(bool)
+	local s
+	if gx.vars.settings.legacywingfreeze then
+		s = tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505571328D;"
+	else
+		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.wing_charge).."a 14F | 14F;"
+	end
+
+	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
+end
+
+function switch_fasthome(bool)
+	gx.editor.switch(tostring(bootloader + offsets.fasthome).."a 505589761D | 505942017D", bool)
+	gx.set_var("settings.fasthome", bool)
 end
 
 function clamp(n, a, b)
@@ -3025,9 +3128,10 @@ gx.add_menu({
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
-		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
+		{"[🕹] {gx@ffandnc} {gxsign}", {switch_fly, {"{gxbool}"}}},
 		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
+		{"[🧍] {gx@playersmenu}", {gx.open_menu, {"playersmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
 		{"[✨] {gx@otherhacks}", {gx.open_menu, {"hacksmenu"}}},
@@ -3044,7 +3148,7 @@ gx.add_menu({
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
+		-- {"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
 		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
@@ -3057,7 +3161,8 @@ gx.add_menu({
 	menu = {
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
-		{"[🚩] {gx@goto}", {gotomenu}}
+		{"[🚩] {gx@goto}", {gotomenu}},
+		{"[🐐] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3086,6 +3191,7 @@ gx.add_menu({
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
 		{"[❓] {gx@others}"},
+		{"[✍️] {gx@manual}"},
 		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
@@ -3129,19 +3235,20 @@ gx.add_menu({
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
-		{"[🤝] {gx@relofferto}", {offer_relation}},
-		{"[🤝] {gx@offertoall}", {offer_all_relation}},
-		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
 	type = "back",
 	menu_repeat = true
 })
 
 gx.add_menu({
-	title = "Player relations:",
-	name = "relationsmenu",
+	title = "{gx@playersmenu}:",
+	name = "playersmenu",
 	menu = {
-		{"Test Players", {get_players_list}}
+		{"[🕯] {gx@lightplayer}", {lightplayer}},
+		{"[🕯] {gx@lightall}", {lightall}},
+		{"[🤝] {gx@relofferto}", {offer_relation}},
+		{"[🤝] {gx@offertoall}", {offer_all_relation}},
+		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
 	type = "back"
 })
@@ -3165,7 +3272,7 @@ gx.add_menu({
 		{"{gxsign} {gx@autoburn}", {set_autoburn, {"{gxbool}"}}},
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
-		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedenergy}", {switch_uwings, {"{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
@@ -3182,11 +3289,13 @@ gx.add_menu({
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
 		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}},
+		{"{gx@legacywingfreeze}: {gx:settings.legacywingfreeze}", {gx.set_var, {"settings.legacywingfreeze", "!{gx:settings.legacywingfreeze}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
 		{"{gx@usecandle}: {gx:settings.alwayscandle}", {gx.set_var, {"settings.alwayscandle", "!{gx:settings.alwayscandle}"}}},
 		{"{gx@breakscenes}: {gx:settings.bscenes}", {switch_cutscene_destroyer, --[[AHAHAHAHA]] {"!{gx:settings.bscenes}"}}},
+		{"{gx@fasthome}: {gx:settings.fasthome}", {switch_fasthome, {"!{gx:settings.fasthome}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
 		{"{gx@chtpimg}", {imgsmenu}},
 		{"{gx@language}", {gx.open_menu, {"langmenu"}}},
@@ -3211,7 +3320,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
+	_text = "[Goat]{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
@@ -3221,8 +3330,12 @@ function _init()
 	switch_cutscene_destroyer(gx.vars.settings.bscenes)
 
 	if gx.vars.settings.save_spells then
+		-- if gg.alert("Do you want to restore last spells?", "Yes", "No") == 1 then
 		load_spells()
+		-- end
 	end
+
+	switch_fasthome(gx.vars.settings.fasthome)
 
 	gg.toast(_text)
 end

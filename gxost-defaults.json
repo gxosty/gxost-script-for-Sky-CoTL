@@ -8,6 +8,8 @@
 	"ggvisible" : false,
 	"tpimg" : "Black",
 	"alwayscandle" : true,
+	"legacywingfreeze" : false,
+	"fasthome" : true,
 	"fly_speed" : 20.0,
 	"bscenes" : false,
 	"save_spells" : false,
