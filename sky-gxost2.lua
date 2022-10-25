@@ -2852,7 +2852,7 @@ function switch_uswim(bool)
 	end
 
 	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
-en
+end
 
 function switch_fasthome(bool)
 	gx.editor.switch(tostring(bootloader + offsets.fasthome).."a 505589761D | 505942017D", bool)
