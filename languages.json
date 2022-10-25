@@ -25,6 +25,7 @@
 		"unlockelders" : "Unlock Elders",
 		"changemap" : "Change Map",
 		"goto" : "Go to...",
+		"tptopl" : "Teleport to Player",
 		"camera" : "Camera",
 		"cameratitle" : "Camera hack",
 		"camerayaw" : "Camera Yaw",
@@ -186,6 +187,7 @@
 		"collectwaxes" : "Собрать огоньки",
 		"collectwls" : "Собрать весь Крылатый Свет",
 		"unlockelders" : "Разблокировать Старейшин",
+		"tptopl" : "Телепорт к игроку",
 		"changemap" : "Сменить Карту",
 		"goto" : "Идти...",
 		"camera" : "Камера",
@@ -239,7 +241,10 @@
 		"usecandle" : "Использовать свечу во время фарма",
 		"ggvisible" : "Показать GG",
 		"chtpimg" : "Сменить Рисунок Телепорта",
-		"language" : "Язык"
+		"language" : "Язык",
+		"yes" : "Да",
+		"no" : "Нет",
+		"manual" : "Ручной"
 	},
 	"es" : {
 		"map" : "Map",

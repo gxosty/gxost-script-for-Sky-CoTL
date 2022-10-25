@@ -30,7 +30,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.7d"
+version = "0.1.8"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -386,7 +386,8 @@ magicsid = {
 	{"🐱Cat Cape", 583315364, 4},
 	{"🐱Cat Mask", -901640940, 2},
 	{"🐱Cat Prop", 1436679857, 5},
-	{"🐱Krill Cat", 847145578, 6}
+	{"🐱Krill Cat", 847145578, 6},
+	{"👻Candle Trick", 1441565188, 6}
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
@@ -2414,8 +2415,11 @@ function get_players_list()
 		end
 	end
 
-	pmin = players[1].dist
-	pmax = players[1].dist
+	if #players == 0 then gg.alert("No player was found", "ok") return end
+	-- gg.alert(tostring(players))
+
+	pmin = players[1].dist - 0.1
+	pmax = players[1].dist + 0.1
 
 	for k, v in ipairs(players) do
 		if pmin > v.dist then
@@ -2428,6 +2432,7 @@ function get_players_list()
 
 	for k, v in ipairs(players) do
 		local d = (v.dist - pmin) / (pmax - pmin) * 3.8 + 0.1
+		-- gg.alert(tostring(d))
 		v.text = clrs[math.ceil(d)]..v.text
 	end
 
@@ -2441,6 +2446,7 @@ function choose_player(bool)
 	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
+	if players == nil then return end
 	for k, v in ipairs(players) do
 		table.insert(pmenu, v.text)
 	end
@@ -2575,6 +2581,16 @@ function offer_relation()
 	table.insert(values, {address = player + offsets.pose, value = 6, flags = "D"})
 
 	gx.editor.set(values)
+end
+
+function tptoplayer()
+	local p = choose_player(true)
+	local values = gx.editor.get({
+		{address = p.pos, flags = "F"},
+		{address = p.pos + 0x4, flags = "F"},
+		{address = p.pos + 0x8, flags = "F"},
+	})
+	setposit(table.unpack(gx.extract.values(values)))
 end
 
 function get_wl_count(b)
@@ -3145,7 +3161,8 @@ gx.add_menu({
 	menu = {
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
-		{"[🚩] {gx@goto}", {gotomenu}}
+		{"[🚩] {gx@goto}", {gotomenu}},
+		{"[] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3273,13 +3290,13 @@ gx.add_menu({
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
 		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}},
-		{"{gx@legacywingfreeze}: {gx:legacywingfreeze}", {gx.set_var, {"settings.legacywingfreeze", "!{gx:settings.legacywingfreeze}"}}},
+		{"{gx@legacywingfreeze}: {gx:settings.legacywingfreeze}", {gx.set_var, {"settings.legacywingfreeze", "!{gx:settings.legacywingfreeze}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
 		{"{gx@usecandle}: {gx:settings.alwayscandle}", {gx.set_var, {"settings.alwayscandle", "!{gx:settings.alwayscandle}"}}},
 		{"{gx@breakscenes}: {gx:settings.bscenes}", {switch_cutscene_destroyer, --[[AHAHAHAHA]] {"!{gx:settings.bscenes}"}}},
-		{"{gx@fasthome}: {gx:settings.fasthome}", {switch_fasthome, {"{gxbool}"}}},
+		{"{gx@fasthome}: {gx:settings.fasthome}", {switch_fasthome, {"!{gx:settings.fasthome}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
 		{"{gx@chtpimg}", {imgsmenu}},
 		{"{gx@language}", {gx.open_menu, {"langmenu"}}},
@@ -3304,7 +3321,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
+	_text = "[Goat]{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
@@ -3314,7 +3331,9 @@ function _init()
 	switch_cutscene_destroyer(gx.vars.settings.bscenes)
 
 	if gx.vars.settings.save_spells then
+		-- if gg.alert("Do you want to restore last spells?", "Yes", "No") == 1 then
 		load_spells()
+		-- end
 	end
 
 	switch_fasthome(gx.vars.settings.fasthome)
