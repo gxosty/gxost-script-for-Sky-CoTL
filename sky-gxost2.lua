@@ -2837,11 +2837,22 @@ function switch_uwings(bool)
 	if gx.vars.settings.legacywingfreeze then
 		s = tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505571328D;"
 	else
-		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.wing_charge).."a 14F | 14F;"
+		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.swim).."a 14F | 14F;"
 	end
 
 	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
 end
+
+function switch_uswim(bool)
+	local s
+	if gx.vars.settings.legacywingfreeze then
+		s = tostring(player + offsets.swim).."a 14F | 14Ff;"..tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505571328D;"
+	else
+		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.wing_charge).."a 14F | 14F;"
+	end
+
+	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
+en
 
 function switch_fasthome(bool)
 	gx.editor.switch(tostring(bootloader + offsets.fasthome).."a 505589761D | 505942017D", bool)
@@ -3337,7 +3348,7 @@ gx.add_menu({
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
 		{"{gxsign} {gx@unlimitedenergy}", {switch_uwings, {"{gxbool}"}}},
-		{"{gxsign} {gx@unlimitedswimenergy}", {gx.editor.switch, {tostring(player + offsets.swim).."a 1F | 1Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedswimenergy}", {switch_swim, {"{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
