@@ -3296,6 +3296,7 @@ gx.add_menu({
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		{"{gxsign} {gx@disable10slot}", {pmagic, {10, 0, 0, "{gxbool}"}}}, -- spamcall's after, only can crab voice. XD
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
 	},
@@ -3336,6 +3337,7 @@ gx.add_menu({
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
 		{"{gxsign} {gx@unlimitedenergy}", {switch_uwings, {"{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedswimenergy}", {gx.editor.switch, {tostring(player + offsets.swim).."a 1F | 1Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
