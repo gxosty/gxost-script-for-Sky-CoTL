@@ -344,20 +344,20 @@ magicsid = {
 	{'🙀️Kizuna AI Call',2413103828,6},
 	{'👑️Small rabit',-848739711,3},
 	{'🧸️Winter piano',-1202427550,5},
-	{'🆕️Crab Troll',901504997,6},
-	{'🆕️Anti Krill',3362316915,6}, 
+	{'👻Crab Troll',901504997,6},
+	{'🦐Anti Krill',3362316915,6}, 
 	{'👗️Canada Cape',769892976,4},
-	{'🆕️Halloween Pants',969946279,1},
-	{'🆕️Halloween Hair 1',116679863,3},
-	{'🆕️Halloween Hair 2',2534225385,3},
-	{'🆕️Halloween Pumpkin',125584301,5},
-	{'🆕️Halloween Chair',3497279169,5},
-	{'🆕️Halloween Horn',1123843208,3},
-	{'🆕️Witch Hat 2',4219181095,3},
-	{'🆕Winter Feast Scarf',70832281,4},
-	{'🆕Winter Feast Hat',2202141658,3}, 
-	{'🆕Winter Feast Cape',1762827508,4},
-	{'🆕Snow Globe',1440439821,5},
+	{'👖Halloween Pants',969946279,1},
+	{'👑Halloween Hair 1',116679863,3},
+	{'👑Halloween Hair 2',2534225385,3},
+	{'🧸️Halloween Pumpkin',125584301,5},
+	{'🧸️Halloween Chair',3497279169,5},
+	{'🧸️Halloween Horn',1123843208,3},
+	{'👑Witch Hat 2',4219181095,3},
+	{'👑Winter Feast Scarf',70832281,4},
+	{'👑Winter Feast Hat',2202141658,3}, 
+	{'👗Winter Feast Cape',1762827508,4},
+	{'🧸️Snow Globe',1440439821,5},
 	{'❤️Gondola', 303877523, 5},
 	{'🧸️Triumph Handpan', 454864430, 5},
 	{'🤡Tiger Mask', 475055967, 2},
@@ -378,6 +378,8 @@ magicsid = {
 	{'👗️Wisteria Cape 2022', -1244390069, 4},
 	{'👑️Rainbow Double Flower', -1014212311, 3},
 	{'🧸️TGC Anniversary Guitar', 332997197, 5},
+	{'🧸️Marshmallow Bonfire', -1129614302},
+	{'🆕Krill hat', -705906186},
 	{"⛺Summer Tent", 1414743743, 5},
 	{"🎧Moon Star Hair Acc", -1989753674, 3},
 	{"👗️Runaway Pants", -1134828593, 1},
@@ -428,6 +430,7 @@ maps = {
 	{"Wasteland Lobby", "DuskStart", 0},
 	{"Wasteland", "Dusk", 2},
 	{"Abyss Area", "Dusk_Triangle", 2},
+	{"Abyss Area End", "Dusk_TriangleEnd", 0},
 	{"Wasteland Graveyard", "DuskGraveyard", 6},
 	{"Forgotten Ark", "DuskOasis", 2},
 	{"Crab Fields", "Dusk_CrabField", 3},
@@ -443,7 +446,7 @@ maps = {
 	{"Infinite Desert", "Night_InfiniteDesert", 0},
 	{"Planets", "NightDesert_Planets", 0},
 	{"Office", "TGCOffice", 0},
-	{"Void of Shattering", "StormEvent_VoidSpace", 0},
+	{"Void of Shattering", "StormEvent_VoidSpace", 1},
 	{"Days of Mischief", "Event_DaysOfMischief", 0},
 	{"Nintendo area", "Nintendo_CandleSpace", 0},
 	{"Eden", "StormStart", 1},
@@ -1085,6 +1088,7 @@ posits = {
 	{map='NightDesert_Beach',name='Back to desert',x=464.6367492675781,y=8.204781532287598,z=552.7400512695312},
 	{map='Night_JarCave',name='Back',x=-81.74847412109375,y=28.22599983215332,z=373.6864013671875},
 	{map='Night2',name='Top',x=-0.18086150288581848,y=294.4930419921875,z=0.7263343930244446},
+	{map='Night2',name='Top oob',x=-2.15201473236084,y=515.6214599609375,z=-8.84313774108867},
 	{map='Storm',name='Skip',x=7,y=266,z=-250},
 	{map='Storm',name='End of Cave',x=61.72602462768555,y=272.8486022949219,z=-332.78521728515625},
 	{map='Storm',name='OOB Transparent',x=192,y=8,z=-489},
@@ -1374,6 +1378,7 @@ offsets = {
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
 	wing_charge = 0x45C22C, --
+	swim = 0x45C22C + 0x24, --
 	ptowcharge = 0x50D944, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
@@ -1794,6 +1799,64 @@ clouds_results[1].bool = "{gxbool}"
 gg.clearResults()
 
 ------------------------------------
+
+i = 0
+
+function capespam()
+   gg.setVisible(false)
+   while true do
+      pmagic(2, -1244390069, 1)
+      gg.sleep(500)
+      pmagic(2, -700035318, 1)
+      gg.sleep(500)
+      pmagic(2, 573237039, 1)
+      gg.sleep(500)
+      pmagic(2, 1762827508, 2)
+      gg.sleep(500)
+      pmagic(2, 769892976, 1)
+      gg.sleep(500)
+      pmagic(2, 330655056, 1)
+      gg.sleep(500)
+      pmagic(2, 1402240423, 1)
+      gg.sleep(500)
+      pmagic(2, 2207305370, 1)
+      gg.sleep(500)
+      pmagic(2, -195929339, 1)
+      gg.sleep(500)
+      pmagic(2, -1822337532, 1)
+      gg.sleep(500)
+      pmagic(2, -308941587, 1)
+      gg.sleep(500)
+      pmagic(2, 329684861, 1)
+      gg.sleep(500)
+      pmagic(2, 162066154, 1)
+      gg.sleep(500)
+      pmagic(2, -445538750, 1)
+      gg.sleep(500)
+      pmagic(2, 1375571404, 1)
+      gg.sleep(500)
+      pmagic(2, -6043825, 1)
+      gg.sleep(500)
+      pmagic(2, -1623262339, 1)
+      gg.sleep(500)
+      pmagic(2, 1306675982, 1)
+      gg.sleep(500)
+      pmagic(2, -784831205, 1)
+      gg.sleep(500)
+      pmagic(2, 930203946, 1)
+      gg.sleep(500)
+      pmagic(2, 625581156, 1)
+      gg.sleep(500)
+      pmagic(2, 540856305, 1)
+      gg.sleep(500)
+      pmagic(2, 2079599063, 1)
+      gg.sleep(500)
+      i = i + 1
+      if i == 3 then
+         break
+      end
+   end
+end
 
 function set_game_speed(speed)
 	setadd(nentity + offsets.gamespeed_off, gg.TYPE_FLOAT, speed, false)
@@ -3148,7 +3211,7 @@ gx.add_menu({
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		-- {"[☀️] {gx@collectwaxes}", {collect_waxes}},
+		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
 		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
