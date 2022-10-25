@@ -1352,10 +1352,10 @@ sarray = {}
 -- off 505589761
 
 offsets = {
-	chat = 0x5BBF84,
-	ptoemotes = 0xA42624,
-	ptocloset = 0x3DCB44,
-	ptofnodes = 0x821420,
+	chat = 0x5BC25C, --
+	ptoemotes = 0xA42AF4, --
+	ptocloset = 0x3DCB44, --
+	ptofnodes = 0x821844, --
 	ptospeed = 0x13E928C, --
 	ptoplayer = 0x14B6238, --
 	ptopbase = 0x4348E8, --
@@ -1372,34 +1372,34 @@ offsets = {
 	plbright = 0x45C2D4, --
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
-	wing_charge = 0x45C22C,
-	ptowcharge = 0x50D85C,
+	wing_charge = 0x45C22C, --
+	ptowcharge = 0x50D944, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
 	constel_menu = 0x15B4A88, --
 	ptofastitem = -0x10FA8, --
 	fastitem = 0x26C, --
-	fasthome = 0x86442C,
+	fasthome = 0x864850, --
 	-- vwing = 0x470D9C,
-	damage = 0x45C22C + 0xBC,
+	damage = 0x45C22C + 0xBC, --
 	pos_off = 0x457020, --
-	wl_pos = 0x4B4F34,
-	statue_pos = -0x83053C,
+	wl_pos = 0x4B4F34, --
+	statue_pos = -0x83053C, --
 	magic = 0x4681B0, --
 	props_off = 0x45E104, --
 	famount_off = 0x45E104 + 0x15D0,--
-	plants = 0xCB21C8,
-	portal_off = 0x40EB08,
+	plants = 0xDB21C8, --
+	portal_off = 0x40EB08, --
 	portal2_off = -0x7840, --
 	-- portal3_off = -0x129E044,
-	vcandles = 0x4E62B4,
-	vcandles_dist = 0x70,
-	curmap_off = -0x1680E6C,
-	wind_off = -0x87A6CC,
-	player_dist = 0x121F0,
-	prelation = -0xC0,
-	pcode = 0x10798,
+	-- vcandles = 0x4E62B4,
+	-- vcandles_dist = 0x70,
+	curmap_off = -0x1680E6C, --
+	wind_off = -0x87A6CC, --
+	player_dist = 0x121F0, --
+	prelation = -0xC0, --
+	pcode = 0x10798, --
 
 	full_magics = 0x3FBC18
 }
@@ -2093,7 +2093,7 @@ function dospell(ind)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
-	if ind == 7 then
+	if ind == 8 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 		if slotmenu == nil then
 			return
@@ -2104,15 +2104,23 @@ function dospell(ind)
 			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
-		for i, v in ipairs(magicsid) do
-			if v[3] == ind then
-				table.insert(mlist, v[1])
-				table.insert(mids, v[2])
+		if ind == 7 then
+			magicmenu = 1
+			mlist[1] = "-- -- Manual -- --"
+			mids[1] = gg.prompt({[1] = "Write Spell ID:"}, {[1] = ""}, {[1] = "number"})
+			if mids[1] == nil then return end
+			mids[1] = mids[1][1]
+		else
+			for i, v in ipairs(magicsid) do
+				if v[3] == ind then
+					table.insert(mlist, v[1])
+					table.insert(mids, v[2])
+				end
 			end
-		end
-		magicmenu = gg.choice(mlist, nil, "Choose spell:")
-		if magicmenu == nil then
-			return
+			magicmenu = gg.choice(mlist, nil, "Choose spell:")
+			if magicmenu == nil then
+				return
+			end
 		end
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = mlist[magicmenu]
@@ -2745,6 +2753,22 @@ function switch_chat(bool)
 	gx.editor.switch(data, bool)
 end
 
+function switch_uwings(bool)
+	local s
+	if gx.vars.settings.legacywingfreeze then
+		s = tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505571328D;"
+	else
+		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.wing_charge).."a 14F | 14F;"
+	end
+
+	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
+end
+
+function switch_fasthome(bool)
+	gx.editor.switch(tostring(bootloader + offsets.fasthome).."a 505589761D | 505942017D", bool)
+	gx.set_var("settings.fasthome", bool)
+end
+
 function clamp(n, a, b)
 	if n < a then return a end
 	if n > b then return b end
@@ -3088,10 +3112,10 @@ gx.add_menu({
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
-		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
+		{"[🕹] {gx@ffandnc} {gxsign}", {switch_fly, {"{gxbool}"}}},
 		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
-		{"[] {gx@playersmenu}", {gx.open_menu, {"playersmenu"}}},
+		{"[🧍] {gx@playersmenu}", {gx.open_menu, {"playersmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
 		{"[✨] {gx@otherhacks}", {gx.open_menu, {"hacksmenu"}}},
@@ -3108,7 +3132,7 @@ gx.add_menu({
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		{"[☀️] {gx@collectwaxes}", {collect_waxes}},
+		-- {"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
 		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
 	},
@@ -3150,6 +3174,7 @@ gx.add_menu({
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
 		{"[❓] {gx@others}"},
+		{"[✍️] {gx@manual}"},
 		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
@@ -3231,7 +3256,7 @@ gx.add_menu({
 		{"{gxsign} {gx@autoburn}", {set_autoburn, {"{gxbool}"}}},
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
-		{"{gxsign} {gx@unlimitedenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a 14F | 14Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
+		{"{gxsign} {gx@unlimitedenergy}", {switch_uwings, {"{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
@@ -3248,11 +3273,13 @@ gx.add_menu({
 		{"{gx@fspeed}: {gx:settings.fly_speed}", {gx.prompt_set_var, {"settings.fly_speed", "Set FreeFly speed:"}}},
 		{"{gx@uaiacr}: {gx:settings.useautoburn}", {gx.set_var, {"settings.useautoburn", "!{gx:settings.useautoburn}"}}},
 		{"{gx@sspells}: {gx:settings.save_spells}", {gx.set_var, {"settings.save_spells", "!{gx:settings.save_spells}"}}},
+		{"{gx@legacywingfreeze}: {gx:legacywingfreeze}", {gx.set_var, {"settings.legacywingfreeze", "!{gx:settings.legacywingfreeze}"}}},
 		{"{gx@showpcoords}: {gx:settings.show_coords}", {gx.set_var, {"settings.show_coords", "!{gx:settings.show_coords}"}}},
 		{"{gx@noproprecharge}: {gx:settings.fastitem}", {gx.set_var, {"settings.fastitem", "!{gx:settings.fastitem}"}}},
 		{"{gx@tpmenuaftercr}: {gx:settings.menuaftercr}", {gx.set_var, {"settings.menuaftercr", "!{gx:settings.menuaftercr}"}}},
 		{"{gx@usecandle}: {gx:settings.alwayscandle}", {gx.set_var, {"settings.alwayscandle", "!{gx:settings.alwayscandle}"}}},
 		{"{gx@breakscenes}: {gx:settings.bscenes}", {switch_cutscene_destroyer, --[[AHAHAHAHA]] {"!{gx:settings.bscenes}"}}},
+		{"{gx@fasthome}: {gx:settings.fasthome}", {switch_fasthome, {"{gxbool}"}}},
 		{"{gx@ggvisible}: {gx:settings.ggvisible}", {switch_gg_visibility}},
 		{"{gx@chtpimg}", {imgsmenu}},
 		{"{gx@language}", {gx.open_menu, {"langmenu"}}},
@@ -3289,6 +3316,8 @@ function _init()
 	if gx.vars.settings.save_spells then
 		load_spells()
 	end
+
+	switch_fasthome(gx.vars.settings.fasthome)
 
 	gg.toast(_text)
 end
