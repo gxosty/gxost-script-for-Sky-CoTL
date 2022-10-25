@@ -28,7 +28,7 @@ else
 	langlist = gx.load_json_file("languages.json")
 end
 
-scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
+scriptv = {process = {'com.tgc.sky.android'}, version = 204815}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
@@ -1351,19 +1351,20 @@ theplayer = nil
 sarray = {}
 
 offsets = {
-	chat = 0x5BBF84, --
-	ptoemotes = 0xA42624, --
+	chat = 0x5BC25C, --
+	ptoemotes = 0xA42AF4, --
 	ptocloset = 0x3DCB44, --
-	ptofnodes = 0x821420, --
-	ptoplayer = 0x14B4238, --
+	ptofnodes = 0x821844, --
+	ptospeed = 0x13E928C, --
+	ptoplayer = 0x14B6238, 
 	ptopbase = 0x4348E8, --
-	ptoentity = 0x17BC6E8, --
-	-- pvector = -0x114CA2C, ||
+	ptoentity = 0x17BE6E8, --
+	pvector = -0x1144EF8, --
 	gamespeed_off = -0x15BA868, --
 	gesture = 0x468F34, --
-	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x60 | cam pos -0x70 --
+	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x3C | cam pos -0x70
 	cam_dist = -0xC, --
-	cam_fov = -0x60, --
+	cam_fov = -0x3C, --
 	cam_pos = -0x70, --
 	plbright = 0x45C2D4, --
 	hcandle = 0x57A410, --
@@ -1383,17 +1384,17 @@ offsets = {
 	statue_pos = -0x83053C, --
 	magic = 0x4681B0, --
 	props_off = 0x45E104, --
-	famount_off = 0x45E104 + 0x15D0, --
-	plants = 0xCB21C8, --
+	famount_off = 0x45E104 + 0x15D0,--
+	plants = 0xDB21C8, --
 	portal_off = 0x230DE0, --
 	portal2_off = -0x7840, --
 	vcandles = 0x4E62B4, --
 	vcandles_dist = 0x70, --
 	curmap_off = -0x1680E6C, --
 	wind_off = -0x87A6CC, --
-	player_dist = 0x121F0,
-	prelation = -0xC0,
-	pcode = 0x10798
+	player_dist = 0x121F0, --
+	prelation = -0xC0, --
+	pcode = 0x10798, --
 }
 
 gg.setRanges(gg.REGION_C_ALLOC)
