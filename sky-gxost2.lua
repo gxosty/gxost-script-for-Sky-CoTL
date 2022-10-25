@@ -1380,6 +1380,7 @@ offsets = {
 	wing_charge = 0x45C22C, --
 	swim = 0x45C22C + 0x24, --
 	ptowcharge = 0x50D944, --
+	ptoscharge = 0x50D944 + 0x80, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
@@ -2846,9 +2847,9 @@ end
 function switch_uswim(bool)
 	local s
 	if gx.vars.settings.legacywingfreeze then
-		s = tostring(player + offsets.swim).."a 14F | 14Ff;
+		s = tostring(player + offsets.swim).."a 1F | 1Ff;"..tostring(bootloader + offsets.ptoscharge).."a 505571328D | 505571328D;"
 	else
-		s = tostring(player + offsets.swim).."a 14F | 14F;
+		s = tostring(bootloader + offsets.ptoscharge).."a 505571328D | 505745408D;"..tostring(player + offsets.swim).."a 1F | 1F;"
 	end
 
 	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
