@@ -2846,9 +2846,9 @@ end
 function switch_uswim(bool)
 	local s
 	if gx.vars.settings.legacywingfreeze then
-		s = tostring(player + offsets.swim).."a 14F | 14Ff;"..tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505571328D;"
+		s = tostring(player + offsets.swim).."a 14F | 14Ff;
 	else
-		s = tostring(bootloader + offsets.ptowcharge).."a 505571328D | 505745408D;"..tostring(player + offsets.wing_charge).."a 14F | 14F;"
+		s = tostring(player + offsets.swim).."a 14F | 14F;
 	end
 
 	gx.editor.switch(s..tostring(player + offsets.damage).."a 0D | 0Df", bool)
