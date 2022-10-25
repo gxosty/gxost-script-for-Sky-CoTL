@@ -12,7 +12,9 @@ if debug_mode ~= "local" then
 		defsets = gx.json.decode(gg.makeRequest(url.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest(url.."/languages.json").content)
 	else
-		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
+		local resp = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content
+		-- gg.alert(tostring(resp))
+		gx = load(resp)()
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
@@ -1341,50 +1343,60 @@ sarray = {}
 -- 34C8
 -- ppos -> code 0x10798
 
+-- pname_dist 0x2460
+-- pname_code 0xC4F
+-- player -> pname -0x4221B0
+
+-- fasthome
+-- on  505942017
+-- off 505589761
+
 offsets = {
-	chat = 0x5BBF84, --
-	ptoemotes = 0xA42624, --
-	ptocloset = 0x3DCB44, --
-	ptofnodes = 0x821420, --
-	ptospeed = 0x13E728C,
-	ptoplayer = 0x14B4238, --
+	chat = 0x5BBF84,
+	ptoemotes = 0xA42624,
+	ptocloset = 0x3DCB44,
+	ptofnodes = 0x821420,
+	ptospeed = 0x13E928C, --
+	ptoplayer = 0x14B6238, --
 	ptopbase = 0x4348E8, --
-	ptoentity = 0x17BC6E8, --
-	pvector = -0x1144EFC, --
+	ptoentity = 0x17BE6E8, --
+	pvector = -0x1144EF8, --
 	gamespeed_off = -0x15BA868, --
 	gesture = 0x468F34, --
 	force_move = -0x11444F0, --
-	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x60 | cam pos -0x70 --
+	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x3C | cam pos -0x70
 	cam_dist = -0xC, --
-	cam_fov = -0x60, --
+	cam_fov = -0x3C, --
 	cam_pos = -0x70, --
 	cam_break = {0x380, 0x6B0}, --
 	plbright = 0x45C2D4, --
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
-	wing_charge = 0x45C22C, --
+	wing_charge = 0x45C22C,
+	ptowcharge = 0x50D85C,
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
 	constel_menu = 0x15B4A88, --
 	ptofastitem = -0x10FA8, --
 	fastitem = 0x26C, --
-	-- vwing = 0x470D9C, ||
-	damage = 0x45C22C + 0xBC, --
+	fasthome = 0x86442C,
+	-- vwing = 0x470D9C,
+	damage = 0x45C22C + 0xBC,
 	pos_off = 0x457020, --
-	wl_pos = 0x4B4F34, --
-	statue_pos = -0x83053C, --
+	wl_pos = 0x4B4F34,
+	statue_pos = -0x83053C,
 	magic = 0x4681B0, --
 	props_off = 0x45E104, --
-	famount_off = 0x45E104 + 0x15D0, --
-	plants = 0xCB21C8, --
-	portal_off = 0x40EB08, --
+	famount_off = 0x45E104 + 0x15D0,--
+	plants = 0xCB21C8,
+	portal_off = 0x40EB08,
 	portal2_off = -0x7840, --
-	-- portal3_off = -0x129E044, --
-	vcandles = 0x4E62B4, --
-	vcandles_dist = 0x70, --
-	curmap_off = -0x1680E6C, --
-	wind_off = -0x87A6CC, --
+	-- portal3_off = -0x129E044,
+	vcandles = 0x4E62B4,
+	vcandles_dist = 0x70,
+	curmap_off = -0x1680E6C,
+	wind_off = -0x87A6CC,
 	player_dist = 0x121F0,
 	prelation = -0xC0,
 	pcode = 0x10798,
@@ -2355,29 +2367,60 @@ end
 function get_players_list()
 	local players = {}
 	local values = {}
+	local pmin = 0
+	local pmax = 0
+	local clrs = {[1] = '🟢', [2] = '🟡', [3] = '🟠', [4] = '🔴'}
 
-	for i = 1, 7 do
+	for i = 1, 16 do
 		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode + 0x8, flags = "D"})
 	end
 
 	values = gx.editor.get(values)
 
-	for i = 1, #values, 4 do
+	for i = 1, #values, 5 do
 		if values[i].value ~= 0 then
 			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
 			local code = values[i].value
 			local dist = distance3D(getposit(true), ppos)
-			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			local is_friend_address = values[i + 4].address
+			local is_friend = 0 ~= values[i + 4].value
+			local text = tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			if is_friend then
+				text = " Friend "..text
+			else
+				text = " Player "..text
+			end
+
 			table.insert(players, {
 				pos = values[i + 1].address,
 				code = values[i].value,
 				dist = dist,
+				is_friend_address = is_friend_address,
+				friend = is_friend,
 				text = text
 			})
 		end
+	end
+
+	pmin = players[1].dist
+	pmax = players[1].dist
+
+	for k, v in ipairs(players) do
+		if pmin > v.dist then
+			pmin = v.dist
+		end
+		if pmax < v.dist then
+			pmax = v.dist
+		end
+	end
+
+	for k, v in ipairs(players) do
+		local d = (v.dist - pmin) / (pmax - pmin) * 3.8 + 0.1
+		v.text = clrs[math.ceil(d)]..v.text
 	end
 
 	table.sort(players, function(a, b) return a.dist < b.dist end)
@@ -2387,6 +2430,7 @@ function get_players_list()
 end
 
 function choose_player(bool)
+	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
 	for k, v in ipairs(players) do
@@ -2398,6 +2442,27 @@ function choose_player(bool)
 	else
 		return p
 	end
+end
+
+function lightplayer()
+	gx._block_repeat = true
+	local player = choose_player(true)
+	if player == nil then return end
+	local values = {
+		{address = player.is_friend_address + 0x8, value = 1, flags = "D"}
+	}
+	gx.editor.set(values)
+end
+
+function lightall()
+	gx._block_repeat = true
+	local players = get_players_list()
+	if player == nil then return end
+	local values = {}
+	for k, p in ipairs(players) do
+		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
+	end
+	gx.editor.set(values)
 end
 
 function switch_stick_to_player(bool)
@@ -3026,6 +3091,7 @@ gx.add_menu({
 		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
 		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
+		{"[] {gx@playersmenu}"},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
 		{"[✨] {gx@otherhacks}", {gx.open_menu, {"hacksmenu"}}},
@@ -3127,19 +3193,21 @@ gx.add_menu({
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
-		{"[🤝] {gx@relofferto}", {offer_relation}},
-		{"[🤝] {gx@offertoall}", {offer_all_relation}},
-		{"[😱] {gx@requestfromall}", {set_all_relation}},
+		
 	},
 	type = "back",
 	menu_repeat = true
 })
 
 gx.add_menu({
-	title = "Player relations:",
-	name = "relationsmenu",
+	title = "{gx@playersmenu}:",
+	name = "playersmenu",
 	menu = {
-		{"Test Players", {get_players_list}}
+		{"[🕯] {gx@lightplayer}", {lightplayer}},
+		{"[🕯] {gx@lightall}", {lightall}},
+		{"[🤝] {gx@relofferto}", {offer_relation}},
+		{"[🤝] {gx@offertoall}", {offer_all_relation}},
+		{"[😱] {gx@requestfromall}", {set_all_relation}},
 	},
 	type = "back"
 })
