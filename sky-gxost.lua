@@ -24,7 +24,7 @@ else
 	langlist = gx.load_json_file("languages.json")
 end
 
-scriptv = {process = {'com.tgc.sky.android'}, version = 202986}
+scriptv = {process = {'com.tgc.sky.android'}, version = 204815}
 
 gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
@@ -3091,7 +3091,7 @@ gx.add_menu({
 		{"[🕹] {gx@ffandnc} ⚠ {gxsign}", {switch_fly, {"{gxbool}"}}},
 		{"[💫] {gx@spells}", {gx.open_menu, {"spellsmenu"}}},
 		{"[🎉] {gx@fun}", {gx.open_menu, {"funmenu"}}},
-		{"[] {gx@playersmenu}"},
+		{"[] {gx@playersmenu}", {gx.open_menu, {"playersmenu"}}},
 		{"[🦋] {gx@wings}", {gx.open_menu, {"wingmenu"}}},
 		{"[💨] {gx@nowindwall}", {nowind}},
 		{"[✨] {gx@otherhacks}", {gx.open_menu, {"hacksmenu"}}},
