@@ -3162,7 +3162,7 @@ gx.add_menu({
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
 		{"[🚩] {gx@goto}", {gotomenu}},
-		{"[] {gx@tptopl}", {tptoplayer}}
+		{"[🐐] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3235,7 +3235,6 @@ gx.add_menu({
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
-		
 	},
 	type = "back",
 	menu_repeat = true
