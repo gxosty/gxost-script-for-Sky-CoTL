@@ -2118,11 +2118,13 @@ function update_sspell_list(slot, id, name)
 	gx.vars.settings.saved_spells = midslots
 end
 
-function dospell(ind)
+function dospell(ind, bl)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
 	if ind == 8 then
+		gx.vars.sparkle = bl
+	elseif ind == 9 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 		if slotmenu == nil then
 			return
@@ -2133,7 +2135,7 @@ function dospell(ind)
 			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
-		if ind == 7 then
+		if ind == 8 then
 			magicmenu = 1
 			mlist[1] = "-- -- Manual -- --"
 			mids[1] = gg.prompt({[1] = "Write Spell ID:"}, {[1] = ""}, {[1] = "number"})
@@ -3221,7 +3223,7 @@ gx.add_menu({
 gx.add_menu({
 	title = "{gx@spellcat}:",
 	name = "spellsmenu",
-	f = {dospell, {"{gxindex}"}},
+	f = {dospell, {"{gxindex}", "{gxbool}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
 		{"[👺] {gx@masksandaccs}"},
@@ -3229,7 +3231,7 @@ gx.add_menu({
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
 		{"[❓] {gx@others}"},
-		{"[✨] {gx@sparkleeffect} {gxsign}", {gx.set_var, {"sparkle", "{gxbool}"}}},
+		{"[✨] {gx@sparkleeffect}"},
 		{"[✍️] {gx@manual}"},
 		{"[❌] {gx@remove}"}
 	},
