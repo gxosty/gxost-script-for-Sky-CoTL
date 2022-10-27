@@ -3238,6 +3238,7 @@ gx.add_menu({
 		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
+	menu_repeat = true,
 	type = "back"
 })
 
