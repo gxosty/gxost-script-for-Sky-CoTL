@@ -2480,7 +2480,7 @@ function choose_player(bool)
 	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
-	if player == nil then gg.toast("No Players are here") return end
+	if players == nil then gg.toast("No Players are here") return end
 	for k, v in ipairs(players) do
 		table.insert(pmenu, v.text)
 	end
