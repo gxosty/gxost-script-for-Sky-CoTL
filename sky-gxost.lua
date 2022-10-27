@@ -3187,8 +3187,8 @@ gx.add_menu({
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		{"[] {gx@lightfriends}", {send_friend_lights}},
-		{"[] {gx@claimlights}", {collect_friend_lights}},
+		{"[🕯️] {gx@lightfriends}", {send_friend_lights}},
+		{"[☀️] {gx@claimlights}", {collect_friend_lights}},
 	},
 	type = "back"
 })
@@ -3229,7 +3229,7 @@ gx.add_menu({
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
 		{"[❓] {gx@others}"},
-		{"[] {gx@sparkleeffect} {gxsign}", {gx.set_var, {"sparkle", "{gxbool}"}}},
+		{"[✨] {gx@sparkleeffect} {gxsign}", {gx.set_var, {"sparkle", "{gxbool}"}}},
 		{"[✍️] {gx@manual}"},
 		{"[❌] {gx@remove}"}
 	},
@@ -3362,7 +3362,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "[Goat]{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
+	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version..".𝔤𝔵 loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
