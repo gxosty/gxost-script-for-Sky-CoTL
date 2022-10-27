@@ -2507,7 +2507,7 @@ end
 function lightall()
 	gx._block_repeat = true
 	local players = get_players_list()
-	if player == nil then return end
+	if players == nil then gg.toast("No Players are here") return end
 	local values = {}
 	for k, p in ipairs(players) do
 		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
