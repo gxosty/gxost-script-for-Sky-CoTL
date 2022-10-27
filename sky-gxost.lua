@@ -2122,9 +2122,9 @@ function dospell(ind, bl)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
-	gx._block_repeat = false
+	gx._block_repeat = true
 	if ind == 7 then
-		gx._block_repeat = true
+		gx._block_repeat = false
 		gx.vars.sparkle = bl
 	elseif ind == 9 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
@@ -2158,7 +2158,7 @@ function dospell(ind, bl)
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
 		mslot[slotmenu] = mlist[magicmenu]
 		if gx.vars.sparkle then
-			pmagic(slotmenu, mids[magicmenu], 360)
+			pmagic(slotmenu, mids[magicmenu], 0)
 		else
 			pmagic(slotmenu, mids[magicmenu], 257)
 		end
