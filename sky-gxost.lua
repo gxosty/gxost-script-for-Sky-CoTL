@@ -2122,7 +2122,7 @@ function dospell(ind, bl)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
-	if ind == 8 then
+	if ind == 7 then
 		gx.vars.sparkle = bl
 	elseif ind == 9 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
