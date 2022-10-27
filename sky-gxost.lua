@@ -2574,7 +2574,7 @@ function offer_relation()
 	end
 
 	local p = choose_player()
-	if p == nil then return end
+	if p == nil then gg.toast("No Players are here") return end
 
 	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D"})
 	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D"})
@@ -2585,6 +2585,7 @@ end
 
 function tptoplayer()
 	local p = choose_player(true)
+	if p == nil then gg.toast("No Players are here") return end
 	local values = gx.editor.get({
 		{address = p.pos, flags = "F"},
 		{address = p.pos + 0x4, flags = "F"},
