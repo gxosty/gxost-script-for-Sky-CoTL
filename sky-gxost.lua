@@ -2156,6 +2156,7 @@ function dospell(ind, bl)
 			end
 		end
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
+		if slotmenu == nil then return end
 		mslot[slotmenu] = mlist[magicmenu]
 		if gx.vars.sparkle then
 			pmagic(slotmenu, mids[magicmenu], 0)
