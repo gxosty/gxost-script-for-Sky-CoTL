@@ -35,7 +35,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.8"
+version = "0.1.8a"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -1407,7 +1407,6 @@ offsets = {
 	player_dist = 0x121F0, --
 	prelation = -0xC0, --
 	pcode = 0x10798, --
-	pchat = 0xB6B3725, --nentity
 	fastflap = 0x934E74,
 
 	full_magics = 0x3FBC18
@@ -2098,14 +2097,6 @@ function send_friend_lights()
 	if b then gg.toast("[OK]: Done") else return end
 end
 
-function switch_public_chat(bool)
-	if bool then
-		gx.editor.set_string({{nentity + offsets.pchat, "public", 6}}, true)
-	else
-		gx.editor.set_string({{nentity + offsets.pchat, "local", 6}}, false)
-	end
-end
-
 function update_sspell_list(slot, id, name)
 	for k, v in ipairs(midslots) do
 		if slot == v[1] then
@@ -2500,9 +2491,8 @@ function lightplayer()
 	local player = choose_player(true)
 	if player == nil then gg.toast("No Players are here") return end
 	local values = {
-		{address = player.is_friend_address + 0x8, value = 1, flags = "D"},
+		{address = player.is_friend_address + 0x4, value = 1, flags = "D"},
 		{address = player.is_friend_address + 0xC, value = 43, flags = "D"},
-		{address = player.is_friend_address + 0x14, value = 3, flags = "D"}
 	}
 	gx.editor.set(values)
 end
@@ -2513,9 +2503,8 @@ function lightall()
 	if players == nil then gg.toast("No Players are here") return end
 	local values = {}
 	for k, p in ipairs(players) do
-		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
+		table.insert(values, {address = p.is_friend_address + 0x4, value = 1, flags = "D"})
 		table.insert(values, {address = p.is_friend_address + 0xC, value = 43, flags = "D"}) -- just like that :)
-		table.insert(values, {address = p.is_friend_address + 0x14, value = 3, flags = "D"})
 	end
 	gx.editor.set(values)
 end
@@ -3205,7 +3194,7 @@ gx.add_menu({
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
 		{"[🚩] {gx@goto}", {gotomenu}},
-		{"[🐐] {gx@tptopl}", {tptoplayer}}
+		{"[🧍] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3278,7 +3267,6 @@ gx.add_menu({
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
-		{"{gxsign} {gx@publicchat}", {switch_public_chat, {"{gxbool}"}}},
 		-- {"{gxsign} {gx@chathonk}", {gx.set_var, {"honkt", "{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
@@ -3368,7 +3356,11 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version..".𝔤𝔵 loaded"
+	_mode = ""
+	if git_branch == "dev" then
+		_mode = "-dev"
+	end
+	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version.._mode..".𝔤𝔵 loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
