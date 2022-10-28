@@ -35,7 +35,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.8a"
+version = "0.1.8"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -2500,8 +2500,9 @@ function lightplayer()
 	local player = choose_player(true)
 	if player == nil then gg.toast("No Players are here") return end
 	local values = {
-		{address = player.is_friend_address + 0x4, value = 1, flags = "D"},
+		{address = player.is_friend_address + 0x8, value = 1, flags = "D"},
 		{address = player.is_friend_address + 0xC, value = 43, flags = "D"},
+		{address = player.is_friend_address + 0x14, value = 3, flags = "D"}
 	}
 	gx.editor.set(values)
 end
@@ -2512,8 +2513,9 @@ function lightall()
 	if players == nil then gg.toast("No Players are here") return end
 	local values = {}
 	for k, p in ipairs(players) do
-		table.insert(values, {address = p.is_friend_address + 0x4, value = 1, flags = "D"})
+		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
 		table.insert(values, {address = p.is_friend_address + 0xC, value = 43, flags = "D"}) -- just like that :)
+		table.insert(values, {address = p.is_friend_address + 0x14, value = 3, flags = "D"})
 	end
 	gx.editor.set(values)
 end
@@ -3203,7 +3205,7 @@ gx.add_menu({
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
 		{"[🚩] {gx@goto}", {gotomenu}},
-		{"[🧍] {gx@tptopl}", {tptoplayer}}
+		{"[🐐] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3366,11 +3368,7 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_mode = ""
-	if git_branch == "dev" then
-		_mode = "-dev"
-	end
-	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version.._mode..".𝔤𝔵 loaded"
+	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version..".𝔤𝔵 loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
