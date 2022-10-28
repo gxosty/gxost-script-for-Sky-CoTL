@@ -67,6 +67,12 @@
 			"en" : "Update v0.1.8\n- Updated for the latest version of Sky\n- Player related functions were moved to \"Players\" menu\n- \"Collect wax\" was removed (It wasn't even working and I don't think anyone uses it)\n- Added \"Teleport to Player\" in \"Teleporter\" menu\n- Fixed \"Unlimited Energy\" recovering slow (btw, in settings you can put old one too, this is new one)\n- Added \"Fast Home\" in settings\n- Added \"Manual\" spell id input in \"Spells\" menu\n\nv0.1.8a is incoming!",
 			"ru" : "Обновление v0.1.8\n- Обновлено для последней версии Sky\n- Функции, связанные с игроком, были перемещены в меню «Игроки».\n- Убран \"Собрать огоньки\"\n- Добавлено \"Телепорт к игроку\" в меню \"Телепорт\"\n- Исправлено медленное восстановление \"Безлимитной энергии\" (кстати, в настройках вы можете поставить и старое, это новое)\n- Добавлено \"Fast Home\" в настройках\n- Добавлен \"Ручной\" ввод идентификатора заклинания в меню \"Заклинания\"\n\nv0.1.8a на подходе!"
 		}
+	},
+	"0.1.8a" : {
+		"content" : {
+			"en" : "Update v0.1.8a (I tried T-T)\n- Added \"Fast Flap\" in \"Other Hacks\"\n- Added \"Sparkle\" toggle in \"Spells\" to switch ON and OFF sparkles while using spells. Defaults to OFF each script run\n- Added \"Public Chat\" in \"Fun\" menu\n- Added \"Light Friends\" and \"Claim Lights from Friends\" in \"Farm\" menu for lighting/collecting lights from friends constellation (I hope you understood)\n!! \"FreeFly\" is \"down\"\n- Removed word \"Goat\" and \"Goat\" emoji from the script",
+			"ru" : "Обновление v0.1.8a (я попытался T-T)\n- Добавлено «Быстрые крылья» в «Другие взломы»\n- Добавлен переключатель «Искра» в «Заклинании» для включения и выключения искр при применении заклинании. По умолчанию выключено при каждом запуске скрипта\n- Добавлен \"Общий чат\" в меню \"Веселье\"\n- Добавлены \"Light Friends\" и \"Claim Lights from Friends\" в меню \"Фарм\" для освещение/собирание огней из созвездия друзей (надеюсь, вы поняли)\n!! \"Свободный полёт\" пока что не работает\n- Из скрипта удалено слово \"Коза\" и эмодзи \"Коза\"."
+		}
 	}
 }
 
