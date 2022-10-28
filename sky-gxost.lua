@@ -15,14 +15,19 @@ if debug_mode ~= "local" then
 		local resp = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content
 		-- gg.alert(tostring(resp))
 		gx = load(resp)()
+		gxapi = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/api-sky-o.lua").content
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
 		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
 else
 	gx = require("gx.gx")
+	local file = io.open("api-sky-o.lua", "r")
+	gxapi = file:read("*a")
+	file:close()
 	defsets = gx.load_json_file("gxost-defaults.json")
 	langlist = gx.load_json_file("languages.json")
 end
+gxapi = load(gxapi)()
 
 scriptv = {process = {'com.tgc.sky.android'}, version = 204815}
 
@@ -30,7 +35,7 @@ gameinfo = gg.getTargetInfo()
 a_ver = gg.ANDROID_SDK_INT
 dump_path = "/sdcard/sky_items_dump.json"
 config_path = "/sdcard/gxost.gx"
-version = "0.1.8"
+version = "0.1.8a"
 languages = {
 	{"en", "[🇺🇸] English"},
 	{"ru", "[🇷🇺] Русский"},
@@ -57,7 +62,7 @@ end
 function load_spells()
 	for k, v in ipairs(midslots) do
 		if v[2] ~= 0 then
-			pmagic(v[1], v[2], 0)
+			pmagic(v[1], v[2], 360)
 			mslot[v[1]] = v[3]
 		end
 	end
@@ -1365,7 +1370,7 @@ offsets = {
 	gamespeed_off = -0x15BA868, --
 	gesture = 0x468F34, --
 	force_move = -0x11444F0, --
-	camera = -0xE42BB4, -- camera yaw | cam distance: -0xC | cam FOV: -0x3C | cam pos -0x70
+	camera = -0xE42BB4, --
 	cam_dist = -0xC, --
 	cam_fov = -0x3C, --
 	cam_pos = -0x70, --
@@ -1385,6 +1390,7 @@ offsets = {
 	-- vwing = 0x470D9C,
 	damage = 0x45C22C + 0xBC, --
 	pos_off = 0x457020, --
+	shout = 0x45CCF8, --
 	wl_pos = 0x4B4F34, --
 	statue_pos = -0x83053C, --
 	magic = 0x4681B0, --
@@ -1401,6 +1407,7 @@ offsets = {
 	player_dist = 0x121F0, --
 	prelation = -0xC0, --
 	pcode = 0x10798, --
+	fastflap = 0x934E74,
 
 	full_magics = 0x3FBC18
 }
@@ -2078,6 +2085,18 @@ function pmagic(arr, id, sil, freeze)
 	gx.editor.set(values)
 end
 
+function collect_friend_lights()
+	gg.toast("Processing")
+	local b = gxapi.request("claim_all_gifts")
+	if b then gg.toast("[OK]: Done") else return end
+end
+
+function send_friend_lights()
+	gg.toast("Processing")
+	local b = gxapi.request("send_gifts_all")
+	if b then gg.toast("[OK]: Done") else return end
+end
+
 function update_sspell_list(slot, id, name)
 	for k, v in ipairs(midslots) do
 		if slot == v[1] then
@@ -2090,11 +2109,15 @@ function update_sspell_list(slot, id, name)
 	gx.vars.settings.saved_spells = midslots
 end
 
-function dospell(ind)
+function dospell(ind, bl)
 	local mlist = {}
 	local mids = {}
 	ind = ind[1]
-	if ind == 8 then
+	gx._block_repeat = true
+	if ind == 7 then
+		gx._block_repeat = false
+		gx.vars.sparkle = bl
+	elseif ind == 9 then
 		slotmenu = gg.multiChoice(mslot, nil, "Choose slots to remove:")
 		if slotmenu == nil then
 			return
@@ -2105,7 +2128,7 @@ function dospell(ind)
 			update_sspell_list(i, magicsid[1][2], magicsid[1][1])
 		end
 	else
-		if ind == 7 then
+		if ind == 8 then
 			magicmenu = 1
 			mlist[1] = "-- -- Manual -- --"
 			mids[1] = gg.prompt({[1] = "Write Spell ID:"}, {[1] = ""}, {[1] = "number"})
@@ -2124,8 +2147,13 @@ function dospell(ind)
 			end
 		end
 		slotmenu = gg.choice(mslot, nil, "Choose slot:")
+		if slotmenu == nil then return end
 		mslot[slotmenu] = mlist[magicmenu]
-		pmagic(slotmenu, mids[magicmenu], 0)
+		if gx.vars.sparkle then
+			pmagic(slotmenu, mids[magicmenu], 0)
+		else
+			pmagic(slotmenu, mids[magicmenu], 257)
+		end
 		update_sspell_list(slotmenu, mids[magicmenu], mlist[magicmenu])
 	end
 
@@ -2446,7 +2474,7 @@ function choose_player(bool)
 	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
-	if players == nil then return end
+	if players == nil then gg.toast("No Players are here") return end
 	for k, v in ipairs(players) do
 		table.insert(pmenu, v.text)
 	end
@@ -2461,9 +2489,10 @@ end
 function lightplayer()
 	gx._block_repeat = true
 	local player = choose_player(true)
-	if player == nil then return end
+	if player == nil then gg.toast("No Players are here") return end
 	local values = {
-		{address = player.is_friend_address + 0x8, value = 1, flags = "D"}
+		{address = player.is_friend_address + 0x4, value = 1, flags = "D"},
+		{address = player.is_friend_address + 0xC, value = 43, flags = "D"},
 	}
 	gx.editor.set(values)
 end
@@ -2471,10 +2500,11 @@ end
 function lightall()
 	gx._block_repeat = true
 	local players = get_players_list()
-	if player == nil then return end
+	if players == nil then gg.toast("No Players are here") return end
 	local values = {}
 	for k, p in ipairs(players) do
-		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
+		table.insert(values, {address = p.is_friend_address + 0x4, value = 1, flags = "D"})
+		table.insert(values, {address = p.is_friend_address + 0xC, value = 43, flags = "D"}) -- just like that :)
 	end
 	gx.editor.set(values)
 end
@@ -3079,8 +3109,8 @@ function update()
 			local vals = gg.getValues({
 				{address = nentity + offsets.pvector, flags = gg.TYPE_FLOAT},
 				{address = nentity + offsets.pvector + 0x4, flags = gg.TYPE_FLOAT},
-				{address = nentity + offsets.camera, flags = gg.TYPE_FLOAT},
-				{address = nentity + offsets.camera + 0x4, flags = gg.TYPE_FLOAT}
+				{address = nentity + offsets.camera + 0x4, flags = gg.TYPE_FLOAT},
+				{address = nentity + offsets.camera, flags = gg.TYPE_FLOAT}
 			})
 			
 			if (vals[1].value + vals[2].value ~= 0) then
@@ -3117,7 +3147,8 @@ function update()
 	prev_map = current_map
 end
 
-
+gx.vars.honkt = false
+gx.vars.sparkle = false
 
 gx.add_menu({
 	title = {"{gx@map}: ", {get_map_name}, " | {gx@wlsinmap}: ", {get_wl_count, {true}}, {getpositstring}},
@@ -3149,9 +3180,9 @@ gx.add_menu({
 		{"[📍] {gx@tptowl}", {tptowl}},
 		{"[📍] {gx@tpwltoy}", {tpwls}},
 		{"[📍] {gx@tpsttoy}", {tpstatues}},
-		-- {"[☀️] {gx@collectwaxes}", {collect_waxes}},
 		{"[⭐] {gx@collectwls}", {collect_wls}},
-		-- {"[🔓] {gx@unlockelders}", {unlockelders}},
+		{"[🕯️] {gx@lightfriends}", {send_friend_lights}},
+		{"[☀️] {gx@claimlights}", {collect_friend_lights}},
 	},
 	type = "back"
 })
@@ -3163,7 +3194,7 @@ gx.add_menu({
 		{"[⏩] {gx@changemap} (I)", {changemapmenu}},
 		{"[⏩] {gx@changemap} (II)", {changemapmenu, {2}}},
 		{"[🚩] {gx@goto}", {gotomenu}},
-		{"[🐐] {gx@tptopl}", {tptoplayer}}
+		{"[🧍] {gx@tptopl}", {tptoplayer}}
 	},
 	type = "back"
 })
@@ -3184,7 +3215,7 @@ gx.add_menu({
 gx.add_menu({
 	title = "{gx@spellcat}:",
 	name = "spellsmenu",
-	f = {dospell, {"{gxindex}"}},
+	f = {dospell, {"{gxindex}", "{gxbool}"}},
 	menu = {
 		{"[👖] {gx@pants}"},
 		{"[👺] {gx@masksandaccs}"},
@@ -3192,10 +3223,12 @@ gx.add_menu({
 		{"[🧣] {gx@capes}"},
 		{"[🪑] {gx@props}"},
 		{"[❓] {gx@others}"},
+		{"[✨] {gx@sparkleeffect} {gxsign}"},
 		{"[✍️] {gx@manual}"},
 		{"[❌] {gx@remove}"}
 	},
 	use_single_function = true,
+	menu_repeat = true,
 	type = "back"
 })
 
@@ -3234,6 +3267,7 @@ gx.add_menu({
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		-- {"{gxsign} {gx@chathonk}", {gx.set_var, {"honkt", "{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
 		{"[☀️] {gx@playerbrightness}", {gx.editor.prompt_set, {tostring(player + offsets.plbright).."a Ff", {"Player Brightness:"}}}},
 	},
@@ -3274,6 +3308,7 @@ gx.add_menu({
 		{"{gxsign} {gx@uacae}", {unlock_all, {"{gxbool}"}}},
 		{"{gxsign} {gx@ufn}", {gx.editor.switch, {tostring(bootloader + offsets.ptofnodes).."a 872415336D | 1384120352D", "{gxbool}"}}},
 		{"{gxsign} {gx@unlimitedenergy}", {switch_uwings, {"{gxbool}"}}},
+		{"{gxsign} {gx@fastflap}", {gx.editor.switch, {tostring(bootloader + offsets.fastflap).."a 520725538D | 506761216D", "{gxbool}"}}},
 		{"{gxsign} {gx@alwayscandle}", {gx.editor.switch, {tostring(nentity + offsets.hcandle).."a 0B | 1Bf", "{gxbool}"}}},
 		{"{gxsign} {gx@quicksteps}", {gx.editor.switch, {quick_results}}},
 		{"{gxsign} {gx@removeclouds}", {gx.editor.switch, {clouds_results}}},
@@ -3321,7 +3356,11 @@ function _init()
 	load_langs()
 	load_settings()
 	changelog()
-	_text = "[Goat]{𝖗𝖊}𝕴𝖓𝖈-"..version.." loaded"
+	_mode = ""
+	if git_branch == "dev" then
+		_mode = "-dev"
+	end
+	_text = "{𝖗𝖊}𝖎𝖓𝖈𝖆𝖗𝖓𝖆𝖙𝖎𝖔𝖓-"..version.._mode..".𝔤𝔵 loaded"
 
 	if a_ver >= 30 then
 		_text = _text.." |Android "..tostring(a_ver - 19).."|"
@@ -3337,6 +3376,8 @@ function _init()
 	end
 
 	switch_fasthome(gx.vars.settings.fasthome)
+
+	gxapi.init()
 
 	gg.toast(_text)
 end
