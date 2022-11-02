@@ -3096,6 +3096,7 @@ gx.add_menu({
 		{"{gxsign} {gx@readchats}", {switch_chat, {"{gxbool}"}}},
 		{"{gxsign} {gx@spamsparkle}", {pmagic, {9, -1727483534, 0, "{gxbool}"}}},
 		{"{gxsign} {gx@spamcall}", {pmagic, {10, 1725047129, 0, "{gxbool}"}}},
+		{"{gxsign} {gx@noenergy}", {gx.editor.switch, {tostring(player + offsets.wing_charge).."a -1F | -1Ff;"..tostring(player + offsets.damage).."a 0D | 0Df", "{gxbool}"}}},
 		{"{gxsign} {gx@disable10slot}", {pmagic, {10, 0, 0, "{gxbool}"}}},
 		{"{gxsign} {gx@publicchat}", {switch_public_chat, {"{gxbool}"}}},
 		-- {"{gxsign} {gx@sticktop}", {switch_stick_to_player, {"{gxbool}"}}},
