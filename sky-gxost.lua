@@ -2423,29 +2423,64 @@ end
 function get_players_list()
 	local players = {}
 	local values = {}
+	local pmin = 0
+	local pmax = 0
+	local clrs = {[1] = '🟢', [2] = '🟡', [3] = '🟠', [4] = '🔴'}
 
-	for i = 1, 7 do
+	for i = 1, 16 do
 		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode, flags = "D"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x4, flags = "F"})
 		table.insert(values, {address = coords.z + offsets.player_dist * i + 0x8, flags = "F"})
+		table.insert(values, {address = coords.z + offsets.player_dist * i + offsets.pcode + 0x8, flags = "D"})
 	end
 
 	values = gx.editor.get(values)
 
-	for i = 1, #values, 4 do
+	for i = 1, #values, 5 do
 		if values[i].value ~= 0 then
 			local ppos = {values[i + 1].value, values[i + 2].value, values[i + 3].value}
 			local code = values[i].value
 			local dist = distance3D(getposit(true), ppos)
-			local text = "Player "..tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			local is_friend_address = values[i + 4].address
+			local is_friend = 0 ~= values[i + 4].value
+			local text = tostring(code).." | dist: "..tostring(gx.round(dist, 3))
+			if is_friend then
+				text = " Friend "..text
+			else
+				text = " Player "..text
+			end
+
 			table.insert(players, {
 				pos = values[i + 1].address,
 				code = values[i].value,
 				dist = dist,
+				is_friend_address = is_friend_address,
+				friend = is_friend,
 				text = text
 			})
 		end
+	end
+
+	if #players == 0 then gg.alert("No player was found", "ok") return end
+	-- gg.alert(tostring(players))
+
+	pmin = players[1].dist - 0.1
+	pmax = players[1].dist + 0.1
+
+	for k, v in ipairs(players) do
+		if pmin > v.dist then
+			pmin = v.dist
+		end
+		if pmax < v.dist then
+			pmax = v.dist
+		end
+	end
+
+	for k, v in ipairs(players) do
+		local d = (v.dist - pmin) / (pmax - pmin) * 3.8 + 0.1
+		-- gg.alert(tostring(d))
+		v.text = clrs[math.ceil(d)]..v.text
 	end
 
 	table.sort(players, function(a, b) return a.dist < b.dist end)
@@ -2455,8 +2490,10 @@ function get_players_list()
 end
 
 function choose_player(bool)
+	gx._block_repeat = true
 	local pmenu = {}
 	local players = get_players_list()
+	if players == nil then return end
 	for k, v in ipairs(players) do
 		table.insert(pmenu, v.text)
 	end
@@ -2466,6 +2503,27 @@ function choose_player(bool)
 	else
 		return p
 	end
+end
+
+function lightplayer()
+	gx._block_repeat = true
+	local player = choose_player(true)
+	if player == nil then return end
+	local values = {
+		{address = player.is_friend_address + 0x8, value = 1, flags = "D"}
+	}
+	gx.editor.set(values)
+end
+
+function lightall()
+	gx._block_repeat = true
+	local players = get_players_list()
+	if player == nil then return end
+	local values = {}
+	for k, p in ipairs(players) do
+		table.insert(values, {address = p.is_friend_address + 0x8, value = 1, flags = "D"})
+	end
+	gx.editor.set(values)
 end
 
 function switch_stick_to_player(bool)
@@ -3105,6 +3163,8 @@ gx.add_menu({
 		{"[🤝] {gx@relofferto}", {offer_relation}},
 		{"[🤝] {gx@offertoall}", {offer_all_relation}},
 		{"[😱] {gx@requestfromall}", {set_all_relation}},
+		{"[🕯] {gx@lightplayer}", {lightplayer}},
+		{"[🕯] {gx@lightall}", {lightall}},
 	},
 	type = "xback",
 	menu_repeat = true
