@@ -456,6 +456,8 @@
 		"removeclouds" : "雲削除",
 		"wbd" : "ウォールブリーチの距離",
 		"uaiacr" : "自動焼きをキャンマラの時に使う?",
+		"lightplayer" : "誰かを灯す",
+		"lightall" : "",
 		"showpcoords" : "座標をタイトルに出す?",
 		"noproprecharge" : "アイテムのクールダウン削除",
 		"tpmenuaftercr" : "キャンマラの後にテレポートメニューを表示する?",
