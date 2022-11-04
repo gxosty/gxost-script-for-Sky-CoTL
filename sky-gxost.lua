@@ -2621,7 +2621,7 @@ function offer_relation()
 	end
 
 	local p = choose_player()
-	if p == nil then return end
+	if p == nil then gg.toast("No Players are here") return end
 
 	table.insert(values, {address = coords.z + offsets.prelation, value = type, flags = "D"})
 	table.insert(values, {address = coords.z + offsets.prelation + 0x4, value = 41249, flags = "D"})
