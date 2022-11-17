@@ -465,7 +465,8 @@ maps = {
 	{"🆕️ Aurora collaboration2", "AP16SoftInside", 0},
 	{"🆕️ Aurora collaboration3", "AP16TheSeed", 0},
 	{"🆕️ Aurora collaboration4", "AP16EyesOfChild", 0},
-	{"🆕️ Aurora collaboration5", "AP16VoidSpace", 0}
+	{"🆕️ Aurora collaboration5", "AP16VoidSpace", 0},
+	{"🆕️ Aurora collaboration6 0.19.5~", "AP16FlightMechanic", 0}
 }
 
 -- AUTO CANDLE RUN POINTS --
