@@ -21,7 +21,7 @@ if debug_mode ~= "local" then
 		gx = load(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gx-gg/main/gx.lua").content)()
 		gxapi = gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/api-sky-o.lua").content
 		defsets = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/gxost-defaults.json").content)
-		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/gxosty/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
+		langlist = gx.json.decode(gg.makeRequest("https://raw.githubusercontent.com/yutodadil/gxost-script-for-Sky-CoTL/"..git_branch.."/languages.json").content)
 	end
 else
 	local file = io.open("api-sky-o.lua", "r")
