@@ -3072,7 +3072,7 @@ gx.add_menu({
 		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
 		{"[⏭] {gx@farm}", {gx.open_menu, {"farmmenu"}}},
 		{"[🌀] {gx@teleporter}", {gx.open_menu, {"teleportermenu"}}},
-		{"[🧎‍♂️] {gx@sit}", {gx.editor.switch, {tostring(player + offsets.status).."a 2D | 2D;"}},
+		{"[🧎‍♂️] {gx@sit}", {setadd(player + offsets.status, gg.TYPE_DWORD, 2, false)}},
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
