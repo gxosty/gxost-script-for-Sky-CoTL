@@ -247,6 +247,10 @@ _propsid = {
 	{2026179880,     '{gx@prop.spellfire}'},
 	{1931354705,     '{gx@prop.snowglobe}'},
 	{-699266735,     '{gx@prop.pillowxmas}'},
+	{-1753813059,    '{prop.auroravoice}'},
+	{120659421,      '{prop.catprop}'},
+	{-433617850,     '{prop.marshmallo}'},
+	{-949155226,     '{prop.marshmallostick}'},
 	{2035109393,     '{gx@prop.nothing}'},
 	{0,              '{gx@prop.disable}'}
 }
