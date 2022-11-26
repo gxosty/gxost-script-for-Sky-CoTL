@@ -1388,7 +1388,8 @@ offsets = {
 	hcandle = 0x57A410, --
 	ptonentity = 0x7FB50C, --
 	wing_charge = 0x45C22C, --
-	swim = 0x45C22C + 0x24,
+	swim = 0x45C22C + 0x24, --
+	status = 0x8B8458, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
@@ -3071,6 +3072,7 @@ gx.add_menu({
 		{"[⬆️] {gx@wallbreach}: {gx:settings.wbdistance}", {pmove, {"{gx:settings.wbdistance}"}}},
 		{"[⏭] {gx@farm}", {gx.open_menu, {"farmmenu"}}},
 		{"[🌀] {gx@teleporter}", {gx.open_menu, {"teleportermenu"}}},
+		{"[🧎‍♂️] {gx@sit}", {gx.editor.switch, {tostring(player + offsets.status).."a 2D | 2D;"},
 		{"[🪑] {gx@prophack}", {propmenu}},
 		{"[💻] {gx@openui}", {gx.open_menu, {"uimenu"}}},
 		{"[📷] {gx@camera}", {gx.open_menu, {"cameramenu"}}},
