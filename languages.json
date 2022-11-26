@@ -106,6 +106,7 @@
 		"testfunc" : "Test Functionn",
 		"fps60" : "60 FPS",
 		"disable10slot" : "Reset Spell Slot 10",
+		"sit" : "Sit",
 
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
@@ -476,6 +477,7 @@
 		"unlimitedswimenergy" : "息無限",
 		"fps60" : "60 FPS",
 		"disable10slot" : "魔法の10番目のスロットをリセットする",
+		"sit" : "座る",
 		"testfunc" : "Test Functionn",
 		"prop.ancestorjar": "Ancestor Jar",
 		"prop.ancestralkettle": "Ancestral Kettle",
