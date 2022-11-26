@@ -175,6 +175,10 @@
 		"prop.xiloph": "Xiloph",
 		"prop.xmastable": "XMas table",
 		"prop.yellowumbrella": "Yellow Umbrella",
+		"prop.auroravoice": "Aurora Voice",
+		"prop.catprop": "Cat Prop",
+		"prop.marshmallo": "Marshmallo Stand",
+		"prop.marshmallostick": "Marshmallo Stick",
 	},
 	"ru" : {
 		"map" : "Карта",
@@ -541,5 +545,9 @@
 		"prop.xiloph": "Xiloph",
 		"prop.xmastable": "クリスマスチャッテ",
 		"prop.yellowumbrella": "Yellow Umbrella",
+		"prop.auroravoice": "Auroraの声",
+		"prop.catprop": "猫の置物",
+		"prop.marshmallo": "マシュマロの串置く奴",
+		"prop.marshmallostick": "マシュマロの串",
 	}
 }
