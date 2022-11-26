@@ -247,10 +247,10 @@ _propsid = {
 	{2026179880,     '{gx@prop.spellfire}'},
 	{1931354705,     '{gx@prop.snowglobe}'},
 	{-699266735,     '{gx@prop.pillowxmas}'},
-	{-1753813059,    '{prop.auroravoice}'},
-	{120659421,      '{prop.catprop}'},
-	{-433617850,     '{prop.marshmallo}'},
-	{-949155226,     '{prop.marshmallostick}'},
+	{-1753813059,    '{gx@prop.auroravoice}'},
+	{120659421,      '{gx@prop.catprop}'},
+	{-433617850,     '{gx@prop.marshmallo}'},
+	{-949155226,     '{gx@prop.marshmallostick}'},
 	{2035109393,     '{gx@prop.nothing}'},
 	{0,              '{gx@prop.disable}'}
 }
@@ -1389,7 +1389,7 @@ offsets = {
 	ptonentity = 0x7FB50C, --
 	wing_charge = 0x45C22C, --
 	swim = 0x45C22C + 0x24, --
-	status = 0x45C22C + 0x25B40, --
+	status = 0x45C22C + 0x1E04, --
 	sleeping = 0x460890, --
 	pose = 0x45A428, --
 	closet_menu = 0x15B0F68, --
