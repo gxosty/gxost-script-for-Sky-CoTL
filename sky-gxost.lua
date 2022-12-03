@@ -399,6 +399,10 @@ magicsid = {
 	{"👗️New Cape [Beta] Crash ⚠", -940505450},
 	{"🧸️Ball and Goal [Beta]", -913145276},
 	{"🧸️Aurora Voice [Beta]", -834438493},
+	{"🤡 Rabbit Mask [Beta 0.20.0]", 371568737},
+	{"🤡 New Year Pants [Beta 0.20.0]", 483128979},
+	{"🤡 Rabbit Mask [Beta 0.20.0]", 371568737},
+	{"🤡 New Yaer Umbrella [Beta 0.20.0]", 1621987452},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
