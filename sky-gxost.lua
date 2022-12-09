@@ -404,7 +404,7 @@ magicsid = {
 	{"🧸️New Yaer Umbrella [Beta 0.20.0]", 1621987452},
 	{"🤡white ribbon [Beta 0.20.0]", 43899279},
 	{"🧸️new flute? [Beta 0.20.0]", 1403584133},
-	{"🧸️white Gondola [Beta 0.20.0]", -1333564540},
+	{"🧸️なんか潜るやつ [Beta 0.20.0]", -1333564540},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
