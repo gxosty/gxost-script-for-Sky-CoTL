@@ -402,7 +402,9 @@ magicsid = {
 	{"🤡Rabbit Mask [Beta 0.20.0]", 371568737},
 	{"👖New Year Pants [Beta 0.20.0]", 483128979},
 	{"🧸️New Yaer Umbrella [Beta 0.20.0]", 1621987452},
-	{"👗️New Year Cape", 3849428546},
+	{"🤡white ribbon [Beta 0.20.0]", 43899279},
+	{"🧸️new flute? [Beta 0.20.0]", 1403584133},
+	{"🧸️white Gondola [Beta 0.20.0]", -1333564540},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
