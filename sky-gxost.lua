@@ -386,9 +386,9 @@ magicsid = {
 	{'🧸️Summer Tent', 1414743743},
 	{'🆕Krill hat', -705906186},
 	{'🆕Krillcat', 847145578},
-	{'👖Aurora Pants', -1134828593},
-	{'👑️Aurora hair', 239584271},
-	{'👑️Aurora headaccessory', -1989753674}, -- 疲れた。
+	{'👖Runaway Pants', -1134828593},
+	{'👑️Runaway Hair', 239584271},
+	{'👑️Moon Star Hair Accessory', -1989753674}, -- 疲れた。
 	{'👖To the love outfits', 782433094},
 	{'👗️Giving in Cape', 939730131},
 	{'🆕Candle Troll', 1441565188},	
