@@ -407,6 +407,7 @@ magicsid = {
 	{"🤡white ribbon [Beta 0.20.0]", 43899279},
 	{"🧸️new flute? [Beta 0.20.0]", 1403584133},
 	{"🧸️なんか潜るやつ [Beta 0.20.0]", -1333564540},
+	{"💫DND [Dev 0.20.0]", -915747335},
 };
 
 -- {map_name}, {map_codename}, {map_wing_lights}
